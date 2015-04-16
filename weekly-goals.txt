@@ -1,0 +1,11 @@
+Week 1
+Goals
+-Get java terminal responding correctly to user input in a way that is meaningful to the game
+-Write basic database creating scripts
+-Implement menu system
+
+Week 2
+Goals
+-Creation of in game data
+-Creation of story
+-Integration of story
