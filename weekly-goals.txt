@@ -3,9 +3,11 @@ Goals
 -Get java terminal responding correctly to user input in a way that is meaningful to the game
 -Write basic database creating scripts
 -Implement menu system
+-Test that sample inputs are being recieved
+-Decide on how to communicate between Java and MySQL
 
 Week 2
 Goals
--Creation of in game data
--Creation of story
+-Begin creation of in game data
+-Begin creation of story
 -Integration of story
