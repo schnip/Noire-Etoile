@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ERDPlusFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="3">
+  <Diagrams>
+    <StoreDiagram Kind="Relational">
+      <Objects>
+        <StoreTable Id="8" Name="Employer" X="81" Y="23" Width="144" Height="50" SortOrder="Automatic">
+          <Fields>
+            <StoreField Id="9" Name="name" IsOptional="false" IsPrimaryKey="true" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="12" Name="status" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+          </Fields>
+          <Relationships>
+            <Relationship ForeignTableId="13" IsForeignKeyAlsoPrimaryKey="false" ForeignKeyUniqueGroups="" FkSortIndex="0">
+              <Items>
+                <Item SourceId="266" Name="employer" />
+              </Items>
+            </Relationship>
+            <Relationship ForeignTableId="66" IsForeignKeyAlsoPrimaryKey="true" ForeignKeyUniqueGroups="" FkSortIndex="0">
+              <Items>
+                <Item SourceId="266" Name="employer_name" />
+              </Items>
+            </Relationship>
+          </Relationships>
+        </StoreTable>
+        <StoreTable Id="13" Name="Person" X="101" Y="108" Width="144" Height="98" SortOrder="Automatic">
+          <Fields>
+            <StoreField Id="14" Name="id" IsOptional="false" IsPrimaryKey="true" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="17" Name="name" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="18" Name="max_weight" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+          </Fields>
+          <Relationships>
+            <Relationship ForeignTableId="48" IsForeignKeyAlsoPrimaryKey="true" ForeignKeyUniqueGroups="" FkSortIndex="0">
+              <Items>
+                <Item SourceId="267" Name="person_id" />
+              </Items>
+            </Relationship>
+            <Relationship ForeignTableId="66" IsForeignKeyAlsoPrimaryKey="true" ForeignKeyUniqueGroups="" FkSortIndex="0">
+              <Items>
+                <Item SourceId="267" Name="person_id" />
+              </Items>
+            </Relationship>
+          </Relationships>
+        </StoreTable>
+        <StoreTable Id="21" Name="Planet" X="650" Y="289" Width="144" Height="130" SortOrder="Automatic">
+          <Fields>
+            <StoreField Id="22" Name="name" IsOptional="false" IsPrimaryKey="true" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="25" Name="loc_x" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="26" Name="loc_y" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="27" Name="info" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="28" Name="danger_level" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="29" Name="police_level" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+          </Fields>
+          <Relationships>
+            <Relationship ForeignTableId="13" IsForeignKeyAlsoPrimaryKey="false" ForeignKeyUniqueGroups="" FkSortIndex="0">
+              <Items>
+                <Item SourceId="278" Name="planet" />
+              </Items>
+            </Relationship>
+            <Relationship ForeignTableId="40" IsForeignKeyAlsoPrimaryKey="false" ForeignKeyUniqueGroups="" FkSortIndex="0">
+              <Items>
+                <Item SourceId="278" Name="planet" />
+              </Items>
+            </Relationship>
+          </Relationships>
+        </StoreTable>
+        <StoreTable Id="31" Name="Star_System" X="650" Y="456" Width="144" Height="114" SortOrder="Automatic">
+          <Fields>
+            <StoreField Id="32" Name="name" IsOptional="false" IsPrimaryKey="true" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="35" Name="loc_x" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="36" Name="loc_y" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="37" Name="info" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="38" Name="danger_level" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="39" Name="police_level" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+          </Fields>
+          <Relationships>
+            <Relationship ForeignTableId="40" IsForeignKeyAlsoPrimaryKey="false" ForeignKeyUniqueGroups="" FkSortIndex="0">
+              <Items>
+                <Item SourceId="269" Name="star_system" />
+              </Items>
+            </Relationship>
+            <Relationship ForeignTableId="21" IsForeignKeyAlsoPrimaryKey="false" ForeignKeyUniqueGroups="" FkSortIndex="0">
+              <Items>
+                <Item SourceId="269" Name="star_system" />
+              </Items>
+            </Relationship>
+          </Relationships>
+        </StoreTable>
+        <StoreTable Id="40" Name="Log" X="102" Y="243" Width="144" Height="98" SortOrder="Automatic">
+          <Fields>
+            <StoreField Id="41" Name="id" IsOptional="false" IsPrimaryKey="true" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="44" Name="text" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="45" Name="stardate" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+          </Fields>
+          <Relationships />
+        </StoreTable>
+        <StoreTable Id="48" Name="Inventory_entry" X="103" Y="414" Width="144" Height="98" SortOrder="Automatic">
+          <Fields>
+            <StoreField Id="52" Name="good_id" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="53" Name="quantity" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="54" Name="weight" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+          </Fields>
+          <Relationships />
+        </StoreTable>
+        <StoreTable Id="55" Name="goods" X="620" Y="11" Width="144" Height="114" SortOrder="Automatic">
+          <Fields>
+            <StoreField Id="56" Name="id" IsOptional="false" IsPrimaryKey="true" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="59" Name="name" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="60" Name="value" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="61" Name="weight" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="62" Name="legality" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+            <StoreField Id="63" Name="description" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+          </Fields>
+          <Relationships>
+            <Relationship ForeignTableId="66" IsForeignKeyAlsoPrimaryKey="true" ForeignKeyUniqueGroups="" FkSortIndex="0">
+              <Items>
+                <Item SourceId="271" Name="goods_id" />
+              </Items>
+            </Relationship>
+            <Relationship ForeignTableId="48" IsForeignKeyAlsoPrimaryKey="true" ForeignKeyUniqueGroups="" FkSortIndex="0">
+              <Items>
+                <Item SourceId="271" Name="good_id" />
+              </Items>
+            </Relationship>
+          </Relationships>
+        </StoreTable>
+        <StoreTable Id="66" Name="Produces" X="648" Y="171" Width="144" Height="82" SortOrder="Automatic">
+          <Fields>
+            <StoreField Id="70" Name="quantity" IsOptional="false" IsPrimaryKey="false" SortIndex="0" UniqueGroups="" />
+          </Fields>
+          <Relationships />
+        </StoreTable>
+      </Objects>
+      <Settings Units="Inches" Orientation="Landscape" PresetPaperId="US_Letter" SheetWidth="8.5" SheetHeight="11.0" LeftMargin="1.0" TopMargin="1.0" RightMargin="1.0" BottomMargin="1.0" />
+    </StoreDiagram>
+  </Diagrams>
+</ERDPlusFile>
