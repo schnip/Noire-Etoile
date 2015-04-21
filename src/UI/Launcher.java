@@ -12,6 +12,7 @@ public class Launcher {
 		Engine e = new Engine();
 		String ret;
 		x[0] = "Hello World!";
+		x[1] = "This is the main window in which you will interact with Noire Etoile";
 		x[22] = "Enter a string and press enter (q to exit)";
 		ret = e.render(x);
 		while(!ret.equals("q")) {
