@@ -1,1 +1,1 @@
-java -cp bin UI.launcher
+java -cp bin UI.Launcher
