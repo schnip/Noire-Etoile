@@ -14,13 +14,11 @@ public class Launcher {
 		x[0] = "Hello World!";
 		x[22] = "Enter a string and press enter (q to exit)";
 		ret = e.render(x);
-		while(true) {
-			if (ret == "q") {
-				break;
-			}
+		while(!ret.equals("q")) {
 			x[3] = "The string you entered was: " + ret;
 			ret = e.render(x);
 		}
+		e.close();
 	}
 	
 	public static String[] getArrayFilledWithBlanks(int len) {
