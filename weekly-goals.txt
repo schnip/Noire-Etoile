@@ -11,3 +11,6 @@ Goals
 -Begin creation of in game data
 -Begin creation of story
 -Integration of story
+-Implement class connecting game and database (BLACKDATABASE)
+-Allow use of scripts in Java Class
+
