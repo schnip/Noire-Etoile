@@ -58,4 +58,11 @@ public class Launcher {
 		x[22] = "(Press enter when you are ready to go to orbit)";
 		ret = e.render(x);
 	}
+
+	public static void orbitScreen(Engine e) {
+		String[] x = getArrayFilledWithBlanks(23);
+		String ret;
+		x[0] = "Orbit Screen";
+		ret = e.render(x);
+	}
 }
