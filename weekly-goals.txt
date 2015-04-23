@@ -3,7 +3,7 @@ Goals
 -Get java terminal responding correctly to user input in a way that is meaningful to the game
 -Write basic database creating scripts
 -Implement menu system
--Test that sample inputs are being recieved
+-Test that sample inputs are being received
 -Decide on how to communicate between Java and MySQL
 
 Week 2
