@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class BlackDatabase {
 	private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	private final String DB_URL = "jdbc:mysql://localhost/";
+	private final String DB_URL = "jdbc:mysql://localhost/noire_etoile";
 
 	//  Database credentials
 	private final String USER = "user";
@@ -15,15 +15,16 @@ public class BlackDatabase {
 
 	public BlackDatabase() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(JDBC_DRIVER);
 
 			//STEP 3: Open a connection
 			System.out.println("Connecting to database...");
-			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			stmt = conn.createStatement();
 			getPlanetStmt = conn.prepareCall("{call log_from_planet(?)}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			System.out.println("breaking in Black Database init:");
 			e.printStackTrace();
 		}
 	}
@@ -35,8 +36,10 @@ public class BlackDatabase {
 			boolean hadResults = getPlanetStmt.execute();
 			while (hadResults) {
 				r = getPlanetStmt.getResultSet();
-				hadResults = getPlanetStmt.getMoreResults();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
 			}
+			System.out.println(r.isClosed());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

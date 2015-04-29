@@ -1,5 +1,7 @@
 package ui;
 
+import java.sql.ResultSet;
+
 import database.BlackDatabase;
 
 
@@ -71,7 +73,7 @@ public class Launcher {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Orbit Screen";
-		x[1] = "You are currently in orbit around " + player_planet + " in the " + player_system + " system."
+		x[1] = "You are currently in orbit around " + player_planet + " in the " + player_system + " system.";
 		x[3] = "    1) System map";
 		x[4] = "    2) Spacedock";
 		x[5] = "    3) Land and meet with people on planet";
@@ -136,18 +138,20 @@ public class Launcher {
 			ret = e.render(x);
 			switch (ret) {
 				case "l":
-					ResultSet rs = bd.getPlanetNews(player_planet);
+					ResultSet rs = bd.getPlanetNews("Planet Eric");
 					if (rs == null) {
 						break;
 					}
+					try{
 					rs.first();
 					for (int i = 0; i < 10; i++) {
-						x[i+2] = "  " + rs.getInt("stardate") + " " + rs.getString("log_text");
+						x[i+2] = "  " + rs.getInt("star_date") + " " + rs.getString("log_text");
 						if (rs.isLast()) {
 							break;
 						}
 						rs.next();
 					}
+					}catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 					break;
 				case "s":
 					// TODO get system-wide news here

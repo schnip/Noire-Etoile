@@ -14,10 +14,12 @@ planet varchar(255),
 PRIMARY KEY(id)
 );
 
+alter table star_log change column stardate star_date int;
+
 CREATE TABLE IF NOT EXISTS Star_Log(
 id int,
 log_text varchar(512),
-stardate int,
+star_date int,
 planet varchar(255),
 star_system varchar(255),
 PRIMARY KEY(id)
