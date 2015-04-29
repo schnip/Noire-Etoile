@@ -136,7 +136,15 @@ public class Launcher {
 			ret = e.render(x);
 			switch (ret) {
 				case "l":
-					// TODO get local news here
+					ResultSet rs = bd.getPlanetInfo(player_planet);
+					rs.first();
+					for (int i = 0; i < 10; i++) {
+						x[i+2] = "  " + rs.getInt("stardate") + " " + rs.getString("log_text");
+						if (rs.isLast()) {
+							break;
+						}
+						rs.next();
+					}
 					break;
 				case "s":
 					// TODO get system-wide news here
