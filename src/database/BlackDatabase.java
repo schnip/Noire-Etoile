@@ -28,7 +28,7 @@ public class BlackDatabase {
 		}
 	}
 
-	public ResultSet getPlanetInfo(String planetName){
+	public ResultSet getPlanetNews(String planetName){
 		ResultSet r = null;
 		try {
 			getPlanetStmt.setString(1, planetName);
@@ -41,6 +41,10 @@ public class BlackDatabase {
 			e.printStackTrace();
 		}
 		return r;
+	}
+
+	public ResultSet getSystemNews(String planetName){
+		return null;
 	}
 
 }

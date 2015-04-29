@@ -132,11 +132,14 @@ public class Launcher {
 		x[0] = "News Screen";
 		x[1] = "You are on " + player_planet + " in the " + player_system + " system";
 		x[22] = "(l for local news, s for system news, g for galactic news, b to go back)";
-			while(true) {
+		while(true) {
 			ret = e.render(x);
 			switch (ret) {
 				case "l":
-					ResultSet rs = bd.getPlanetInfo(player_planet);
+					ResultSet rs = bd.getPlanetNews(player_planet);
+					if (rs == null) {
+						break;
+					}
 					rs.first();
 					for (int i = 0; i < 10; i++) {
 						x[i+2] = "  " + rs.getInt("stardate") + " " + rs.getString("log_text");
