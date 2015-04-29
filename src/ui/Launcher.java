@@ -125,7 +125,8 @@ public class Launcher {
 	private static void newsX(Engine e, BlackDatabase bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
-		x[0] = "News Screen";	
+		x[0] = "News Screen";
+		x[1] = "You are on TODO in the TODO system";
 		x[22] = "(l for local news, s for system news, g for galactic news, b to go back)";
 			while(true) {
 			ret = e.render(x);
