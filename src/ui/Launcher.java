@@ -126,9 +126,25 @@ public class Launcher {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "News Screen";	
-		x[22] = "(l for local news, s for system news, g for galactic news)";
-		ret = e.render(x);
-		
+		x[22] = "(l for local news, s for system news, g for galactic news, b to go back)";
+			while(true) {
+			ret = e.render(x);
+			switch (ret) {
+				case "l":
+					// TODO get local news here
+					break;
+				case "s":
+					// TODO get system-wide news here
+					break;
+				case "g":
+					// TODO get galaxy-wide news here
+					break;
+				case "b":
+					return;
+				default:
+					break;
+			}
+		}
 	}
 
 	private static void cargoX(Engine e, BlackDatabase bd) {
