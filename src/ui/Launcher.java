@@ -7,6 +7,8 @@ public class Launcher {
 
 	private static String player_name;
 	private static String player_ship;
+	private static String player_planet;
+	private static String player_system;
 
 	/**
 	 * @param args
@@ -60,6 +62,8 @@ public class Launcher {
 		x[10] = "When you are ready, we'll go to orbit!";
 		x[22] = "(Press enter when you are ready to go to orbit)";
 		ret = e.render(x);
+		player_planet = "Undefined";
+		player_system = "Undefined";
 		orbitX(e, bd);
 	}
 
@@ -67,7 +71,7 @@ public class Launcher {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Orbit Screen";
-		x[1] = "You are currently in orbit around "; // TODO gather planet name and put it here
+		x[1] = "You are currently in orbit around " + player_planet + " in the " + player_system + " system."
 		x[3] = "    1) System map";
 		x[4] = "    2) Spacedock";
 		x[5] = "    3) Land and meet with people on planet";
@@ -126,7 +130,7 @@ public class Launcher {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "News Screen";
-		x[1] = "You are on TODO in the TODO system";
+		x[1] = "You are on " + player_planet + " in the " + player_system + " system";
 		x[22] = "(l for local news, s for system news, g for galactic news, b to go back)";
 			while(true) {
 			ret = e.render(x);
@@ -175,7 +179,7 @@ public class Launcher {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "System Screen";	
-		x[1] = "You are currently in the TODO system on planets TODO"; // TODO gather system and planet name and put it here
+		x[1] = "You are currently on " + player_planet + " in the " + player_system + " system";
 		x[3] = "    g) Galactic map";
 		x[4] = "    r) Return to orbit screen";
 		// TODO bring planets there to be selected between
