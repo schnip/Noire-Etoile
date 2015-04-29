@@ -3,13 +3,13 @@ CREATE DATABASE ne_db;
 use ne_db;
 go;
 
-CREATE TABLE Employer(
+CREATE TABLE IF NOT EXISTS Employer(
 name varchar(255),
 status varchar(255),
 PRIMARY KEY(name)
 );
 
-CREATE TABLE Person(
+CREATE TABLE IF NOT EXISTS Person(
 id int,
 name varchar(255),
 max_weight int,
@@ -18,7 +18,7 @@ planet varchar(255),
 PRIMARY KEY(id),
 );
 
-CREATE TABLE Star_Log(
+CREATE TABLE IF NOT EXISTS Star_Log(
 id int,
 log_text varchar(512),
 stardate int,
@@ -27,7 +27,7 @@ star_system varchar(255),
 PRIMARY KEY(id),
 );
 
-CREATE TABLE Inventory_entry(
+CREATE TABLE IF NOT EXISTS Inventory_entry(
 person_id int,
 good_id int,
 quantity int,
@@ -35,7 +35,7 @@ weight int
 CONSTRAINT pk_person_good PRIMARY KEY (person_id, good_id)
 );
 
-CREATE TABLE Goods(
+CREATE TABLE IF NOT EXISTS Goods(
 id int,
 name varchar(255),
 good_value int,
@@ -45,7 +45,7 @@ description varchar(512),
 PRIMARY KEY (id)
 );
 
-CREATE TABLE Produces(
+CREATE TABLE IF NOT EXISTS Produces(
 employer_name varchar(255),
 person_id int,
 goods_id int,
@@ -53,7 +53,7 @@ quantity int,
 CONSTRAINT pk_employer_person_goods PRIMARY KEY (employer_name, person_id, goods_id)
 );
 
-CREATE TABLE Planet(
+CREATE TABLE IF NOT EXISTS Planet(
 name varchar(255),
 loc_x int,
 loc_y int,
@@ -63,7 +63,7 @@ police_level int,
 PRIMARY KEY (name)
 );
 
-CREATE TABLE Star_System(
+CREATE TABLE IF NOT EXISTS Star_System(
 name varchar(255),
 loc_x int,
 loc_y int,
@@ -122,6 +122,8 @@ ALTER TABLE Planet
 ADD FOREIGN KEY (star_system)
 REFERENCES Star_System(name)
 DELETE ON CASCADE;
+
+
 
 
 
