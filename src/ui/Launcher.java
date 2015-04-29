@@ -174,9 +174,10 @@ public class Launcher {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "System Screen";	
-		x[1] = "You are currently in the TODO system"; // TODO gather system name and put it here
-		x[3] = "    1) Galactic map";
-		x[4] = "    2) Return to orbit screen";
+		x[1] = "You are currently in the TODO system on planets TODO"; // TODO gather system and planet name and put it here
+		x[3] = "    g) Galactic map";
+		x[4] = "    r) Return to orbit screen";
+		// TODO bring planets there to be selected between
 		ret = e.render(x);
 		switch (ret) {
 			case "1":
@@ -193,7 +194,10 @@ public class Launcher {
 	private static void galaxyX(Engine e, BlackDatabase bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
-		x[0] = "Galaxy Screen";	
+		x[0] = "Galaxy Screen";
+		x[1] = "    You are currently in the TODO system";
+		x[3] = "    r) Return to system screen";
+		// TODO bring system there to be selected between
 		ret = e.render(x);
 		
 	}
