@@ -75,6 +75,7 @@ public class Launcher {
 		x[7] = "    5) Read news";
 		x[8] = "    6) Settings";
 		x[9] = "    7) Quit";
+		x[22] = "(Type a number and press enter)";
 		ret = e.render(x);
 		switch (ret) {
 			case "1":
@@ -94,6 +95,7 @@ public class Launcher {
 				break;
 			case "6":
 				settingsX(e, bd);
+				orbitX(e, bd);
 				break;
 			case "7":
 				break;
@@ -107,13 +109,24 @@ public class Launcher {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Settings Screen";	
-		ret = e.render(x);	
+		x[3] = "    No settings available yet";
+		x[5] = "    1) Return to previous menu";
+		x[22] = "(Type a number and press enter)";
+		ret = e.render(x);
+		switch (ret) {
+			case "1":
+				break;
+			default:
+				settingsX(e, bd);
+				break;
+		}
 	}
 
 	private static void newsX(Engine e, BlackDatabase bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "News Screen";	
+		x[22] = "(l for local news, s for system news, g for galactic news)";
 		ret = e.render(x);
 		
 	}
