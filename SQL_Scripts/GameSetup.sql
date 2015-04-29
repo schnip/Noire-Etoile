@@ -1,7 +1,3 @@
-CREATE DATABASE ne_db;
-
-use ne_db;
-go;
 
 CREATE TABLE IF NOT EXISTS Employer(
 name varchar(255),
@@ -15,7 +11,7 @@ name varchar(255),
 max_weight int,
 employer varchar(255),
 planet varchar(255),
-PRIMARY KEY(id),
+PRIMARY KEY(id)
 );
 
 CREATE TABLE IF NOT EXISTS Star_Log(
@@ -24,14 +20,14 @@ log_text varchar(512),
 stardate int,
 planet varchar(255),
 star_system varchar(255),
-PRIMARY KEY(id),
+PRIMARY KEY(id)
 );
 
 CREATE TABLE IF NOT EXISTS Inventory_entry(
 person_id int,
 good_id int,
 quantity int,
-weight int
+weight int,
 CONSTRAINT pk_person_good PRIMARY KEY (person_id, good_id)
 );
 
@@ -53,13 +49,14 @@ quantity int,
 CONSTRAINT pk_employer_person_goods PRIMARY KEY (employer_name, person_id, goods_id)
 );
 
-CREATE TABLE IF NOT EXISTS Planet(
+create TABLE IF NOT EXISTS Planet(
 name varchar(255),
 loc_x int,
 loc_y int,
 info varchar(512),
 danger_level int,
 police_level int,
+star_system varchar(255),
 PRIMARY KEY (name)
 );
 
@@ -76,52 +73,52 @@ PRIMARY KEY (name)
 ALTER TABLE Person
 ADD FOREIGN KEY (employer)
 REFERENCES Employer(name)
-DELETE ON CASCADE;
+ON delete CASCADE;
 
 ALTER TABLE Person
 ADD FOREIGN KEY (planet)
 REFERENCES Planet(name)
-DELETE ON CASCADE;
+ON delete CASCADE;
 
 ALTER TABLE Star_Log
 ADD FOREIGN KEY (planet)
 REFERENCES Planet(name)
-DELETE ON CASCADE;
+ON delete CASCADE;
 
 ALTER TABLE Star_Log
 ADD FOREIGN KEY (star_system)
 REFERENCES Star_System(name)
-DELETE ON CASCADE;
+ON delete CASCADE;
 
 ALTER TABLE Inventory_entry
-FOREIGN KEY (person_id)
+add FOREIGN KEY (person_id)
 REFERENCES Person(id)
-DELETE ON CASCADE;
+ON delete CASCADE;
 
 ALTER TABLE Inventory_entry
 ADD FOREIGN KEY (good_id)
 REFERENCES Goods(id)
-DELETE ON CASCADE;
+ON delete CASCADE;
 
 ALTER TABLE Produces
 ADD FOREIGN KEY (employer_name)
 REFERENCES Employer(name)
-DELETE ON CASCADE;
+ON delete CASCADE;
 
 ALTER TABLE Produces
 ADD FOREIGN KEY (person_id)
 REFERENCES Person(id)
-DELETE ON CASCADE;
+ON delete CASCADE;
 
 ALTER TABLE Produces
 ADD FOREIGN KEY (goods_id)
 REFERENCES Goods(id)
-DELETE ON CASCADE;
+ON delete CASCADE;
 
 ALTER TABLE Planet
 ADD FOREIGN KEY (star_system)
 REFERENCES Star_System(name)
-DELETE ON CASCADE;
+ON delete CASCADE;
 
 
 

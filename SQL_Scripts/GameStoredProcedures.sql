@@ -24,7 +24,7 @@ END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE log_from_Galaxy
+CREATE PROCEDURE log_from_Galaxy()
 BEGIN
 	SELECT planet, star_system, log_text, star_date
 	FROM Star_log
