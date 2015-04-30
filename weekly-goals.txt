@@ -14,3 +14,12 @@ Goals
 -Implement class connecting game and database (BLACKDATABASE)
 -Allow use of scripts in Java Class
 
+Week 3
+Goals
+-Implement player being able to move in between planets
+-Add more data
+-Begin implementation of trade interface
+-Stored procedures for player movement, trade, gathering information, and adding data
+-Continue implementation of menu
+
+
