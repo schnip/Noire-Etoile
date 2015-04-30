@@ -22,7 +22,7 @@ PRIMARY KEY(id)
 
 
 CREATE TABLE IF NOT EXISTS Star_log(
-id int,
+id int NOT NULL AUTO_INCREMENT,
 log_text varchar(512),
 star_date int,
 planet varchar(255),
