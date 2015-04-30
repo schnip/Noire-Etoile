@@ -21,7 +21,7 @@ INSERT INTO Star_System
 VALUES
 ('Easter Egg Nebula', 0,0, "Check out this!", 66, 66);
 
-INSERT INTO Star_Log
+INSERT INTO Star_log
 (log_text, star_date, planet, star_system)
 VALUES
 ('Eric was here but this was written by Josh',200,'Planet Eric',null);

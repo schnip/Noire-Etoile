@@ -21,7 +21,7 @@ PRIMARY KEY(id)
 
 
 
-CREATE TABLE IF NOT EXISTS Star_Log(
+CREATE TABLE IF NOT EXISTS Star_log(
 id int,
 log_text varchar(512),
 star_date int,
@@ -87,12 +87,12 @@ ADD FOREIGN KEY (planet)
 REFERENCES Planet(name)
 ON delete CASCADE;
 
-ALTER TABLE Star_Log
+ALTER TABLE Star_log
 ADD FOREIGN KEY (planet)
 REFERENCES Planet(name)
 ON delete CASCADE;
 
-ALTER TABLE Star_Log
+ALTER TABLE Star_log
 ADD FOREIGN KEY (star_system)
 REFERENCES Star_System(name)
 ON delete CASCADE;
