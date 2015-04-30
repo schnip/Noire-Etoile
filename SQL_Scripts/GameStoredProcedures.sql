@@ -4,6 +4,7 @@
 	-Same for star system, Overall
 	-listing names of planets for a given system
 */
+USE noire_etoile;
 
 DELIMITER //
 CREATE PROCEDURE log_from_planet (IN planet_name varchar(255))

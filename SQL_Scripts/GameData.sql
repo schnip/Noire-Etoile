@@ -1,5 +1,5 @@
 /* Inserting data into the data base */
-
+USE noire_etoile;
 
 INSERT INTO Planet
 (name, loc_x, loc_y, info, danger_level, police_level)
@@ -21,7 +21,7 @@ INSERT INTO Star_System
 VALUES
 ('Easter Egg Nebula', 0,0, "Check out this!", 66, 66);
 
-INSERT INTO Star_log
+INSERT INTO Star_Log
 (log_text, star_date, planet, star_system)
 VALUES
 ('Eric was here but this was written by Josh',200,'Planet Eric',null);

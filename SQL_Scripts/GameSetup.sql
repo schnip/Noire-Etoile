@@ -1,3 +1,8 @@
+DROP DATABASE IF EXISTS noire_etoile;
+
+CREATE DATABASE noire_etoile;
+
+USE noire_etoile;
 
 CREATE TABLE IF NOT EXISTS Employer(
 name varchar(255),
@@ -14,7 +19,7 @@ planet varchar(255),
 PRIMARY KEY(id)
 );
 
-alter table star_log change column stardate star_date int;
+
 
 CREATE TABLE IF NOT EXISTS Star_Log(
 id int,
