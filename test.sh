@@ -1,1 +1,1 @@
-java -cp bin ui.Launcher
+java -jar jar/game.jar

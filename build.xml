@@ -1,6 +1,16 @@
-<project default="compile">
+<project default="all">
+	<target name="all" depends="compile,build-jar">
+	</target>
     <target name="compile">
         <mkdir dir="bin"/>
         <javac srcdir="src" destdir="bin"/>
+    </target>
+    <target name="build-jar" depends="compile">
+    	<jar destfile="jar/game.jar"
+    		includes="bin/">
+    		<manifest>
+    			<attribute name="Main-Class" value="ui.Launcher"/>
+    		</manifest>
+    	</jar>
     </target>
 </project>
