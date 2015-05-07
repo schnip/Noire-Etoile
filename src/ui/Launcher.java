@@ -27,12 +27,16 @@ public class Launcher {
 		x[3] = "This is the main menu";
 		x[5] = "    1) Connect to the local database";
 		x[6] = "    2) New game";
+		x[7] = "    3) Load game";
 		x[22] = "Enter a string and press enter (q to exit)";
 		ret = e.render(x);
 		while(!ret.equals("q")) {
 			//x[3] = "The string you entered was: " + ret;
 			if (ret.equals("2")) {
 				createCharater(e, bd);
+			}
+			if (ret.equals("3")) {
+				// TODO things
 			}
 			ret = e.render(x);
 		}
