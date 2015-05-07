@@ -10,9 +10,15 @@ public class BlackDatabase implements DBInterface{
 	private final String USER = "user";
 	private final String PASS = "pass";
 	private Connection conn = null;
-	private Statement stmt = null;
-	private CallableStatement getPlanetStmt = null;
-
+	private CallableStatement getPlanetNewsStmt;
+	private CallableStatement getSystemNewsStmt;
+	private CallableStatement getInventoryStmt;
+	private CallableStatement getGalaxyNewsStmt;
+	private CallableStatement getSystemPlanetsStmt;
+	private CallableStatement getSystemsStmt;
+	private CallableStatement setPlayerPlanetStmt;
+	private CallableStatement getPlayerPlanetStmt;
+	
 	public BlackDatabase() {
 		try {
 			Class.forName(JDBC_DRIVER);
@@ -20,8 +26,14 @@ public class BlackDatabase implements DBInterface{
 			//STEP 3: Open a connection
 			System.out.println("Connecting to database...");
 			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-			stmt = conn.createStatement();
-			getPlanetStmt = conn.prepareCall("{call log_from_planet(?)}");
+			getPlanetNewsStmt = conn.prepareCall("{call log_from_planet(?)}");
+			getSystemNewsStmt = conn.prepareCall("{call log_from_star_system(?)}");
+			getInventoryStmt = conn.prepareCall("{call persons_inventory(?)}");
+			getGalaxyNewsStmt = conn.prepareCall("{call log_from_Galaxy()}");
+			getSystemPlanetsStmt = conn.prepareCall("{call planets_given_system(?)}");
+			getSystemsStmt = conn.prepareCall("{call all_systems_in_galaxy()}");
+			setPlayerPlanetStmt = conn.prepareCall("{call travel_to_planet(?,?)}");
+			getPlayerPlanetStmt = conn.prepareCall("{call player_planet(?,?)}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("breaking in Black Database init:");
@@ -29,55 +41,169 @@ public class BlackDatabase implements DBInterface{
 		}
 	}
 
+	@Override
 	public ResultSet getPlanetNews(String planetName){
 		ResultSet r = null;
 		try {
-			getPlanetStmt.setString(1, planetName);
-			boolean hadResults = getPlanetStmt.execute();
+			getPlanetNewsStmt.setString(1, planetName);
+			boolean hadResults = getPlanetNewsStmt.execute();
 			while (hadResults) {
-				r = getPlanetStmt.getResultSet();
+				r = getPlanetNewsStmt.getResultSet();
 				//hadResults = getPlanetStmt.getMoreResults();
 				break;
 			}
-			System.out.println(r.isClosed());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return r;
 	}
 
-	public ResultSet getSystemNews(String planetName){
-		return null;
+	@Override
+	public ResultSet getSystemNews(String SystemName){
+		ResultSet r = null;
+		try {
+			getSystemNewsStmt.setString(1, SystemName);
+			boolean hadResults = getSystemNewsStmt.execute();
+			while (hadResults) {
+				r = getSystemNewsStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return r;
 	}
 
 	@Override
 	public ResultSet getPersonInventory(String personName) {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSet r = null;
+		try {
+			getInventoryStmt.setString(1, personName);
+			boolean hadResults = getInventoryStmt.execute();
+			while (hadResults) {
+				r = getInventoryStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return r;
 	}
 
 	@Override
 	public ResultSet getGalaxyNews() {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSet r = null;
+		try {
+			boolean hadResults = getGalaxyNewsStmt.execute();
+			while (hadResults) {
+				r = getGalaxyNewsStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return r;
 	}
 
 	@Override
 	public ResultSet getSystemPlanets(String systemName) {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSet r = null;
+		try {
+			getSystemPlanetsStmt.setString(1, systemName);
+			boolean hadResults = getSystemPlanetsStmt.execute();
+			while (hadResults) {
+				r = getSystemPlanetsStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return r;
 	}
 
 	@Override
 	public ResultSet getSystems() {
+		ResultSet r = null;
+		try {
+			boolean hadResults = getSystemsStmt.execute();
+			while (hadResults) {
+				r = getSystemsStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return r;
+	}
+
+	@Override
+	public Boolean setPlayerPlanet(String planetName, String playerName) {
+		boolean r = false;
+		try {
+			setPlayerPlanetStmt.setString(1, planetName);
+			setPlayerPlanetStmt.setString(2, playerName);
+			r = setPlayerPlanetStmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return r;
+	}
+
+	@Override
+	public ResultSet getVendors(String planetName, String playerName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Boolean setPlayerPlanet(String planetName, String playerName) {
+	public Boolean makeTrade(String buyerName, String vendorName, int BgoodID,
+			int Bquantity, int VgoodID, int Vquantity) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ResultSet getGoods(String playerName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean createPlayer(String playerName, String playerPlanet,
+			int maxWeight, String shipName, int startCredits) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	@Override
+	public String getPlayerPlanet(String playerName) {
+		ResultSet r = null;
+		String pname = null;
+		try {
+			getPlayerPlanetStmt.setString(1, playerName);
+			boolean hadResults = getPlayerPlanetStmt.execute();
+			while (hadResults) {
+				r = getPlayerPlanetStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (r == null) {
+			return null;
+		}
+		try{
+			r.first();
+			pname = r.getString("planet");
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+		return pname;
 	}
 
 }

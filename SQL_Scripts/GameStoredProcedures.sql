@@ -75,3 +75,12 @@ BEGIN
 	WHERE pname = name;
 END//
 DELIMITER ;
+
+//DELIMITER //
+CREATE PROCEDURE create_new_player (IN pname varchar(255))
+BEGIN
+	select planet
+	from Person
+	WHERE pname = name;
+END//
+DELIMITER ;
