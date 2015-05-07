@@ -65,14 +65,15 @@ public class Launcher {
 		x[10] = "When you are ready, we'll go to orbit!";
 		x[22] = "(Press enter when you are ready to go to orbit)";
 		ret = e.render(x);
-		player_planet = "Undefined";
-		player_system = "Undefined";
+		player_planet = "Planet Eric";
+		player_system = "Easter Egg Nebula";
 		orbitX(e, bd);
 	}
 
 	private static void orbitX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
+		player_planet = bd.getPlayerPlanet(player_name);
 		x[0] = "Orbit Screen";
 		x[1] = "You are currently in orbit around " + player_planet + " in the " + player_system + " system.";
 		x[3] = "    1) System map";
@@ -133,6 +134,8 @@ public class Launcher {
 	private static void newsX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
+		player_planet = bd.getPlayerPlanet(player_name);
+		
 		x[0] = "News Screen";
 		x[1] = "You are on " + player_planet + " in the " + player_system + " system";
 		x[22] = "(l for local news, s for system news, g for galactic news, b to go back)";
@@ -140,7 +143,7 @@ public class Launcher {
 			ret = e.render(x);
 			switch (ret) {
 				case "l":
-					ResultSet rs = bd.getPlanetNews("Planet Eric");
+					ResultSet rs = bd.getPlanetNews("player_planet");
 					if (rs == null) {
 						break;
 					}
@@ -156,10 +159,36 @@ public class Launcher {
 					} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 					break;
 				case "s":
-					// TODO get system-wide news here
+					rs = bd.getSystemNews("player_system");
+					if (rs == null) {
+						break;
+					}
+					try{
+					rs.first();
+					for (int i = 0; i < 10; i++) {
+						x[i+2] = "  " + rs.getInt("star_date") + " " + rs.getString("log_text");
+						if (rs.isLast()) {
+							break;
+						}
+						rs.next();
+					}
+					} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 					break;
 				case "g":
-					// TODO get galaxy-wide news here
+					rs = bd.getGalaxyNews();
+					if (rs == null) {
+						break;
+					}
+					try{
+					rs.first();
+					for (int i = 0; i < 10; i++) {
+						x[i+2] = "  " + rs.getInt("star_date") + " " + rs.getString("log_text");
+						if (rs.isLast()) {
+							break;
+						}
+						rs.next();
+					}
+					} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 					break;
 				case "b":
 					return;
@@ -183,6 +212,7 @@ public class Launcher {
 		x[0] = "On Planet Screen";
 		try {
 			ResultSet rs = bd.getVendors(player_planet, player_name);
+			if(rs!= null){
 			rs.first();
 			for (int i = 1; i < 11; i++) {
 				x[i+5] = "    " + i + ") " + rs.getString("name");
@@ -191,6 +221,7 @@ public class Launcher {
 					break;
 				}
 				rs.next();
+			}
 			}
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		ret = e.render(x);
@@ -240,8 +271,10 @@ public class Launcher {
 				return;
 			default:
 				int choice = Integer.parseInt(ret);
-				if (choice<0 && choice<11) {
+				System.out.println("player_planet = "+player_planet);
+				if (choice>0 && choice<11) {
 					player_planet = p[choice-1];
+					System.out.println("In choice to set planet. player_planet = "+player_planet);
 					bd.setPlayerPlanet(player_planet, player_name);
 				}
 				break;
@@ -259,6 +292,7 @@ public class Launcher {
 		// TODO bring system there to be selected between
 		try {
 			ResultSet rs = bd.getSystems();
+			if(rs!=null){
 			rs.first();
 			for (int i = 1; i < 11; i++) {
 				x[i+5] = "    " + i + ") " + rs.getString("name");
@@ -267,6 +301,7 @@ public class Launcher {
 					break;
 				}
 				rs.next();
+			}
 			}
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		while(true) {

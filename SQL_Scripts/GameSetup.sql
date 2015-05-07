@@ -11,12 +11,11 @@ PRIMARY KEY(name)
 );
 
 CREATE TABLE IF NOT EXISTS Person(
-id int,
-name varchar(255),
+name varchar(255) unique,
 max_weight int,
 employer varchar(255),
 planet varchar(255),
-PRIMARY KEY(id)
+PRIMARY KEY(name)
 );
 
 
@@ -31,15 +30,15 @@ PRIMARY KEY(id)
 );
 
 CREATE TABLE IF NOT EXISTS Inventory_entry(
-person_id int,
+personName varchar(255),
 good_id int,
 quantity int,
 weight int,
-CONSTRAINT pk_person_good PRIMARY KEY (person_id, good_id)
+CONSTRAINT pk_person_good PRIMARY KEY (personName, good_id)
 );
 
 CREATE TABLE IF NOT EXISTS Goods(
-id int,
+id int NOT NULL AUTO_INCREMENT,
 name varchar(255),
 good_value int,
 weight int,
@@ -50,10 +49,10 @@ PRIMARY KEY (id)
 
 CREATE TABLE IF NOT EXISTS Produces(
 employer_name varchar(255),
-person_id int,
+personName varchar(255),
 goods_id int,
 quantity int,
-CONSTRAINT pk_employer_person_goods PRIMARY KEY (employer_name, person_id, goods_id)
+CONSTRAINT pk_employer_person_goods PRIMARY KEY (employer_name, personName, goods_id)
 );
 
 create TABLE IF NOT EXISTS Planet(
@@ -98,8 +97,8 @@ REFERENCES Star_System(name)
 ON delete CASCADE;
 
 ALTER TABLE Inventory_entry
-add FOREIGN KEY (person_id)
-REFERENCES Person(id)
+add FOREIGN KEY (personName)
+REFERENCES Person(name)
 ON delete CASCADE;
 
 ALTER TABLE Inventory_entry
@@ -113,8 +112,8 @@ REFERENCES Employer(name)
 ON delete CASCADE;
 
 ALTER TABLE Produces
-ADD FOREIGN KEY (person_id)
-REFERENCES Person(id)
+ADD FOREIGN KEY (personName)
+REFERENCES Person(name)
 ON delete CASCADE;
 
 ALTER TABLE Produces

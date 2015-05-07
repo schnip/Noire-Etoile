@@ -33,34 +33,45 @@ BEGIN
 END//
 DELIMITER ;
 
---next procedures that we need are as follows
-
---get a persons inventory based on a string for person_id
 DELIMITER //
-CREATE PROCEDURE persons_inventory (IN p_id int)
+CREATE PROCEDURE persons_inventory (IN pname varchar(255))
 BEGIN
 	SELECT good_id, quantity, weight
 	FROM Inventory_entry
-	WHERE person_id = p_id;
+	WHERE personName = pname;
 END//
 
---get all of the systems in the galaxy
 DELIMITER //
 CREATE PROCEDURE planets_given_system (IN star_system_name varchar(255))
 BEGIN
-	SELECT planet
+	SELECT name
 	FROM Planet
 	WHERE star_system = star_system_name;
 END//
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE all_systems_in_galaxy ()
+BEGIN
+	SELECT name
+	FROM Star_System;
+END//
+DELIMITER ;
 
---set the players planet person is sent and planet is sent
 //DELIMITER //
-CREATE PROCEDURE travel_to_planet (IN planet_name varchar (255), p_id int)
+CREATE PROCEDURE travel_to_planet (IN planet_name varchar (255),IN pname varchar(255))
 BEGIN
 	UPDATE Person
 	SET planet = planet_name
-	WHERE p_id = id
+	WHERE pname = name;
+END//
+DELIMITER ;
+
+//DELIMITER //
+CREATE PROCEDURE player_planet (IN pname varchar(255))
+BEGIN
+	select planet
+	from Person
+	WHERE pname = name;
 END//
 DELIMITER ;
