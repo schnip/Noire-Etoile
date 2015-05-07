@@ -93,23 +93,28 @@ public class Launcher {
 		switch (ret) {
 			case "1":
 				systemX(e, bd, false);
-				break;
+				orbitX(e, bd);
+				return;
 			case "2":
 				spacedockX(e, bd);
-				break;
+				orbitX(e, bd);
+				return;
 			case "3":
 				landingX(e, bd);
-				break;
+				orbitX(e, bd);
+				return;
 			case "4":
 				cargoX(e, bd);
-				break;
+				orbitX(e, bd);
+				return;
 			case "5":
 				newsX(e, bd);
-				break;
+				orbitX(e, bd);
+				return;
 			case "6":
 				settingsX(e, bd);
 				orbitX(e, bd);
-				break;
+				return;
 			case "7":
 				return;
 			default:
