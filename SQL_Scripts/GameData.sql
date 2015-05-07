@@ -6,15 +6,25 @@ INSERT INTO Star_System
 VALUES
 ('Easter Egg Nebula', 0,0, "Check out this!", 66, 66);
 
+INSERT INTO Star_System
+(name, loc_x, loc_y, info, danger_level, police_level)
+VALUES
+('Larry is going crazy', 30,50, "He is freaking out!", 40, 20);
+
 INSERT INTO Planet
 (name, loc_x, loc_y, info, danger_level, police_level,star_system)
 VALUES
 ('Omicron Persei 8', 0, 0, "Lrrr doesn't like unwanted guests", 10, 10,'Easter Egg Nebula');
 
 INSERT INTO Planet
-(name, loc_x, loc_y, info, danger_level, police_level)
+(name, loc_x, loc_y, info, danger_level, police_level,star_system)
 VALUES
-('Tatooine', 10, 10, "Maybe vader some day later now he's just a small fry", 2, 2);
+('Tatooine', 10, 10, "Maybe vader some day later now he's just a small fry", 2, 2,'Larry is going crazy');
+
+INSERT INTO Planet
+(name, loc_x, loc_y, info, danger_level, police_level,star_system)
+VALUES
+('Sriram Land', 10, 10, "The best place in the galaxy", 2, 2,'Larry is going crazy');
 
 INSERT INTO Planet
 (name, loc_x, loc_y, info, danger_level, police_level,star_system)
@@ -101,12 +111,12 @@ insert into Goods
 values
 ('Columbian Powdered Suger',1000,10,false,'If you know what I mean. (nudge nudge)');
 
-insert into Inventory_Entry
+insert into Inventory_entry
 (personName,good_id,quantity,weight)
 values
 ('Hook',2,50,500);
 
-insert into Inventory_Entry
+insert into Inventory_entry
 (personName,good_id,quantity,weight)
 values
 ('Planet Eric Cargo Hold',1,5,500);
@@ -121,7 +131,7 @@ insert into Goods
 values
 ('Credit',1,0,true,'The currency of the Galaxy');
 
-insert into Inventory_Entry
+insert into Inventory_entry
 (personName,good_id,quantity,weight)
 values
 ('Planet Eric Cargo Hold',3,1,500);
@@ -131,7 +141,7 @@ insert into Goods
 values
 ('StarFleet v500 Deluxe',1500,750,true,'A great option for a Galactic Traveler on a Budget');
 
-insert into Inventory_Entry
+insert into Inventory_entry
 (personName,good_id,quantity,weight)
 values
 ('O.P.8 Ship Depo',4,1,750);
