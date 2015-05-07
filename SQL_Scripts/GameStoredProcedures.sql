@@ -86,3 +86,5 @@ BEGIN
 	(pname,maxWeight,'System',playerPlanet);
 END//
 DELIMITER ;
+
+DELIMITER //
