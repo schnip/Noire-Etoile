@@ -116,6 +116,11 @@ insert into Goods
 values
 ('Fixer-up Engine',500,500,true,'It\'ll at least keep your ship running... at least for a little while');
 
+insert into Goods
+(name,good_value,weight,legality,description)
+values
+('Credit',1,0,true,'The currency of the Galaxy');
+
 insert into Inventory_Entry
 (person_id,good_id,quantity,weight)
 values

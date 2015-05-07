@@ -75,7 +75,7 @@ public class BlackDatabase implements DBInterface{
 	}
 
 	@Override
-	public Boolean setPlayerPlanet(String planetName) {
+	public Boolean setPlayerPlanet(String planetName, String playerName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
