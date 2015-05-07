@@ -28,4 +28,5 @@ Goals
 -implement duplicate name checking.
 -more data
 -finish trade implementation
--implement stored procedures to enable these
+-implement stored procedures to enable these as needed
+-make another try at getting it to run outside of eclipse
