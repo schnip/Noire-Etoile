@@ -67,7 +67,11 @@ public class Launcher {
 		ret = e.render(x);
 		player_planet = "Planet Eric";
 		player_system = "Easter Egg Nebula";
-		orbitX(e, bd);
+		if (bd.createPlayer(player_name, player_planet, 1000, player_ship, 1000)) {
+			orbitX(e, bd);
+		} else {
+			createCharater(e, bd);
+		}
 	}
 
 	private static void orbitX(Engine e, DBInterface bd) {
