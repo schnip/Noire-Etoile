@@ -28,4 +28,4 @@ Goals
 -implement duplicate name checking.
 -more data
 -finish trade implementation
-
+-implement stored procedures to enable these
