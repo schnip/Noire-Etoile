@@ -199,6 +199,17 @@ public class Launcher {
 		x[1] = "You are currently on " + player_planet + " in the " + player_system + " system";
 		x[3] = "    g) Galactic map";
 		x[4] = "    r) Return to orbit screen";
+		try {
+			ResultSet rs = bd.getSystemPlanets(player_system);
+			rs.first();
+			for (int i = 0; i < 10; i++) {
+				x[i+5] = "    " + i + ") " + rs.getInt("star_date") + " " + rs.getString("log_text");
+				if (rs.isLast()) {
+					break;
+				}
+				rs.next();
+			}
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		// TODO bring planets there to be selected between
 		ret = e.render(x);
 		switch (ret) {

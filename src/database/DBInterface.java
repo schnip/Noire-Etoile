@@ -10,4 +10,7 @@ public interface DBInterface {
 	public ResultSet getSystemPlanets(String systemName);
 	public ResultSet getSystems();
 	public Boolean setPlayerPlanet(String planetName, String playerName);
+	public ResultSet getVendors(String planetName, String playerName);
+	public Boolean makeTrade(String buyerName, String vendorName, int BgoodID, int Bquantity, int VgoodID, int Vquantity);
+	public ResultSet getGoods(String playerName);
 }
