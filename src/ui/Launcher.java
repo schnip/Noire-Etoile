@@ -325,6 +325,9 @@ public class Launcher {
 				default:
 					int choice = Integer.parseInt(ret);
 					if (choice<0 && choice<11) {
+						if (player_system.equals(p[choice-1])) {
+							return false;
+						}
 						player_system = p[choice-1];
 						return true;
 					}
