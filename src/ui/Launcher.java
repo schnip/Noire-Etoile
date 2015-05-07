@@ -286,7 +286,7 @@ public class Launcher {
 					System.out.println("In choice to set planet. player_planet = "+player_planet);
 					bd.setPlayerPlanet(player_planet, player_name);
 				}
-				break;
+				return;
 		}
 		}
 	}
