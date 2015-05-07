@@ -88,3 +88,62 @@ END//
 DELIMITER ;
 
 DELIMITER //
+CREATE PROCEDURE get_vendors (IN planet_name varchar(255), pname varchar(255))
+BEGIN
+	SELECT name
+	FROM Person
+	WHERE planet_name = planet AND pname != name
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE get_goods_vendor (IN pname varchar(255))
+BEGIN
+	SELECT g.name, g.value, p.quantity, g.weight, g.description
+	FROM Person as p JOIN goods AS g ON p.good_id = g.id
+	WHERE p.name = person_name
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE make_trade (IN buyer varchar(255), seller varchar(255), buyer_good_id int, quan_from_buyer int, seller_good_id int, quan_from_seller int)
+BEGIN
+	---FILL WITH SOMETHING COOL!
+END//
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
