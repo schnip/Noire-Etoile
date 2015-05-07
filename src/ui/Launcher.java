@@ -83,11 +83,11 @@ public class Launcher {
 		x[8] = "    6) Settings";
 		x[9] = "    7) Quit";
 		x[22] = "(Type a number and press enter)";
-		ret = e.render(x);
 		while(true) {
+		ret = e.render(x);
 		switch (ret) {
 			case "1":
-				systemX(e, bd);
+				systemX(e, bd, false);
 				break;
 			case "2":
 				spacedockX(e, bd);
@@ -192,18 +192,21 @@ public class Launcher {
 		
 	}
 
-	private static void systemX(Engine e, DBInterface bd) {
+	private static void systemX(Engine e, DBInterface bd, boolean must) {
 		String[] x = getArrayFilledWithBlanks(23);
+		String[] p = getArrayFilledWithBlanks(10);
 		String ret;
 		x[0] = "System Screen";	
 		x[1] = "You are currently on " + player_planet + " in the " + player_system + " system";
-		x[3] = "    g) Galactic map";
+		if (!must)
+			x[3] = "    g) Galactic map";
 		x[4] = "    r) Return to orbit screen";
 		try {
 			ResultSet rs = bd.getSystemPlanets(player_system);
 			rs.first();
-			for (int i = 0; i < 10; i++) {
-				x[i+5] = "    " + i + ") " + rs.getInt("star_date") + " " + rs.getString("log_text");
+			for (int i = 1; i < 11; i++) {
+				x[i+5] = "    " + i + ") " + rs.getString("name");
+				p[i-1] = rs.getString("name");
 				if (rs.isLast()) {
 					break;
 				}
@@ -211,27 +214,61 @@ public class Launcher {
 			}
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		// TODO bring planets there to be selected between
+		while(true) {
 		ret = e.render(x);
 		switch (ret) {
-			case "1":
-				galaxyX(e, bd);
-				break;
-			case "2":
-				break;
+			case "g":
+				boolean change = galaxyX(e, bd);
+				systemX(e, bd, true);
+				return;
+			case "r":
+				if (must)
+					break;
+				return;
 			default:
-				systemX(e, bd);
+				int choice = Integer.parseInt(ret);
+				if (choice<0 && choice<11) {
+					player_planet = p[choice-1];
+					bd.setPlayerPlanet(player_planet, player_name);
+				}
 				break;
+		}
 		}
 	}
 
-	private static void galaxyX(Engine e, DBInterface bd) {
+	private static boolean galaxyX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
+		String[] p = getArrayFilledWithBlanks(10);
 		String ret;
 		x[0] = "Galaxy Screen";
 		x[1] = "    You are currently in the " + player_system + " system";
 		x[3] = "    r) Return to system screen";
 		// TODO bring system there to be selected between
-		ret = e.render(x);
-		
+		try {
+			ResultSet rs = bd.getSystems();
+			rs.first();
+			for (int i = 1; i < 11; i++) {
+				x[i+5] = "    " + i + ") " + rs.getString("name");
+				p[i-1] = rs.getString("name");
+				if (rs.isLast()) {
+					break;
+				}
+				rs.next();
+			}
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+		while(true) {
+			ret = e.render(x);
+			switch (ret) {
+				case "r":
+					return false;
+				default:
+					int choice = Integer.parseInt(ret);
+					if (choice<0 && choice<11) {
+						player_system = p[choice-1];
+						return true;
+					}
+					break;
+			}
+			}
 	}
 }
