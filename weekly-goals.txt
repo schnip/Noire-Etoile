@@ -22,4 +22,13 @@ Goals
 -Stored procedures for player movement, trade, gathering information, and adding data
 -Continue implementation of menu
 
+Week 4
+Goals
+-implement load game
+-implement duplicate name checking.
+-more data
+-finish trade implementation
+-implement stored procedures to enable these as needed
+-make another try at getting it to run outside of eclipse
 
+Maven - build thing

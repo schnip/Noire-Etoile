@@ -3,6 +3,7 @@ package ui;
 import java.sql.ResultSet;
 
 import database.BlackDatabase;
+import database.DBInterface;
 
 
 public class Launcher {
@@ -19,19 +20,23 @@ public class Launcher {
 		// TODO Auto-generated method stub
 		String[] x = getArrayFilledWithBlanks(23);
 		Engine e = new Engine();
-		BlackDatabase bd = new BlackDatabase();
+		DBInterface bd = new BlackDatabase();
 		String ret;
 		x[0] = "Hello World!";
 		x[1] = "This is the main window in which you will interact with Noire Etoile";
 		x[3] = "This is the main menu";
 		x[5] = "    1) Connect to the local database";
 		x[6] = "    2) New game";
+		x[7] = "    3) Load game";
 		x[22] = "Enter a string and press enter (q to exit)";
 		ret = e.render(x);
 		while(!ret.equals("q")) {
 			//x[3] = "The string you entered was: " + ret;
 			if (ret.equals("2")) {
 				createCharater(e, bd);
+			}
+			if (ret.equals("3")) {
+				// TODO things
 			}
 			ret = e.render(x);
 		}
@@ -46,7 +51,7 @@ public class Launcher {
 		return x;
 	}
 
-	private static void createCharater(Engine e, BlackDatabase bd) {
+	private static void createCharater(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Welcome to Noire Etoile! I am your ship's onboard computer!";
@@ -64,14 +69,19 @@ public class Launcher {
 		x[10] = "When you are ready, we'll go to orbit!";
 		x[22] = "(Press enter when you are ready to go to orbit)";
 		ret = e.render(x);
-		player_planet = "Undefined";
-		player_system = "Undefined";
-		orbitX(e, bd);
+		player_planet = "Planet Eric";
+		player_system = "Easter Egg Nebula";
+		if (bd.createPlayer(player_name, player_planet, 1000, player_ship, 1000)) {
+			orbitX(e, bd);
+		} else {
+			createCharater(e, bd);
+		}
 	}
 
-	private static void orbitX(Engine e, BlackDatabase bd) {
+	private static void orbitX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
+		player_planet = bd.getPlayerPlanet(player_name);
 		x[0] = "Orbit Screen";
 		x[1] = "You are currently in orbit around " + player_planet + " in the " + player_system + " system.";
 		x[3] = "    1) System map";
@@ -82,36 +92,42 @@ public class Launcher {
 		x[8] = "    6) Settings";
 		x[9] = "    7) Quit";
 		x[22] = "(Type a number and press enter)";
+		while(true) {
 		ret = e.render(x);
 		switch (ret) {
 			case "1":
-				systemX(e, bd);
-				break;
+				systemX(e, bd, false);
+				orbitX(e, bd);
+				return;
 			case "2":
 				spacedockX(e, bd);
-				break;
+				orbitX(e, bd);
+				return;
 			case "3":
 				landingX(e, bd);
-				break;
+				orbitX(e, bd);
+				return;
 			case "4":
 				cargoX(e, bd);
-				break;
+				orbitX(e, bd);
+				return;
 			case "5":
 				newsX(e, bd);
-				break;
+				orbitX(e, bd);
+				return;
 			case "6":
 				settingsX(e, bd);
 				orbitX(e, bd);
-				break;
+				return;
 			case "7":
-				break;
+				return;
 			default:
-				orbitX(e, bd);
 				break;
+		}
 		}
 	}
 
-	private static void settingsX(Engine e, BlackDatabase bd) {
+	private static void settingsX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Settings Screen";	
@@ -128,9 +144,11 @@ public class Launcher {
 		}
 	}
 
-	private static void newsX(Engine e, BlackDatabase bd) {
+	private static void newsX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
+		player_planet = bd.getPlayerPlanet(player_name);
+		
 		x[0] = "News Screen";
 		x[1] = "You are on " + player_planet + " in the " + player_system + " system";
 		x[22] = "(l for local news, s for system news, g for galactic news, b to go back)";
@@ -138,7 +156,25 @@ public class Launcher {
 			ret = e.render(x);
 			switch (ret) {
 				case "l":
-					ResultSet rs = bd.getPlanetNews("Planet Eric");
+					ResultSet rs = bd.getPlanetNews("player_planet");
+					if (rs == null) {
+						break;
+					}
+					try{
+					if (rs == null)
+						break;
+					rs.first();
+					for (int i = 0; i < 10; i++) {
+						x[i+2] = "  " + rs.getInt("star_date") + " " + rs.getString("log_text");
+						if (rs.isLast()) {
+							break;
+						}
+						rs.next();
+					}
+					} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+					break;
+				case "s":
+					rs = bd.getSystemNews("player_system");
 					if (rs == null) {
 						break;
 					}
@@ -151,13 +187,23 @@ public class Launcher {
 						}
 						rs.next();
 					}
-					}catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
-					break;
-				case "s":
-					// TODO get system-wide news here
+					} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 					break;
 				case "g":
-					// TODO get galaxy-wide news here
+					rs = bd.getGalaxyNews();
+					if (rs == null) {
+						break;
+					}
+					try{
+					rs.first();
+					for (int i = 0; i < 10; i++) {
+						x[i+2] = "  " + rs.getInt("star_date") + " " + rs.getString("log_text");
+						if (rs.isLast()) {
+							break;
+						}
+						rs.next();
+					}
+					} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 					break;
 				case "b":
 					return;
@@ -167,22 +213,50 @@ public class Launcher {
 		}
 	}
 
-	private static void cargoX(Engine e, BlackDatabase bd) {
+	private static void cargoX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Inventory Screen";	
+		try {
+			ResultSet rs = bd.getGoods(player_name);
+			if(rs!= null){
+			rs.first();
+			for (int i = 1; i < 11; i++) {
+				x[i+5] = "  " + rs.getInt("quantity") + " " + rs.getString("name");
+				if (rs.isLast()) {
+					break;
+				}
+				rs.next();
+			}
+			}
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		ret = e.render(x);		
 	}
 
-	private static void landingX(Engine e, BlackDatabase bd) {
+	private static void landingX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
+		String[] p = getArrayFilledWithBlanks(10);
 		String ret;
-		x[0] = "On Planet Screen";	
+		x[0] = "On Planet Screen";
+		try {
+			ResultSet rs = bd.getVendors(player_planet, player_name);
+			if(rs!= null){
+			rs.first();
+			for (int i = 1; i < 11; i++) {
+				x[i+5] = "    " + i + ") " + rs.getString("name");
+				p[i-1] = rs.getString("name");
+				if (rs.isLast()) {
+					break;
+				}
+				rs.next();
+			}
+			}
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		ret = e.render(x);
 		
 	}
 
-	private static void spacedockX(Engine e, BlackDatabase bd) {
+	private static void spacedockX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Spacedock Screen";	
@@ -190,35 +264,90 @@ public class Launcher {
 		
 	}
 
-	private static void systemX(Engine e, BlackDatabase bd) {
+	private static void systemX(Engine e, DBInterface bd, boolean must) {
 		String[] x = getArrayFilledWithBlanks(23);
+		String[] p = getArrayFilledWithBlanks(10);
 		String ret;
 		x[0] = "System Screen";	
 		x[1] = "You are currently on " + player_planet + " in the " + player_system + " system";
-		x[3] = "    g) Galactic map";
+		if (!must)
+			x[3] = "    g) Galactic map";
 		x[4] = "    r) Return to orbit screen";
+		try {
+			ResultSet rs = bd.getSystemPlanets(player_system);
+			rs.first();
+			for (int i = 1; i < 11; i++) {
+				x[i+5] = "    " + i + ") " + rs.getString("name");
+				p[i-1] = rs.getString("name");
+				if (rs.isLast()) {
+					break;
+				}
+				rs.next();
+			}
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		// TODO bring planets there to be selected between
+		while(true) {
 		ret = e.render(x);
 		switch (ret) {
-			case "1":
-				galaxyX(e, bd);
-				break;
-			case "2":
-				break;
+			case "g":
+				boolean change = galaxyX(e, bd);
+				systemX(e, bd, change);
+				return;
+			case "r":
+				if (must)
+					break;
+				return;
 			default:
-				systemX(e, bd);
-				break;
+				int choice = Integer.parseInt(ret);
+				System.out.println("player_planet = " + player_planet);
+				if (choice>0 && choice<11) {
+					player_planet = p[choice-1];
+					System.out.println("In choice to set planet. player_planet = "+player_planet);
+					bd.setPlayerPlanet(player_planet, player_name);
+				}
+				return;
+		}
 		}
 	}
 
-	private static void galaxyX(Engine e, BlackDatabase bd) {
+	private static boolean galaxyX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
+		String[] p = getArrayFilledWithBlanks(10);
 		String ret;
 		x[0] = "Galaxy Screen";
-		x[1] = "    You are currently in the TODO system";
+		x[1] = "    You are currently in the " + player_system + " system";
 		x[3] = "    r) Return to system screen";
 		// TODO bring system there to be selected between
-		ret = e.render(x);
-		
+		try {
+			ResultSet rs = bd.getSystems();
+			if(rs!=null){
+			rs.first();
+			for (int i = 1; i < 11; i++) {
+				x[i+5] = "    " + i + ") " + rs.getString("name");
+				p[i-1] = rs.getString("name");
+				if (rs.isLast()) {
+					break;
+				}
+				rs.next();
+			}
+			}
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+		while(true) {
+			ret = e.render(x);
+			switch (ret) {
+				case "r":
+					return false;
+				default:
+					int choice = Integer.parseInt(ret);
+					if (choice<0 && choice<11) {
+						if (player_system.equals(p[choice-1])) {
+							return false;
+						}
+						player_system = p[choice-1];
+						return true;
+					}
+					break;
+			}
+		}
 	}
 }
