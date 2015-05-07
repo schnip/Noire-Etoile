@@ -42,3 +42,12 @@ BEGIN
 END//
 DELIMITER ;
 
+--next procedures that we need are as follows
+
+--get a persons inventory based on a string for person_id
+
+--get all of the systems in the galaxy
+
+--set the players planet person is sent and planet is sent
+
+
