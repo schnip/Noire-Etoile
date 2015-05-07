@@ -58,7 +58,7 @@ BEGIN
 END//
 DELIMITER ;
 
-//DELIMITER //
+DELIMITER //
 CREATE PROCEDURE travel_to_planet (IN planet_name varchar (255),IN pname varchar(255))
 BEGIN
 	UPDATE Person
@@ -67,7 +67,7 @@ BEGIN
 END//
 DELIMITER ;
 
-//DELIMITER //
+DELIMITER //
 CREATE PROCEDURE player_planet (IN pname varchar(255))
 BEGIN
 	select planet
@@ -76,7 +76,7 @@ BEGIN
 END//
 DELIMITER ;
 
-//DELIMITER //
+DELIMITER //
 CREATE PROCEDURE create_new_player (IN pname varchar(255),In playerPlanet varchar(255),
 			IN maxWeight int)
 BEGIN
