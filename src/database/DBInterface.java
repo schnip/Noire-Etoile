@@ -9,5 +9,5 @@ public interface DBInterface {
 	public ResultSet getGalaxyNews();
 	public ResultSet getSystemPlanets(String systemName);
 	public ResultSet getSystems();
-	public Boolean setPlayerPlanet(String planetName);
+	public Boolean setPlayerPlanet(String planetName, String playerName);
 }

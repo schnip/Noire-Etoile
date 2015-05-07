@@ -3,6 +3,7 @@ package ui;
 import java.sql.ResultSet;
 
 import database.BlackDatabase;
+import database.DBInterface;
 
 
 public class Launcher {
@@ -19,7 +20,7 @@ public class Launcher {
 		// TODO Auto-generated method stub
 		String[] x = getArrayFilledWithBlanks(23);
 		Engine e = new Engine();
-		BlackDatabase bd = new BlackDatabase();
+		DBInterface bd = new BlackDatabase();
 		String ret;
 		x[0] = "Hello World!";
 		x[1] = "This is the main window in which you will interact with Noire Etoile";
@@ -46,7 +47,7 @@ public class Launcher {
 		return x;
 	}
 
-	private static void createCharater(Engine e, BlackDatabase bd) {
+	private static void createCharater(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Welcome to Noire Etoile! I am your ship's onboard computer!";
@@ -69,7 +70,7 @@ public class Launcher {
 		orbitX(e, bd);
 	}
 
-	private static void orbitX(Engine e, BlackDatabase bd) {
+	private static void orbitX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Orbit Screen";
@@ -83,6 +84,7 @@ public class Launcher {
 		x[9] = "    7) Quit";
 		x[22] = "(Type a number and press enter)";
 		ret = e.render(x);
+		while(true) {
 		switch (ret) {
 			case "1":
 				systemX(e, bd);
@@ -104,14 +106,14 @@ public class Launcher {
 				orbitX(e, bd);
 				break;
 			case "7":
-				break;
+				return;
 			default:
-				orbitX(e, bd);
 				break;
+		}
 		}
 	}
 
-	private static void settingsX(Engine e, BlackDatabase bd) {
+	private static void settingsX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Settings Screen";	
@@ -128,7 +130,7 @@ public class Launcher {
 		}
 	}
 
-	private static void newsX(Engine e, BlackDatabase bd) {
+	private static void newsX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "News Screen";
@@ -151,7 +153,7 @@ public class Launcher {
 						}
 						rs.next();
 					}
-					}catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+					} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 					break;
 				case "s":
 					// TODO get system-wide news here
@@ -167,14 +169,14 @@ public class Launcher {
 		}
 	}
 
-	private static void cargoX(Engine e, BlackDatabase bd) {
+	private static void cargoX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Inventory Screen";	
 		ret = e.render(x);		
 	}
 
-	private static void landingX(Engine e, BlackDatabase bd) {
+	private static void landingX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "On Planet Screen";	
@@ -182,7 +184,7 @@ public class Launcher {
 		
 	}
 
-	private static void spacedockX(Engine e, BlackDatabase bd) {
+	private static void spacedockX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Spacedock Screen";	
@@ -190,7 +192,7 @@ public class Launcher {
 		
 	}
 
-	private static void systemX(Engine e, BlackDatabase bd) {
+	private static void systemX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "System Screen";	
@@ -211,11 +213,11 @@ public class Launcher {
 		}
 	}
 
-	private static void galaxyX(Engine e, BlackDatabase bd) {
+	private static void galaxyX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Galaxy Screen";
-		x[1] = "    You are currently in the TODO system";
+		x[1] = "    You are currently in the " + player_system + " system";
 		x[3] = "    r) Return to system screen";
 		// TODO bring system there to be selected between
 		ret = e.render(x);
