@@ -2,7 +2,7 @@ package database;
 
 import java.sql.*;
 
-public class BlackDatabase {
+public class BlackDatabase implements DBInterface{
 	private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	private final String DB_URL = "jdbc:mysql://localhost/noire_etoile";
 
@@ -47,6 +47,36 @@ public class BlackDatabase {
 	}
 
 	public ResultSet getSystemNews(String planetName){
+		return null;
+	}
+
+	@Override
+	public ResultSet getPersonInventory(String personName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultSet getGalaxyNews() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultSet getSystemPlanets(String systemName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultSet getSystems() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean setPlayerPlanet(String planetName) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

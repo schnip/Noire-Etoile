@@ -4,7 +4,7 @@ USE noire_etoile;
 INSERT INTO Planet
 (name, loc_x, loc_y, info, danger_level, police_level)
 VALUES
-('omicron persei 8', 0, 0, "Lrrr doesn't like unwanted guests", 10, 10);
+('Omicron Persei 8', 0, 0, "Lrrr doesn't like unwanted guests", 10, 10);
 
 INSERT INTO Planet
 (name, loc_x, loc_y, info, danger_level, police_level)
@@ -64,27 +64,52 @@ values
 insert into Employer
 (name,status)
 values
-('Vamefi','Bad');
+('Vamefi','Good');
+
+insert into Employer
+(name,status)
+values
+('Triad','Bad');
 
 insert into Person
 (name,max_weight,employer,planet)
 values
-('Cargo Hold',9999,'System','Planet Eric');
+('Planet Eric Cargo Hold',999999,'System','Planet Eric');
+
+insert into Person
+(name,max_weight,employer,planet)
+values
+('O.P.8 Ship Depo',999999,'System','Omicron Persei 8');
 
 insert into Person
 (name,max_weight,employer,planet)
 values
 ('Covvuw',2500,'Itune','Planet Eric');
 
+insert into Person
+(name,max_weight,employer,planet)
+values
+('Hook',2500,'Triad','Omicron Persei 8');
+
 insert into Goods
 (name,good_value,weight,legality,description)
 values
 ('Thuster',500,100,true,'You might need these to get off of the groud.');
 
+insert into Goods
+(name,good_value,weight,legality,description)
+values
+('Columbian Powdered Suger',1000,10,false,'If you know what I mean. (nudge nudge)');
+
 insert into Inventory_Entry
 (person_id,good_id,quantity,weight)
 values
-('Cargo Hold','Thruster',5,500);
+('Hook','Columbian Powdered Suger',50,500);
+
+insert into Inventory_Entry
+(person_id,good_id,quantity,weight)
+values
+('Planet Eric Cargo Hold','Thruster',5,500);
 
 insert into Goods
 (name,good_value,weight,legality,description)
@@ -94,4 +119,14 @@ values
 insert into Inventory_Entry
 (person_id,good_id,quantity,weight)
 values
-('Cargo Hold','Fixer-up Engine',1,500);
+('Planet Eric Cargo Hold','Fixer-up Engine',1,500);
+
+insert into Goods
+(name,good_value,weight,legality,description)
+values
+('StarFleet v500 Deluxe',1500,750,true,'A great option for a Galactic Traveler on a Budget');
+
+insert into Inventory_Entry
+(person_id,good_id,quantity,weight)
+values
+('O.P.8 Ship Depo','StarFleet v500 Deluxe',1,750);
