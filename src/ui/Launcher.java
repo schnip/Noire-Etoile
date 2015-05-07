@@ -217,6 +217,19 @@ public class Launcher {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Inventory Screen";	
+		try {
+			ResultSet rs = bd.getGoods(player_name);
+			if(rs!= null){
+			rs.first();
+			for (int i = 1; i < 11; i++) {
+				x[i+5] = "  " + rs.getInt("quantity") + " " + rs.getString("name");
+				if (rs.isLast()) {
+					break;
+				}
+				rs.next();
+			}
+			}
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		ret = e.render(x);		
 	}
 
