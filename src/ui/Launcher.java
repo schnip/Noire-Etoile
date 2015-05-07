@@ -161,6 +161,8 @@ public class Launcher {
 						break;
 					}
 					try{
+					if (rs == null)
+						break;
 					rs.first();
 					for (int i = 0; i < 10; i++) {
 						x[i+2] = "  " + rs.getInt("star_date") + " " + rs.getString("log_text");
