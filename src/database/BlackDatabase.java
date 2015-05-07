@@ -34,7 +34,7 @@ public class BlackDatabase implements DBInterface{
 			getSystemPlanetsStmt = conn.prepareCall("{call planets_given_system(?)}");
 			getSystemsStmt = conn.prepareCall("{call all_systems_in_galaxy()}");
 			setPlayerPlanetStmt = conn.prepareCall("{call travel_to_planet(?,?)}");
-			getPlayerPlanetStmt = conn.prepareCall("{call player_planet(?,?)}");
+			getPlayerPlanetStmt = conn.prepareCall("{call player_planet(?)}");
 			createNewPlayerStmt = conn.prepareCall("{call create_new_player(?,?,?)}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
