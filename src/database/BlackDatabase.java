@@ -18,6 +18,7 @@ public class BlackDatabase implements DBInterface{
 	private CallableStatement getSystemsStmt;
 	private CallableStatement setPlayerPlanetStmt;
 	private CallableStatement getPlayerPlanetStmt;
+	private CallableStatement createNewPlayerStmt;
 	
 	public BlackDatabase() {
 		try {
@@ -34,6 +35,7 @@ public class BlackDatabase implements DBInterface{
 			getSystemsStmt = conn.prepareCall("{call all_systems_in_galaxy()}");
 			setPlayerPlanetStmt = conn.prepareCall("{call travel_to_planet(?,?)}");
 			getPlayerPlanetStmt = conn.prepareCall("{call player_planet(?,?)}");
+			createNewPlayerStmt = conn.prepareCall("{call create_new_player(?,?,?)}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("breaking in Black Database init:");
@@ -176,8 +178,17 @@ public class BlackDatabase implements DBInterface{
 	@Override
 	public Boolean createPlayer(String playerName, String playerPlanet,
 			int maxWeight, String shipName, int startCredits) {
-		// TODO Auto-generated method stub
-		return null;
+		boolean r = false;
+		try {
+			createNewPlayerStmt.setString(1, playerName);
+			createNewPlayerStmt.setString(2, playerPlanet);
+			createNewPlayerStmt.setInt(3, maxWeight);
+			r = createNewPlayerStmt.execute();
+			r=true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return r;
 	}
 
 	

@@ -77,10 +77,12 @@ END//
 DELIMITER ;
 
 //DELIMITER //
-CREATE PROCEDURE create_new_player (IN pname varchar(255))
+CREATE PROCEDURE create_new_player (IN pname varchar(255),In playerPlanet varchar(255),
+			IN maxWeight int)
 BEGIN
-	select planet
-	from Person
-	WHERE pname = name;
+	insert into Person
+    (name,max_weight,employer,planet)
+	values
+	(pname,maxWeight,'System',playerPlanet);
 END//
 DELIMITER ;
