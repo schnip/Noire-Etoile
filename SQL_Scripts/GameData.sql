@@ -50,3 +50,48 @@ INSERT INTO Star_log
 (log_text, star_date, planet, star_system)
 VALUES
 ('Eric was here but this was written by Cherry',202,'Planet Eric',null);
+
+insert into Employer
+(name,status)
+values
+('System','Impartial');
+
+insert into Employer
+(name,status)
+values
+('Itune','Good');
+
+insert into Employer
+(name,status)
+values
+('Vamefi','Bad');
+
+insert into Person
+(name,max_weight,employer,planet)
+values
+('Cargo Hold',9999,'System','Planet Eric');
+
+insert into Person
+(name,max_weight,employer,planet)
+values
+('Covvuw',2500,'Itune','Planet Eric');
+
+insert into Goods
+(name,good_value,weight,legality,description)
+values
+('Thuster',500,100,true,'You might need these to get off of the groud.');
+
+insert into Inventory_Entry
+(person_id,good_id,quantity,weight)
+values
+('Cargo Hold','Thruster',5,500);
+
+insert into Goods
+(name,good_value,weight,legality,description)
+values
+('Fixer-up Engine',500,500,true,'It\'ll at least keep your ship running... at least for a little while');
+
+insert into Inventory_Entry
+(person_id,good_id,quantity,weight)
+values
+('Cargo Hold','Fixer-up Engine',1,500);
