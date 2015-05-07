@@ -272,7 +272,7 @@ public class Launcher {
 		switch (ret) {
 			case "g":
 				boolean change = galaxyX(e, bd);
-				systemX(e, bd, true);
+				systemX(e, bd, change);
 				return;
 			case "r":
 				if (must)
@@ -280,7 +280,7 @@ public class Launcher {
 				return;
 			default:
 				int choice = Integer.parseInt(ret);
-				System.out.println("player_planet = "+player_planet);
+				System.out.println("player_planet = " + player_planet);
 				if (choice>0 && choice<11) {
 					player_planet = p[choice-1];
 					System.out.println("In choice to set planet. player_planet = "+player_planet);
