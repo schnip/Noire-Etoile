@@ -111,12 +111,12 @@ insert into Goods
 values
 ('Columbian Powdered Suger',1000,10,false,'If you know what I mean. (nudge nudge)');
 
-insert into Inventory_Entry
+insert into Inventory_entry
 (personName,good_id,quantity,weight)
 values
 ('Hook',2,50,500);
 
-insert into Inventory_Entry
+insert into Inventory_entry
 (personName,good_id,quantity,weight)
 values
 ('Planet Eric Cargo Hold',1,5,500);
@@ -131,7 +131,7 @@ insert into Goods
 values
 ('Credit',1,0,true,'The currency of the Galaxy');
 
-insert into Inventory_Entry
+insert into Inventory_entry
 (personName,good_id,quantity,weight)
 values
 ('Planet Eric Cargo Hold',3,1,500);
@@ -141,7 +141,7 @@ insert into Goods
 values
 ('StarFleet v500 Deluxe',1500,750,true,'A great option for a Galactic Traveler on a Budget');
 
-insert into Inventory_Entry
+insert into Inventory_entry
 (personName,good_id,quantity,weight)
 values
 ('O.P.8 Ship Depo',4,1,750);
