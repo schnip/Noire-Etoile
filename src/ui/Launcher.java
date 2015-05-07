@@ -178,8 +178,21 @@ public class Launcher {
 
 	private static void landingX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
+		String[] p = getArrayFilledWithBlanks(10);
 		String ret;
-		x[0] = "On Planet Screen";	
+		x[0] = "On Planet Screen";
+		try {
+			ResultSet rs = bd.getVendors(player_planet, player_name);
+			rs.first();
+			for (int i = 1; i < 11; i++) {
+				x[i+5] = "    " + i + ") " + rs.getString("name");
+				p[i-1] = rs.getString("name");
+				if (rs.isLast()) {
+					break;
+				}
+				rs.next();
+			}
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		ret = e.render(x);
 		
 	}
@@ -269,6 +282,6 @@ public class Launcher {
 					}
 					break;
 			}
-			}
+		}
 	}
 }
