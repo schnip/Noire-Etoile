@@ -19,6 +19,8 @@ public class BlackDatabase implements DBInterface{
 	private CallableStatement setPlayerPlanetStmt;
 	private CallableStatement getPlayerPlanetStmt;
 	private CallableStatement createNewPlayerStmt;
+	private CallableStatement getAllVendorsStmt;
+	private CallableStatement getVendorGoodsStmt;
 	
 	public BlackDatabase() {
 		try {
@@ -36,6 +38,8 @@ public class BlackDatabase implements DBInterface{
 			setPlayerPlanetStmt = conn.prepareCall("{call travel_to_planet(?,?)}");
 			getPlayerPlanetStmt = conn.prepareCall("{call player_planet(?)}");
 			createNewPlayerStmt = conn.prepareCall("{call create_new_player(?,?,?)}");
+			getAllVendorsStmt = conn.prepareCall("{call get_vendors(?,?)}");
+			getVendorGoodsStmt = conn.prepareCall("{call get_goods_vendor(?)}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("breaking in Black Database init:");
@@ -158,8 +162,20 @@ public class BlackDatabase implements DBInterface{
 
 	@Override
 	public ResultSet getVendors(String planetName, String playerName) {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSet r = null;
+		try {
+			getAllVendorsStmt.setString(1, planetName);
+			getAllVendorsStmt.setString(2, playerName);
+			boolean hadResults = getAllVendorsStmt.execute();
+			while (hadResults) {
+				r = getAllVendorsStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return r;
 	}
 
 	@Override
@@ -171,8 +187,19 @@ public class BlackDatabase implements DBInterface{
 
 	@Override
 	public ResultSet getGoods(String playerName) {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSet r = null;
+		try {
+			getVendorGoodsStmt.setString(1, playerName);
+			boolean hadResults = getVendorGoodsStmt.execute();
+			while (hadResults) {
+				r = getVendorGoodsStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return r;
 	}
 
 	@Override
