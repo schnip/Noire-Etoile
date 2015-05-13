@@ -1,0 +1,17 @@
+<project default="all">
+	<target name="all" depends="compile,build-jar">
+	</target>
+    <target name="compile">
+        <mkdir dir="bin"/>
+        <javac srcdir="src" destdir="bin"/>
+    </target>
+    <target name="build-jar" depends="compile">
+    	<jar destfile="jar/game.jar"
+    		basedir="."
+    		includes="bin/**,mysql-connector-java-5.1.35/mysql-connector-java-5.1.35-bin.jar">
+    		<manifest>
+    			<attribute name="Main-Class" value="bin.ui.Launcher"/>
+    		</manifest>
+    	</jar>
+    </target>
+</project>
