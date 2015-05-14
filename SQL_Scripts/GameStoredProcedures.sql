@@ -125,7 +125,8 @@ BEGIN
 	
 	IF value_buyer < value_seller
 	BEGIN
-		RETURN SELECT 'ERROR: NOT ENOUGH MONEY' AS '';
+		SELECT 'ERROR: NOT ENOUGH MONEY' AS one;
+		RETURN one;
 	END
 	
 	SELECT quantity INTO seller_qty
@@ -135,7 +136,8 @@ BEGIN
 		  
 	IF QTY > seller_qty
 	BEGIN
-		RETURN SELECT 'ERROR: VENDOR DOESNT HAVE ENOUGH STOCK' AS '';
+		SELECT 'ERROR: VENDOR DOESNT HAVE ENOUGH STOCK' AS two;
+		RETURN two;
 	END
 	
 	UPDATE Inventory_entry
