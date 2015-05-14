@@ -154,7 +154,14 @@ BEGIN
 END//
 DELIMITER ;
 
-
+DELIMITER //
+CREATE PROCEDURE system_given_planet (IN planet_name varchar(255))
+BEGIN
+	SELECT star_system
+	FROM Planet
+	WHERE planet_name = name;
+END//
+DELIMITER ;
 
 
 
