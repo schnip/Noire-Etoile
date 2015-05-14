@@ -6,12 +6,17 @@ values
 insert into Goods
 (goodName,good_value,weight,legality,description)
 values
+('Cheeseburger',5,1,true,'You might need these to get off of the groud.');
+
+insert into Goods
+(goodName,good_value,weight,legality,description)
+values
 ('Columbian Powdered Suger',1000,10,false,'If you know what I mean. (nudge nudge)');
 
 insert into Goods
 (goodName,good_value,weight,legality,description)
 values
-('Fixer-up Engine',500,500,true,'It\'ll at least keep your ship running... at least for a little while');
+('Fixer-up Engine',500,500,true,'It will at least keep your ship running... at least for a little while');
 
 insert into Goods
 (goodName,good_value,weight,legality,description)
