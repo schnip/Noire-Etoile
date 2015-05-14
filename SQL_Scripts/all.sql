@@ -3,7 +3,7 @@ source GameStoredProcedures.sql;
 source GameDataSystems.sql;
 source GameDataEmployers.sql;
 source GameDataGoods.sql;
-source GameDataPeople.sql;
 source GameDataPlanets.sql;
+source GameDataPeople.sql;
 source GameDataInventoryEntries.sql;
 source GameDataLog.sql;
