@@ -90,7 +90,7 @@ public class Launcher {
 		ret = e.render(x);
 		player_planet = "Planet Eric";
 		player_system = "Easter Egg Nebula";
-		if (bd.createPlayer(player_name, player_planet, 1000, player_ship, 1000)) {
+		if (bd.createPlayer(player_name, player_planet, 5000, player_ship, 1000)) {
 			orbitX(e, bd);
 		} else {
 			createCharater(e, bd);
@@ -301,13 +301,15 @@ public class Launcher {
 		x[0] = "On Vendor Screen";
 		x[1] = "  Choose a good to buy";
 		x[20] = "    r) Return to previous screen";
+		x[3] = "    Item Name        Quantity Availible        Price";
 		try {
 			ResultSet rs = bd.getGoods(v);
 			if(rs!= null){
 			rs.first();
 			for (int i = 1; i < 11; i++) {
 				gdArray.add(rs.getString("goodName"));
-				x[i+5] = "    " + i + ") " + rs.getString("goodName");
+				x[i+5] = "    " + i + ") " + rs.getString("goodName")+
+						"         " + rs.getString("quantity")+"        " + rs.getString("good_value");
 				p[i-1] = rs.getString("goodName");
 				if (rs.isLast()) {
 					break;
