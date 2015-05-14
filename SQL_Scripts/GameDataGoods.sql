@@ -6,7 +6,7 @@ values
 insert into Goods
 (goodName,good_value,weight,legality,description)
 values
-('Cheeseburger',5,1,true,'You might need these to get off of the groud.');
+('Cheeseburger',5,1,true,'One Pounder with Cheese, No Mayo');
 
 insert into Goods
 (goodName,good_value,weight,legality,description)
@@ -27,3 +27,8 @@ insert into Goods
 (goodName,good_value,weight,legality,description)
 values
 ('StarFleet v500 Deluxe',1500,750,true,'A great option for a Galactic Traveler on a Budget');
+
+insert into Goods
+(goodName,good_value,weight,legality,description)
+values
+('Rifle Blaster', 250, 2,true,'This is my rifle, THAT is my gun...');
