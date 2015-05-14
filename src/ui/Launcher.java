@@ -293,7 +293,37 @@ public class Launcher {
 	}
 	
 	private static void vendorX(Engine e, DBInterface bd, String v) {
-		
+		String[] x = getArrayFilledWithBlanks(23);
+		String[] p = getArrayFilledWithBlanks(10);
+		String ret;
+		x[0] = "On Vendor Screen";
+		x[1] = "  Choose a good to buy";
+		x[20] = "    r) Return to previous screen";
+		try {
+			ResultSet rs = bd.getGoods(v);
+			if(rs!= null){
+			rs.first();
+			for (int i = 1; i < 11; i++) {
+				x[i+5] = "    " + i + ") " + rs.getString("name");
+				p[i-1] = rs.getString("name");
+				if (rs.isLast()) {
+					break;
+				}
+				rs.next();
+			}
+			}
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+		while (true) {
+			ret = e.render(x);
+			if (ret.equals("r")) {
+				landingX(e, bd);
+				return;
+			}
+			int choice = Integer.parseInt(ret);
+			if (choice>0 && choice<11) {
+				bd.makeTrade(player_name, v, 0, 1, Integer.parseInt(p[choice-1]), 1);
+			}
+		}		
 	}
 
 	private static void spacedockX(Engine e, DBInterface bd) {
