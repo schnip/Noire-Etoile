@@ -1,3 +1,9 @@
 source GameSetup.sql;
 source GameStoredProcedures.sql;
-source GameData.sql;
+source GameDataSystems.sql;
+source GameDataEmployers.sql;
+source GameDataGoods.sql;
+source GameDataPeople.sql;
+source GameDataPlanets.sql;
+source GameDataInventoryEntries.sql;
+source GameDataLog.sql;

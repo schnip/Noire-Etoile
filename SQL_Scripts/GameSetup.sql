@@ -31,28 +31,27 @@ PRIMARY KEY(id)
 
 CREATE TABLE IF NOT EXISTS Inventory_entry(
 personName varchar(255),
-good_id int,
+goodName int,
 quantity int,
 weight int,
-CONSTRAINT pk_person_good PRIMARY KEY (personName, good_id)
+CONSTRAINT pk_person_good PRIMARY KEY (personName, goodName)
 );
 
 CREATE TABLE IF NOT EXISTS Goods(
-id int NOT NULL AUTO_INCREMENT,
-name varchar(255),
+goodName varchar(255)NOT NULL,
 good_value int,
 weight int,
 legality boolean,
 description varchar(512),
-PRIMARY KEY (id)
+PRIMARY KEY (goodName)
 );
 
 CREATE TABLE IF NOT EXISTS Produces(
 employer_name varchar(255),
 personName varchar(255),
-goods_id int,
+goodName int,
 quantity int,
-CONSTRAINT pk_employer_person_goods PRIMARY KEY (employer_name, personName, goods_id)
+CONSTRAINT pk_employer_person_goods PRIMARY KEY (employer_name, personName, goodName)
 );
 
 create TABLE IF NOT EXISTS Planet(
@@ -102,8 +101,8 @@ REFERENCES Person(name)
 ON delete CASCADE;
 
 ALTER TABLE Inventory_entry
-ADD FOREIGN KEY (good_id)
-REFERENCES Goods(id)
+ADD FOREIGN KEY (goodName)
+REFERENCES Goods(goodName)
 ON delete CASCADE;
 
 ALTER TABLE Produces
@@ -117,8 +116,8 @@ REFERENCES Person(name)
 ON delete CASCADE;
 
 ALTER TABLE Produces
-ADD FOREIGN KEY (goods_id)
-REFERENCES Goods(id)
+ADD FOREIGN KEY (goodName)
+REFERENCES Goods(goodName)
 ON delete CASCADE;
 
 ALTER TABLE Planet
