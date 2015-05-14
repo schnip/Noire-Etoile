@@ -44,7 +44,7 @@ public class Launcher {
 		e.close();
 	}
 	
-	private static void loadGame(Engine e, DBInterface bd) {
+	private static void settingsX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Settings Screen";	
@@ -56,7 +56,7 @@ public class Launcher {
 			case "1":
 				break;
 			default:
-				settingsX(e, bd);
+				orbitX(e, bd);
 				break;
 		}
 	}
@@ -145,7 +145,7 @@ public class Launcher {
 		}
 	}
 
-	private static void settingsX(Engine e, DBInterface bd) {
+	private static void loadGame(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Load Game";	
@@ -163,6 +163,8 @@ public class Launcher {
 				player_planet = get;
 				player_system = bd.getPlanetSystem(get);
 				player_ship = bd.getPlayerShip(ret);
+				orbitX(e, bd);
+				return;
 			}
 		}
 	}
