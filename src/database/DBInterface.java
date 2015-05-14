@@ -18,4 +18,6 @@ public interface DBInterface {
 	public String getPlanetSystem(String planetName);
 	public String getPlayerShip(String playerName);
 	public int getPlayerCredits(String playerName);
+	public int getPlayerTotalWeight(String playerName);
+	public int getPlayerRemainingWeight(String playerName);
 }
