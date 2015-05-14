@@ -37,12 +37,30 @@ public class Launcher {
 			}
 			if (ret.equals("3")) {
 				// TODO things
+				loadGame(e, bd);
 			}
 			ret = e.render(x);
 		}
 		e.close();
 	}
 	
+	private static void settingsX(Engine e, DBInterface bd) {
+		String[] x = getArrayFilledWithBlanks(23);
+		String ret;
+		x[0] = "Settings Screen";	
+		x[3] = "    No settings available yet";
+		x[5] = "    1) Return to previous menu";
+		x[22] = "(Type a number and press enter)";
+		ret = e.render(x);
+		switch (ret) {
+			case "1":
+				break;
+			default:
+				orbitX(e, bd);
+				break;
+		}
+	}
+
 	public static String[] getArrayFilledWithBlanks(int len) {
 		String[] x = new String[len];
 		for (int i = 0; i<len; i++) {
@@ -127,20 +145,27 @@ public class Launcher {
 		}
 	}
 
-	private static void settingsX(Engine e, DBInterface bd) {
+	private static void loadGame(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
-		x[0] = "Settings Screen";	
-		x[3] = "    No settings available yet";
-		x[5] = "    1) Return to previous menu";
-		x[22] = "(Type a number and press enter)";
-		ret = e.render(x);
-		switch (ret) {
-			case "1":
-				break;
-			default:
-				settingsX(e, bd);
-				break;
+		x[0] = "Load Game";	
+		x[3] = "    Enter the name of the character you want to load";
+		x[4] = "    ";
+		x[22] = "(Type a name and press enter)";
+		while(true) {
+			ret = e.render(x);
+			String get;
+			get = bd.getPlayerPlanet(ret);
+			if (get == null) {
+				continue;
+			} else {
+				player_name = ret;
+				player_planet = get;
+				player_system = bd.getPlanetSystem(get);
+				player_ship = bd.getPlayerShip(ret);
+				orbitX(e, bd);
+				return;
+			}
 		}
 	}
 
@@ -238,6 +263,8 @@ public class Launcher {
 		String[] p = getArrayFilledWithBlanks(10);
 		String ret;
 		x[0] = "On Planet Screen";
+		x[1] = "  Choose a vendor to interact with";
+		x[20] = "    r) Return to previous screen";
 		try {
 			ResultSet rs = bd.getVendors(player_planet, player_name);
 			if(rs!= null){
@@ -252,7 +279,20 @@ public class Launcher {
 			}
 			}
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
-		ret = e.render(x);
+		while (true) {
+			ret = e.render(x);
+			if (ret.equals("r")) {
+				orbitX(e, bd);
+				return;
+			}
+			int choice = Integer.parseInt(ret);
+			if (choice>0 && choice<11) {
+				vendorX(e, bd, p[choice-1]);
+			}
+		}		
+	}
+	
+	private static void vendorX(Engine e, DBInterface bd, String v) {
 		
 	}
 
@@ -299,10 +339,10 @@ public class Launcher {
 				return;
 			default:
 				int choice = Integer.parseInt(ret);
-				System.out.println("player_planet = " + player_planet);
+				//System.out.println("player_planet = " + player_planet);
 				if (choice>0 && choice<11) {
 					player_planet = p[choice-1];
-					System.out.println("In choice to set planet. player_planet = "+player_planet);
+					//System.out.println("In choice to set planet. player_planet = "+player_planet);
 					bd.setPlayerPlanet(player_planet, player_name);
 				}
 				return;

@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class BlackDatabase implements DBInterface{
 	private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	private final String DB_URL = "jdbc:mysql://localhost/noire_etoile";
+	private final String DB_URL = "jdbc:mysql://localhost/noire_etoile?noAccessToProcedureBodies=true";
 
 	//  Database credentials
 	private final String USER = "user";
@@ -242,6 +242,18 @@ public class BlackDatabase implements DBInterface{
 			pname = r.getString("planet");
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		return pname;
+	}
+
+	@Override
+	public String getPlanetSystem(String planetName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPlayerShip(String playerName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

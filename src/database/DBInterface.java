@@ -15,4 +15,6 @@ public interface DBInterface {
 	public ResultSet getGoods(String playerName);
 	public String getPlayerPlanet(String playerName);
 	public Boolean createPlayer(String playerName, String playerPlanet, int maxWeight, String shipName, int startCredits);
+	public String getPlanetSystem(String planetName);
+	public String getPlayerShip(String playerName);
 }
