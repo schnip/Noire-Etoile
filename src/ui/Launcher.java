@@ -335,7 +335,7 @@ public class Launcher {
 		String[] x = getArrayFilledWithBlanks(23);
 		String[] p = getArrayFilledWithBlanks(10);
 		String ret;
-		int gw, gc, pw, pc, vq;
+		int gw = 0, gc = 0, pw = 0, pc = 0, vq = 0;
 		x[0] = "Choose an amount to buy";
 		x[20] = "    r) Return to previous screen";
 		try {
@@ -359,13 +359,29 @@ public class Launcher {
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		while (true) {
 			ret = e.render(x);
+			boolean noflag = true;
+			x[9] = "";
 			if (ret.equals("r")) {
 				vendorX(e, bd, v);
 				return;
 			}
 			int choice = Integer.parseInt(ret);
-			if (choice>0 && choice<11) {
-				vendorX(e, bd, p[choice-1]);
+			if (choice * gw < pw) {
+				x[9] = "    Not enough space";
+				noflag = false;
+			}
+			if (choice > vq) {
+				x[10] = "    Vendor does not have that many items";
+				noflag = false;
+			}
+			if (choice * gc > pc) {
+				x[11] = "    You do not have enough credits";
+				noflag = false;
+			}
+			if (noflag) {
+				// Actually make the trade
+				bd.makeTrade(player_name, v, good, choice);
+				return;
 			}
 		}				
 	}
