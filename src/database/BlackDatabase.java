@@ -273,4 +273,16 @@ public class BlackDatabase implements DBInterface{
 		return 0;
 	}
 
+	@Override
+	public int getPlayerTotalWeight(String playerName) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getPlayerRemainingWeight(String playerName) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
