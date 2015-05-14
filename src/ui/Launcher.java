@@ -333,7 +333,6 @@ public class Launcher {
 	private static void amountX(Engine e, DBInterface bd, String v,
 			String good) {
 		String[] x = getArrayFilledWithBlanks(23);
-		String[] p = getArrayFilledWithBlanks(10);
 		String ret;
 		int gw = 0, gc = 0, pw = 0, pc = 0, vq = 0;
 		x[0] = "Choose an amount to buy";
