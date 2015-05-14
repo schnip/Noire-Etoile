@@ -356,18 +356,6 @@ public class Launcher {
 			x[6] = "    " + good + " costs " + gc + " per unit from " + v;
 			x[7] = "    " + good + " weights " + gw;
 			vq = rs.getInt("quantity");
-			//rs = bd.getVendors(player_planet, player_name);
-			if(rs!= null){
-			rs.first();
-			for (int i = 1; i < 11; i++) {
-				x[i+5] = "    " + i + ") " + rs.getString("name");
-				p[i-1] = rs.getString("name");
-				if (rs.isLast()) {
-					break;
-				}
-				rs.next();
-			}
-			}
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		while (true) {
 			ret = e.render(x);
