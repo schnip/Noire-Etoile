@@ -335,12 +335,15 @@ public class Launcher {
 		String[] x = getArrayFilledWithBlanks(23);
 		String[] p = getArrayFilledWithBlanks(10);
 		String ret;
+		int gw, gc, pw, pc, vq;
 		x[0] = "Choose an amount to buy";
 		x[20] = "    r) Return to previous screen";
 		try {
 			ResultSet rs;
-			x[3] = "    You currently have " + bd.getPlayerCredits(player_name) + " credits";
-			x[4] = "    You currently have " + bd.getPlayerRemainingWeight(player_name) + "/" + bd.getPlayerTotalWeight(player_name) + " weight remaining on your ship";
+			pc = bd.getPlayerCredits(player_name);
+			pw = bd.getPlayerRemainingWeight(player_name);
+			x[3] = "    You currently have " + pc + " credits";
+			x[4] = "    You currently have " + pw + "/" + bd.getPlayerTotalWeight(player_name) + " weight remaining on your ship";
 			rs = bd.getGoods(v);
 			if(rs!= null){
 				rs.first();
@@ -348,9 +351,12 @@ public class Launcher {
 				System.out.println("Ahhhhh things are breeeaking");
 				return;
 			}
-			x[6] = "    " + good + " costs " + rs.getInt("good_value") + " per unit from " + v;
-			x[7] = "    " + good + " weights " + rs.getInt("weight");
-			rs = bd.getVendors(player_planet, player_name);
+			gc = rs.getInt("good_value");
+			gw = rs.getInt("weight");
+			x[6] = "    " + good + " costs " + gc + " per unit from " + v;
+			x[7] = "    " + good + " weights " + gw;
+			vq = rs.getInt("quantity");
+			//rs = bd.getVendors(player_planet, player_name);
 			if(rs!= null){
 			rs.first();
 			for (int i = 1; i < 11; i++) {
