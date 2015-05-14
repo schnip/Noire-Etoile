@@ -15,6 +15,7 @@ name varchar(255) unique,
 max_weight int,
 employer varchar(255),
 planet varchar(255),
+shipName varchar(255),
 PRIMARY KEY(name)
 );
 

@@ -41,7 +41,7 @@ public class BlackDatabase implements DBInterface{
 			getSystemsStmt = conn.prepareCall("{call all_systems_in_galaxy()}");
 			setPlayerPlanetStmt = conn.prepareCall("{call travel_to_planet(?,?)}");
 			getPlayerPlanetStmt = conn.prepareCall("{call player_planet(?)}");
-			createNewPlayerStmt = conn.prepareCall("{call create_new_player(?,?,?)}");
+			createNewPlayerStmt = conn.prepareCall("{call create_new_player(?,?,?,?)}");
 			getAllVendorsStmt = conn.prepareCall("{call get_vendors(?,?)}");
 			getVendorGoodsStmt = conn.prepareCall("{call get_goods_vendor(?)}");
 			makeTradeStmt = conn.prepareCall("{call make_trade(?,?,?,?)}");
@@ -228,6 +228,7 @@ public class BlackDatabase implements DBInterface{
 			createNewPlayerStmt.setString(1, playerName);
 			createNewPlayerStmt.setString(2, playerPlanet);
 			createNewPlayerStmt.setInt(3, maxWeight);
+			createNewPlayerStmt.setString(4, shipName);
 			r = createNewPlayerStmt.execute();
 			r=true;
 		} catch (SQLException e) {

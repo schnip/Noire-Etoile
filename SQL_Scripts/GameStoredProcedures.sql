@@ -78,12 +78,12 @@ DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE create_new_player (IN pname varchar(255),In playerPlanet varchar(255),
-			IN maxWeight int)
+			IN maxWeight int, in sName varchar(255))
 BEGIN
 	insert into Person
-    (name,max_weight,employer,planet)
+    (name,max_weight,employer,planet,shipName)
 	values
-	(pname,maxWeight,'User',playerPlanet);
+	(pname,maxWeight,'User',playerPlanet,sName);
 END//
 DELIMITER ;
 
