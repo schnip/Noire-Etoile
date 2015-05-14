@@ -117,6 +117,7 @@ BEGIN
 	DECLARE value_buyer INT DEFAULT 0;
 	DECLARE value_seller INT DEFAULT 0;
 	DECLARE seller_qty INT DEFAULT 0;
+    declare item_weight int default 0;
 	
 	SELECT quantity INTO value_buyer
 	FROM Inventory_entry
@@ -156,6 +157,16 @@ BEGIN
 	SET quantity = quantity - QTY
 	WHERE goodName = Good_Name AND
 		personName = SName; 
+    
+    select weight into item_weight
+    from Inventory_entry
+    where goodName = Good_Name AND
+		personName = SName;
+    
+	insert Inventory_entry
+    (personName,goodName,quantity,weight)
+    values
+    (PName,Good_Name,QTY,item_weight);
 	
 END//
 DELIMITER ;
