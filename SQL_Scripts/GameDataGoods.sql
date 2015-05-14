@@ -21,7 +21,7 @@ values
 insert into Goods
 (goodName,good_value,weight,legality,description)
 values
-('Credit',1,0,true,'The currency of the Galaxy');
+('Money',1,0,true,'The currency of the Galaxy');
 
 insert into Goods
 (goodName,good_value,weight,legality,description)

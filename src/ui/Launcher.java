@@ -248,7 +248,7 @@ public class Launcher {
 			if(rs!= null){
 			rs.first();
 			for (int i = 1; i < 11; i++) {
-				x[i+5] = "  " + rs.getInt("quantity") + " " + rs.getString("name");
+				x[i+5] = "  " + rs.getInt("quantity") + " " + rs.getString("goodName");
 				if (rs.isLast()) {
 					break;
 				}
@@ -365,7 +365,8 @@ public class Launcher {
 				return;
 			}
 			int choice = Integer.parseInt(ret);
-			if (choice * gw < pw) {
+			System.out.println(pw + ","+gw*choice);
+			if (choice * gw > pw) {
 				x[9] = "    Not enough space";
 				noflag = false;
 			}

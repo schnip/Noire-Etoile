@@ -335,7 +335,7 @@ public class BlackDatabase implements DBInterface{
 			return -1;
 		}
 		try{
-			r.first();
+			r.first(); 
 			money = r.getInt("quantity");
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		return money;
