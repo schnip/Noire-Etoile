@@ -171,3 +171,13 @@ BEGIN
 	WHERE personName = pname and goodName='Money';
 END//
 DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE get_used_weight (IN PName varchar(255))
+BEGIN
+    select sum(quantity*weight) as used_weight
+    from inventory_entry
+    where personName = PName;
+	
+END//
+DELIMITER ;
