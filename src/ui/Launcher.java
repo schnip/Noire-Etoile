@@ -1,6 +1,7 @@
 package ui;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import database.BlackDatabase;
 import database.DBInterface;
@@ -296,6 +297,7 @@ public class Launcher {
 		String[] x = getArrayFilledWithBlanks(23);
 		String[] p = getArrayFilledWithBlanks(10);
 		String ret;
+		ArrayList<String> gdArray = new ArrayList<String>();
 		x[0] = "On Vendor Screen";
 		x[1] = "  Choose a good to buy";
 		x[20] = "    r) Return to previous screen";
@@ -304,8 +306,9 @@ public class Launcher {
 			if(rs!= null){
 			rs.first();
 			for (int i = 1; i < 11; i++) {
-				x[i+5] = "    " + i + ") " + rs.getString("name");
-				p[i-1] = rs.getString("name");
+				gdArray.add(rs.getString("goodName"));
+				x[i+5] = "    " + i + ") " + rs.getString("goodName");
+				p[i-1] = rs.getString("goodName");
 				if (rs.isLast()) {
 					break;
 				}
@@ -321,7 +324,7 @@ public class Launcher {
 			}
 			int choice = Integer.parseInt(ret);
 			if (choice>0 && choice<11) {
-				bd.makeTrade(player_name, v, 0, 1, Integer.parseInt(p[choice-1]), 1);
+				bd.makeTrade(player_name, v, p[choice-1],1);
 			}
 		}		
 	}

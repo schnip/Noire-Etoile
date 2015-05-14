@@ -11,7 +11,7 @@ public interface DBInterface {
 	public ResultSet getSystems();
 	public Boolean setPlayerPlanet(String planetName, String playerName);
 	public ResultSet getVendors(String planetName, String playerName);
-	public Boolean makeTrade(String buyerName, String vendorName, int BgoodID, int Bquantity, int VgoodID, int Vquantity);
+	public Boolean makeTrade(String buyerName, String vendorName, String goodName, int Bquantity);
 	public ResultSet getGoods(String playerName);
 	public String getPlayerPlanet(String playerName);
 	public Boolean createPlayer(String playerName, String playerPlanet, int maxWeight, String shipName, int startCredits);

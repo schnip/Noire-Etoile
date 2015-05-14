@@ -21,6 +21,7 @@ public class BlackDatabase implements DBInterface{
 	private CallableStatement createNewPlayerStmt;
 	private CallableStatement getAllVendorsStmt;
 	private CallableStatement getVendorGoodsStmt;
+	private CallableStatement makeTradeStmt;
 	
 	public BlackDatabase() {
 		try {
@@ -40,6 +41,7 @@ public class BlackDatabase implements DBInterface{
 			createNewPlayerStmt = conn.prepareCall("{call create_new_player(?,?,?)}");
 			getAllVendorsStmt = conn.prepareCall("{call get_vendors(?,?)}");
 			getVendorGoodsStmt = conn.prepareCall("{call get_goods_vendor(?)}");
+			makeTradeStmt = conn.prepareCall("{call make_trade(?,?,?,?)}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("breaking in Black Database init:");
@@ -179,10 +181,20 @@ public class BlackDatabase implements DBInterface{
 	}
 
 	@Override
-	public Boolean makeTrade(String buyerName, String vendorName, int BgoodID,
-			int Bquantity, int VgoodID, int Vquantity) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean makeTrade(String buyerName, String vendorName, String BgoodName,
+			int Bquantity) {
+			boolean r = false;
+			try {
+				makeTradeStmt.setString(1, buyerName);
+				makeTradeStmt.setString(2, vendorName);
+				makeTradeStmt.setString(3, BgoodName);
+				makeTradeStmt.setInt(4, Bquantity);
+				r = makeTradeStmt.execute();
+				r=true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return r;
 	}
 
 	@Override
@@ -218,7 +230,6 @@ public class BlackDatabase implements DBInterface{
 		return r;
 	}
 
-	
 	@Override
 	public String getPlayerPlanet(String playerName) {
 		ResultSet r = null;
