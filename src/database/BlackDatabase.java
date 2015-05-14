@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class BlackDatabase implements DBInterface{
 	private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	private final String DB_URL = "jdbc:mysql://localhost/noire_etoile";
+	private final String DB_URL = "jdbc:mysql://localhost/noire_etoile?noAccessToProcedureBodies=true";
 
 	//  Database credentials
 	private final String USER = "user";
