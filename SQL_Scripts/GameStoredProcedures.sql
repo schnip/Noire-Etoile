@@ -192,4 +192,13 @@ BEGIN
 END//
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE get_total_weight (IN PName varchar(255))
+BEGIN
+    select max_weight
+    from Person
+    where personName = PName;
+	
+END//
+DELIMITER ;
 
