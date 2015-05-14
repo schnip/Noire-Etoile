@@ -31,14 +31,14 @@ PRIMARY KEY(id)
 
 CREATE TABLE IF NOT EXISTS Inventory_entry(
 personName varchar(255),
-goodName int,
+goodName varchar(255),
 quantity int,
 weight int,
 CONSTRAINT pk_person_good PRIMARY KEY (personName, goodName)
 );
 
 CREATE TABLE IF NOT EXISTS Goods(
-goodName varchar(255)NOT NULL,
+goodName varchar(255)NOT NULL unique,
 good_value int,
 weight int,
 legality boolean,
@@ -49,7 +49,7 @@ PRIMARY KEY (goodName)
 CREATE TABLE IF NOT EXISTS Produces(
 employer_name varchar(255),
 personName varchar(255),
-goodName int,
+goodName varchar(255),
 quantity int,
 CONSTRAINT pk_employer_person_goods PRIMARY KEY (employer_name, personName, goodName)
 );
