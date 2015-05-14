@@ -267,4 +267,10 @@ public class BlackDatabase implements DBInterface{
 		return null;
 	}
 
+	@Override
+	public int getPlayerCredits(String playerName) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
