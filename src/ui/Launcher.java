@@ -360,6 +360,8 @@ public class Launcher {
 			ret = e.render(x);
 			boolean noflag = true;
 			x[9] = "";
+			x[10] = "";
+			x[11] = "";
 			if (ret.equals("r")) {
 				vendorX(e, bd, v);
 				return;
