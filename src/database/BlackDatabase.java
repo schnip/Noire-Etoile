@@ -25,6 +25,8 @@ public class BlackDatabase implements DBInterface{
 	private CallableStatement getMoneyStmt;
 	private CallableStatement getUsedWeightStmt;
 	private CallableStatement getTotalWeightStmt;
+	private CallableStatement getPlanetSystemStmt;
+	private CallableStatement getPlayerShipStmt;
 	
 	public BlackDatabase() {
 		try {
@@ -48,6 +50,8 @@ public class BlackDatabase implements DBInterface{
 			getMoneyStmt = conn.prepareCall("{call make_trade(?)}");
 			getUsedWeightStmt = conn.prepareCall("{call get_used_weight(?)}");
 			getTotalWeightStmt = conn.prepareCall("{call get_total_weight(?)}");
+			getPlanetSystemStmt = conn.prepareCall("{call system_given_planet(?)}");
+			getPlayerShipStmt = conn.prepareCall("{call get_player_ship(?)}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("breaking in Black Database init:");
@@ -264,14 +268,52 @@ public class BlackDatabase implements DBInterface{
 
 	@Override
 	public String getPlanetSystem(String planetName) {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSet r = null;
+		String pname = null;
+		try {
+			getPlanetSystemStmt.setString(1, planetName);
+			boolean hadResults = getPlanetSystemStmt.execute();
+			while (hadResults) {
+				r = getPlanetSystemStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (r == null) {
+			return null;
+		}
+		try{
+			r.first();
+			pname = r.getString("star_system");
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+		return pname;
 	}
 
 	@Override
 	public String getPlayerShip(String playerName) {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSet r = null;
+		String pname = null;
+		try {
+			getPlayerShipStmt.setString(1, playerName);
+			boolean hadResults = getPlayerShipStmt.execute();
+			while (hadResults) {
+				r = getPlayerShipStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (r == null) {
+			return null;
+		}
+		try{
+			r.first();
+			pname = r.getString("shipName");
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+		return pname;
 	}
 
 	@Override
