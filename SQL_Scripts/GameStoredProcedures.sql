@@ -163,36 +163,11 @@ BEGIN
 END//
 DELIMITER ;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+DELIMITER //
+CREATE PROCEDURE get_player_money (IN pname varchar(255))
+BEGIN
+	SELECT quantity
+	FROM inventory_entry
+	WHERE personName = pname and goodName='Money';
+END//
+DELIMITER ;
