@@ -83,7 +83,7 @@ BEGIN
 	insert into Person
     (name,max_weight,employer,planet)
 	values
-	(pname,maxWeight,'System',playerPlanet);
+	(pname,maxWeight,'User',playerPlanet);
 END//
 DELIMITER ;
 
@@ -99,16 +99,55 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE get_goods_vendor (IN pname varchar(255))
 BEGIN
-	SELECT g.name, g.value, p.quantity, g.weight, g.description
+	SELECT g.name, g.goods_value, i.quantity, g.weight, g.description
 	FROM InventoryEntry as i JOIN goods AS g ON i.good_id = g.id
 	WHERE i.personName = pname;
 END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE make_trade (IN buyer varchar(255), seller varchar(255), buyer_good_id int, quan_from_buyer int, seller_good_id int, quan_from_seller int)
+CREATE PROCEDURE make_trade (IN PName varchar(255), IN SName varchar(255), IN Good_Name varchar(255), IN QTY int)
 BEGIN
-	---FILL WITH SOMETHING COOL!
+	DECLARE value_buyer INT DEFAULT 0;
+	DECLARE value_seller INT DEFAULT 0;
+	DECLARE seller_qty INT DEFAULT 0;
+	
+	SELECT quantity INTO value_buyer
+	FROM Inventory_entry
+	WHERE personName = PName AND 
+		  goodName = 'Money';	
+	
+	SELECT goods_value INTO value_seller
+	FROM Goods
+	WHERE goodName = Good_Name;
+	
+	SET value_seller = value_seller * QTY;
+	
+	IF value_buyer < value_seller
+	BEGIN
+		RETURN SELECT 'ERROR: NOT ENOUGH MONEY' AS '';
+	END
+	
+	SELECT quantity INTO seller_qty
+	FROM Inventory_entry
+	WHERE personName = SName AND 
+		  goodName = Good_Name;
+		  
+	IF QTY > seller_qty
+	BEGIN
+		RETURN SELECT 'ERROR: VENDOR DOESNT HAVE ENOUGH STOCK' AS '';
+	END
+	
+	UPDATE Inventory_entry
+	SET quantity = quantity - value_seller
+	WHERE PName = personName AND 
+		  goodName = 'Money'; 
+	
+	UPDATE Inventory_entry
+	SET quantity = quantity - QTY
+	WHERE goodName = Good_Name AND
+		personName = SName; 
+	
 END//
 DELIMITER ;
 
