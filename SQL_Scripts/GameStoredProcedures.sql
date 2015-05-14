@@ -123,11 +123,12 @@ BEGIN
 	
 	SET value_seller = value_seller * QTY;
 	
+	
 	IF value_buyer < value_seller
-	BEGIN
+	THEN
 		SELECT 'ERROR: NOT ENOUGH MONEY';
 		ROLLBACK;
-	END
+	END IF;
 	
 	SELECT quantity INTO seller_qty
 	FROM Inventory_entry
@@ -135,10 +136,10 @@ BEGIN
 		  goodName = Good_Name;
 		  
 	IF QTY > seller_qty
-	BEGIN
+	THEN
 		SELECT 'ERROR: VENDOR DOESNT HAVE ENOUGH STOCK';
 		ROLLBACK;
-	END
+	END IF;
 	
 	UPDATE Inventory_entry
 	SET quantity = quantity - value_seller
