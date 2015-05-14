@@ -324,9 +324,56 @@ public class Launcher {
 			}
 			int choice = Integer.parseInt(ret);
 			if (choice>0 && choice<11) {
-				bd.makeTrade(player_name, v, p[choice-1],1);
+				//bd.makeTrade(player_name, v, p[choice-1],1);
+				amountX(e, bd, v, p[choice-1]);
 			}
 		}		
+	}
+
+	private static void amountX(Engine e, DBInterface bd, String v,
+			String good) {
+		String[] x = getArrayFilledWithBlanks(23);
+		String[] p = getArrayFilledWithBlanks(10);
+		String ret;
+		x[0] = "Choose an amount to buy";
+		x[20] = "    r) Return to previous screen";
+		try {
+			ResultSet rs;
+			x[3] = "    You currently have " + bd.getPlayerCredits(player_name) + " credits";
+			x[4] = "    You currently have " + bd.getPlayerRemainingWeight(player_name) + "/" + bd.getPlayerTotalWeight(player_name) + " weight remaining on your ship";
+			rs = bd.getGoods(v);
+			if(rs!= null){
+				rs.first();
+			} else {
+				System.out.println("Ahhhhh things are breeeaking");
+				return;
+			}
+			x[6] = "    " + good + " costs " + rs.getInt("good_value") + " per unit from " + v;
+			x[7] = "    " + good + " weights " + rs.getInt("weight");
+			rs = bd.getVendors(player_planet, player_name);
+			if(rs!= null){
+			rs.first();
+			for (int i = 1; i < 11; i++) {
+				x[i+5] = "    " + i + ") " + rs.getString("name");
+				p[i-1] = rs.getString("name");
+				if (rs.isLast()) {
+					break;
+				}
+				rs.next();
+			}
+			}
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+		while (true) {
+			ret = e.render(x);
+			if (ret.equals("r")) {
+				vendorX(e, bd, v);
+				return;
+			}
+			int choice = Integer.parseInt(ret);
+			if (choice>0 && choice<11) {
+				vendorX(e, bd, p[choice-1]);
+			}
+		}				
 	}
 
 	private static void spacedockX(Engine e, DBInterface bd) {
