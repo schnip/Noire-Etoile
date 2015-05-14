@@ -382,13 +382,13 @@ public class BlackDatabase implements DBInterface{
 			e.printStackTrace();
 		}
 		if (r == null) {
-			return -1;
+			return getPlayerTotalWeight(playerName);
 		}
 		try{
 			r.first();
 			money = r.getInt("used_weight");
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
-		return money;
+		return getPlayerTotalWeight(playerName)-money;
 	}
 
 }
