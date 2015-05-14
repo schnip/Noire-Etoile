@@ -47,7 +47,7 @@ public class BlackDatabase implements DBInterface{
 			getAllVendorsStmt = conn.prepareCall("{call get_vendors(?,?)}");
 			getVendorGoodsStmt = conn.prepareCall("{call get_goods_vendor(?)}");
 			makeTradeStmt = conn.prepareCall("{call make_trade(?,?,?,?)}");
-			getMoneyStmt = conn.prepareCall("{call make_trade(?)}");
+			getMoneyStmt = conn.prepareCall("{call get_player_money(?)}");
 			getUsedWeightStmt = conn.prepareCall("{call get_used_weight(?)}");
 			getTotalWeightStmt = conn.prepareCall("{call get_total_weight(?)}");
 			getPlanetSystemStmt = conn.prepareCall("{call system_given_planet(?)}");
