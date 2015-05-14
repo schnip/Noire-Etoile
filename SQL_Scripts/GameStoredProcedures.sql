@@ -167,7 +167,7 @@ DELIMITER //
 CREATE PROCEDURE get_player_money (IN pname varchar(255))
 BEGIN
 	SELECT quantity
-	FROM inventory_entry
+	FROM Inventory_entry
 	WHERE personName = pname and goodName='Money';
 END//
 DELIMITER ;
@@ -176,7 +176,7 @@ DELIMITER //
 CREATE PROCEDURE get_used_weight (IN PName varchar(255))
 BEGIN
     select sum(quantity*weight) as used_weight
-    from inventory_entry
+    from Inventory_entry
     where personName = PName;
 	
 END//
@@ -187,7 +187,7 @@ CREATE PROCEDURE get_player_ship (IN PName varchar(255))
 BEGIN
     select shipName
     from Person
-    where personName = PName;
+    where name = PName;
 	
 END//
 DELIMITER ;
@@ -197,7 +197,7 @@ CREATE PROCEDURE get_total_weight (IN PName varchar(255))
 BEGIN
     select max_weight
     from Person
-    where personName = PName;
+    where name = PName;
 	
 END//
 DELIMITER ;
