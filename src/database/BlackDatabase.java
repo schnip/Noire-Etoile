@@ -244,4 +244,16 @@ public class BlackDatabase implements DBInterface{
 		return pname;
 	}
 
+	@Override
+	public String getPlanetSystem(String planetName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPlayerShip(String playerName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

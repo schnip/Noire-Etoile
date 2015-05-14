@@ -263,6 +263,8 @@ public class Launcher {
 		String[] p = getArrayFilledWithBlanks(10);
 		String ret;
 		x[0] = "On Planet Screen";
+		x[1] = "  Choose a vendor to interact with";
+		x[20] = "    r) Return to previous screen";
 		try {
 			ResultSet rs = bd.getVendors(player_planet, player_name);
 			if(rs!= null){
@@ -277,7 +279,20 @@ public class Launcher {
 			}
 			}
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
-		ret = e.render(x);
+		while (true) {
+			ret = e.render(x);
+			if (ret.equals("r")) {
+				orbitX(e, bd);
+				return;
+			}
+			int choice = Integer.parseInt(ret);
+			if (choice>0 && choice<11) {
+				vendorX(e, bd, p[choice-1]);
+			}
+		}		
+	}
+	
+	private static void vendorX(Engine e, DBInterface bd, String v) {
 		
 	}
 
@@ -324,10 +339,10 @@ public class Launcher {
 				return;
 			default:
 				int choice = Integer.parseInt(ret);
-				System.out.println("player_planet = " + player_planet);
+				//System.out.println("player_planet = " + player_planet);
 				if (choice>0 && choice<11) {
 					player_planet = p[choice-1];
-					System.out.println("In choice to set planet. player_planet = "+player_planet);
+					//System.out.println("In choice to set planet. player_planet = "+player_planet);
 					bd.setPlayerPlanet(player_planet, player_name);
 				}
 				return;
