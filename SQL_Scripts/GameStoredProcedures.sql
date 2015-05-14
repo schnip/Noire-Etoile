@@ -100,7 +100,7 @@ DELIMITER //
 CREATE PROCEDURE get_goods_vendor (IN pname varchar(255))
 BEGIN
 	SELECT g.goodName, g.good_value, i.quantity, g.weight, g.description
-	FROM Inventory_entry as i JOIN goods AS g ON i.goodName = g.goodName
+	FROM Inventory_entry as i JOIN Goods AS g ON i.goodName = g.goodName
 	WHERE personName = pname;
 END//
 DELIMITER ;
