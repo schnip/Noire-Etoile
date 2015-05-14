@@ -23,6 +23,8 @@ public class BlackDatabase implements DBInterface{
 	private CallableStatement getVendorGoodsStmt;
 	private CallableStatement makeTradeStmt;
 	private CallableStatement getMoneyStmt;
+	private CallableStatement getUsedWeightStmt;
+	private CallableStatement getTotalWeightStmt;
 	
 	public BlackDatabase() {
 		try {
@@ -44,6 +46,8 @@ public class BlackDatabase implements DBInterface{
 			getVendorGoodsStmt = conn.prepareCall("{call get_goods_vendor(?)}");
 			makeTradeStmt = conn.prepareCall("{call make_trade(?,?,?,?)}");
 			getMoneyStmt = conn.prepareCall("{call make_trade(?)}");
+			getUsedWeightStmt = conn.prepareCall("{call get_used_weight(?)}");
+			getTotalWeightStmt = conn.prepareCall("{call get_total_weight(?)}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("breaking in Black Database init:");
@@ -277,7 +281,7 @@ public class BlackDatabase implements DBInterface{
 			getMoneyStmt.setString(1, playerName);
 			boolean hadResults = getMoneyStmt.execute();
 			while (hadResults) {
-				r = getPlayerPlanetStmt.getResultSet();
+				r = getMoneyStmt.getResultSet();
 				//hadResults = getPlanetStmt.getMoreResults();
 				break;
 			}
@@ -296,14 +300,52 @@ public class BlackDatabase implements DBInterface{
 
 	@Override
 	public int getPlayerTotalWeight(String playerName) {
-		// TODO Auto-generated method stub
-		return 0;
+		ResultSet r = null;
+		int money = -1;
+		try {
+			getTotalWeightStmt.setString(1, playerName);
+			boolean hadResults = getTotalWeightStmt.execute();
+			while (hadResults) {
+				r = getTotalWeightStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (r == null) {
+			return -1;
+		}
+		try{
+			r.first();
+			money = r.getInt("max_weight");
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+		return money;
 	}
 
 	@Override
 	public int getPlayerRemainingWeight(String playerName) {
-		// TODO Auto-generated method stub
-		return 0;
+		ResultSet r = null;
+		int money = -1;
+		try {
+			getUsedWeightStmt.setString(1, playerName);
+			boolean hadResults = getUsedWeightStmt.execute();
+			while (hadResults) {
+				r = getUsedWeightStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (r == null) {
+			return -1;
+		}
+		try{
+			r.first();
+			money = r.getInt("used_weight");
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+		return money;
 	}
 
 }
