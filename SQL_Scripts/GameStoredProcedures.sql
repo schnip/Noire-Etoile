@@ -126,7 +126,7 @@ BEGIN
 	IF value_buyer < value_seller
 	BEGIN
 		SELECT 'ERROR: NOT ENOUGH MONEY' AS '';
-		RETURN 0;
+		ROLLBACK;
 	END
 	
 	SELECT quantity INTO seller_qty
@@ -137,7 +137,7 @@ BEGIN
 	IF QTY > seller_qty
 	BEGIN
 		SELECT 'ERROR: VENDOR DOESNT HAVE ENOUGH STOCK' AS '';
-		RETURN 0;
+		ROLLBACK;
 	END
 	
 	UPDATE Inventory_entry
