@@ -84,6 +84,12 @@ BEGIN
     (name,max_weight,employer,planet,shipName)
 	values
 	(pname,maxWeight,'User',playerPlanet,sName);
+    
+    insert into Inventory_entry
+    (personName,goodName,quantity,weight)
+    values
+    (pname,'Money',50000,0);
+    
 END//
 DELIMITER ;
 
