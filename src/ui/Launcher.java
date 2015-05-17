@@ -385,6 +385,7 @@ public class Launcher {
 			if (noflag) {
 				// Actually make the trade
 				bd.makeTrade(player_name, v, good, choice);
+				traderecieptX(e, bd, v, good, choice, gc);
 				return;
 			}
 		}				
@@ -488,7 +489,7 @@ public class Launcher {
 	}
 	
 	@SuppressWarnings("unused")
-	private void emptyX(Engine e, DBInterface bd) {
+	private static void emptyX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "System Screen";	
@@ -502,14 +503,14 @@ public class Launcher {
 		}
 	}
 	
-	private void traderecieptX(Engine e, DBInterface bd, String vendor, String good, int quantity, int unitcost) {
+	private static void traderecieptX(Engine e, DBInterface bd, String vendor, String good, int quantity, int unitcost) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		x[0] = "Reciept of the Trade of Goods";	
 		x[1] = "You are currently on " + player_planet + " in the " + player_system + " system";
 		x[3] = "You have successfully traded "  + quantity + " of " + good + " for " + unitcost + " credits";
 		x[5] = vendor + " thanks you for your buisness";
-		x[22] = "(Select option and press enter)";
+		x[22] = "(Press enter)";
 		ret = e.render(x);
 	}
 }
