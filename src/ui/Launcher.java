@@ -404,6 +404,7 @@ public class Launcher {
 		String ret;
 		x[0] = "System Screen";	
 		x[1] = "You are currently on " + player_planet + " in the " + player_system + " system";
+		x[22] = "(Select option and press enter)";
 		if (!must)
 			x[3] = "    g) Galactic map";
 		x[4] = "    r) Return to orbit screen";
