@@ -77,9 +77,22 @@ END//
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE create_new_player (IN pname varchar(255),In playerPlanet varchar(255),
+CREATE PROCEDURE create_new_player (IN PName varchar(255),In playerPlanet varchar(255),
 			IN maxWeight int, in sName varchar(255))
-BEGIN
+this:BEGIN
+	
+	DECLARE @alreadyPlayer varchar(255) DEFAULT NULL;
+	
+	SELECT personName INTO @alreadyPlayer
+	FROM Person
+	Where PName = personName
+	
+	
+	if(@alreadyPlayer IS NULL) then
+		leave this;
+	end if;
+	
+
 	insert into Person
     (name,max_weight,employer,planet,shipName)
 	values
