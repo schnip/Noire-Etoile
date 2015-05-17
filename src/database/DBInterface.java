@@ -20,4 +20,5 @@ public interface DBInterface {
 	public int getPlayerCredits(String playerName);
 	public int getPlayerTotalWeight(String playerName);
 	public int getPlayerRemainingWeight(String playerName);
+	public ResultSet getAllGoods();
 }

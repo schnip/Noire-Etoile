@@ -1,5 +1,6 @@
 package ui;
 
+import java.util.Random;
 import java.util.Scanner;
 
 import database.DBInterface;
@@ -10,10 +11,7 @@ public class Engine {
 	private Scanner in;
 	private boolean isWindows;
 	private static final int WINDOW_WIDTH = 80;
-	public static final int SYSTEM_MOVE = 0;
-	public static final int PLANET_MOVE = 1;
-	public static final int ON_SURFACE = 2;
-	public static final int SPACEDOCK = 3;
+	private static final int EVENT_FREQUENCY = 5; // Lower is more frequent
 	
 	public Engine() {
 		in = new Scanner(System.in);
@@ -34,11 +32,10 @@ public class Engine {
 	}
 	
 	public boolean isEvent(DBInterface bd, String planet) {
+		Random r = new Random();
+		if (r.nextInt(EVENT_FREQUENCY) == 0) {
+			return true;
+		}
 		return false;
 	}
-	
-	public void runEvent(DBInterface bd, String planet, String player, int type) {
-		
-	}
-
 }

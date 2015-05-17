@@ -170,6 +170,7 @@ this:BEGIN
 	
 	if(oldQTY >0) then
 		update Inventory_entry
+<<<<<<< HEAD
 		set quantity = QTY+oldQTY where personName=PName and goodName=Good_Name;
         leave this;
 	end if;
@@ -177,6 +178,15 @@ this:BEGIN
 	(personName,goodName,quantity,weight)
 	values
 	(PName,Good_Name,QTY,item_weight);
+=======
+		set quantity = QTY where personName=PName and goodName=Good_Name;
+	else
+		insert Inventory_entry
+		(personName,goodName,quantity,weight)
+		values
+		(PName,Good_Name,QTY,item_weight);
+	end if;
+>>>>>>> origin/master
 	
 END//
 DELIMITER ;
@@ -229,7 +239,14 @@ BEGIN
 END//
 DELIMITER ;
 
-
+DELIMITER //
+CREATE PROCEDURE get_all_goods ()
+BEGIN
+    select goodName
+    from Goods;
+	
+END//
+DELIMITER ;
 
 
 
