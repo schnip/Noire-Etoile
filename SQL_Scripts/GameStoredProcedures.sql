@@ -113,11 +113,12 @@ DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE make_trade (IN PName varchar(255), IN SName varchar(255), IN Good_Name varchar(255), IN QTY int)
-BEGIN
+this:BEGIN
 	DECLARE value_buyer INT DEFAULT 0;
 	DECLARE value_seller INT DEFAULT 0;
 	DECLARE seller_qty INT DEFAULT 0;
     declare item_weight int default 0;
+	declare buyeritem varchar(255);
 	
 	SELECT quantity INTO value_buyer
 	FROM Inventory_entry
@@ -134,7 +135,7 @@ BEGIN
 	IF value_buyer < value_seller
 	THEN
 		SELECT 'ERROR: NOT ENOUGH MONEY';
-		RETURN 0;
+		leave this;
 	END IF;
 	
 	SELECT quantity INTO seller_qty
@@ -145,7 +146,7 @@ BEGIN
 	IF QTY > seller_qty
 	THEN
 		SELECT 'ERROR: VENDOR DOESNT HAVE ENOUGH STOCK';
-		RETURN 0;
+		leave this;
 	END IF;
 	
 	UPDATE Inventory_entry
@@ -163,10 +164,20 @@ BEGIN
     where goodName = Good_Name AND
 		personName = SName;
     
-	insert Inventory_entry
-    (personName,goodName,quantity,weight)
-    values
-    (PName,Good_Name,QTY,item_weight);
+	select goodName into buyeritem
+	from Inventory_entry
+	where personName = PName and goodName = Good_Name;
+	
+	if(buyeritem!=null)
+	then
+		update Inventory_entry
+		set quantity = QTY where personName=PName and goodName=Good_Name;
+	else
+		insert Inventory_entry
+		(personName,goodName,quantity,weight)
+		values
+		(PName,Good_Name,QTY,item_weight);
+	end if
 	
 END//
 DELIMITER ;
