@@ -391,4 +391,10 @@ public class BlackDatabase implements DBInterface{
 		return getPlayerTotalWeight(playerName)-money;
 	}
 
+	@Override
+	public ResultSet getAllGoods() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
