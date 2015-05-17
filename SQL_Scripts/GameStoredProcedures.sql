@@ -177,7 +177,7 @@ this:BEGIN
 		(personName,goodName,quantity,weight)
 		values
 		(PName,Good_Name,QTY,item_weight);
-	end if
+	end if;
 	
 END//
 DELIMITER ;
@@ -230,7 +230,14 @@ BEGIN
 END//
 DELIMITER ;
 
-
+DELIMITER //
+CREATE PROCEDURE get_all_goods ()
+BEGIN
+    select goodName
+    from Goods;
+	
+END//
+DELIMITER ;
 
 
 
