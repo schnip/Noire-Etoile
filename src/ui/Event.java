@@ -16,13 +16,15 @@ public class Event {
 	private static String planet;
 	private static String player;
 	private static int type;
+	private static Engine e;
 	private static Random r;
 	
-	public static void runEvent(DBInterface bd, String planet, String player, int type) {
+	public static void runEvent(DBInterface bd, String planet, String player, int type, Engine e) {
 		Event.bd = bd;
 		Event.planet = planet;
 		Event.player = player;
 		Event.type = type;
+		Event.e = e;
 		Event.r = new Random();
 		
 		
@@ -35,7 +37,16 @@ public class Event {
 		if (good == null) {
 			return;
 		}
-		
+		String[] x = Launcher.getArrayFilledWithBlanks(23);
+		String ret;
+		x[0] = "System Screen";	
+		x[22] = "(Select option and press enter)";
+		while(true) {
+			ret = e.render(x);
+			if (ret.equals("r")) {
+				break;
+			}
+		}
 	}
 
 	private static String getRandomGood() {

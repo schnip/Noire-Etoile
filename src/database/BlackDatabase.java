@@ -397,4 +397,10 @@ public class BlackDatabase implements DBInterface{
 		return null;
 	}
 
+	@Override
+	public void giveGood(String player, String good, int quantity) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

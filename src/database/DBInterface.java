@@ -21,4 +21,5 @@ public interface DBInterface {
 	public int getPlayerTotalWeight(String playerName);
 	public int getPlayerRemainingWeight(String playerName);
 	public ResultSet getAllGoods();
+	public void giveGood(String player, String good, int quantity);
 }

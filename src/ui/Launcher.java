@@ -117,7 +117,7 @@ public class Launcher {
 			case "1":
 				if (systemX(e, bd, false)) {
 					if (e.isEvent(bd, player_planet)) {
-						Event.runEvent(bd, player_planet, player_name, Event.PLANET_MOVE);
+						Event.runEvent(bd, player_planet, player_name, Event.PLANET_MOVE, e);
 					}
 				}
 				orbitX(e, bd);
