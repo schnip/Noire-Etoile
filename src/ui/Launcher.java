@@ -474,15 +474,42 @@ public class Launcher {
 					return false;
 				default:
 					int choice = Integer.parseInt(ret);
-					if (choice<0 && choice<11) {
+					if (choice>0 && choice<11) {
 						if (player_system.equals(p[choice-1])) {
 							return false;
 						}
 						player_system = p[choice-1];
+						player_planet = "nothing";
 						return true;
 					}
 					break;
 			}
 		}
+	}
+	
+	@SuppressWarnings("unused")
+	private void emptyX(Engine e, DBInterface bd) {
+		String[] x = getArrayFilledWithBlanks(23);
+		String ret;
+		x[0] = "System Screen";	
+		x[1] = "You are currently on " + player_planet + " in the " + player_system + " system";
+		x[22] = "(Select option and press enter)";
+		while(true) {
+			ret = e.render(x);
+			if (ret.equals("r")) {
+				break;
+			}
+		}
+	}
+	
+	private void traderecieptX(Engine e, DBInterface bd, String vendor, String good, int quantity, int unitcost) {
+		String[] x = getArrayFilledWithBlanks(23);
+		String ret;
+		x[0] = "Reciept of the Trade of Goods";	
+		x[1] = "You are currently on " + player_planet + " in the " + player_system + " system";
+		x[3] = "You have successfully traded "  + quantity + " of " + good + " for " + unitcost + " credits";
+		x[5] = vendor + " thanks you for your buisness";
+		x[22] = "(Select option and press enter)";
+		ret = e.render(x);
 	}
 }
