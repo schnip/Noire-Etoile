@@ -118,7 +118,7 @@ this:BEGIN
 	DECLARE value_seller INT DEFAULT 0;
 	DECLARE seller_qty INT DEFAULT 0;
     declare item_weight int default 0;
-	declare buyeritem varchar(255);
+	declare oldQTY int default 0;
 	
 	SELECT quantity INTO value_buyer
 	FROM Inventory_entry
@@ -164,20 +164,19 @@ this:BEGIN
     where goodName = Good_Name AND
 		personName = SName;
     
-	select goodName into buyeritem
+	select quantity into oldQTY
 	from Inventory_entry
 	where personName = PName and goodName = Good_Name;
 	
-	if(buyeritem!=null)
-	then
+	if(oldQTY >0) then
 		update Inventory_entry
-		set quantity = QTY where personName=PName and goodName=Good_Name;
-	else
-		insert Inventory_entry
-		(personName,goodName,quantity,weight)
-		values
-		(PName,Good_Name,QTY,item_weight);
-	end if
+		set quantity = QTY+oldQTY where personName=PName and goodName=Good_Name;
+        leave this;
+	end if;
+	insert Inventory_entry
+	(personName,goodName,quantity,weight)
+	values
+	(PName,Good_Name,QTY,item_weight);
 	
 END//
 DELIMITER ;
