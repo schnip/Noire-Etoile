@@ -1,5 +1,7 @@
 package ui;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Random;
 
 import database.DBInterface;
@@ -29,8 +31,33 @@ public class Event {
 	}
 
 	private static void salvage() {
-		// TODO Auto-generated method stub
+		String good = getRandomGood();
+		if (good == null) {
+			return;
+		}
 		
+	}
+
+	private static String getRandomGood() {
+		ArrayList<String> goods = new ArrayList<String>();
+		try {
+			ResultSet rs = bd.getAllGoods();
+			if (rs == null) {
+				return null;
+			}
+			rs.first();
+			while (!rs.isLast()) {
+				goods.add(rs.getString("goodName"));
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (goods.isEmpty()) {
+			return null;
+		}
+		return goods.get(r.nextInt(goods.size()));
 	}
 	
 }
