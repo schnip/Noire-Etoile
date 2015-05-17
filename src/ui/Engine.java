@@ -11,6 +11,7 @@ public class Engine {
 	private Scanner in;
 	private boolean isWindows;
 	private static final int WINDOW_WIDTH = 80;
+	private static final int EVENT_FREQUENCY = 5; // Lower is more frequent
 	
 	public Engine() {
 		in = new Scanner(System.in);
@@ -32,14 +33,9 @@ public class Engine {
 	
 	public boolean isEvent(DBInterface bd, String planet) {
 		Random r = new Random();
-		if (r.nextInt(5) == 0) {
+		if (r.nextInt(EVENT_FREQUENCY) == 0) {
 			return true;
 		}
 		return false;
 	}
-	
-	public void runEvent(DBInterface bd, String planet, String player, int type) {
-		Random r = new Random();
-	}
-
 }
