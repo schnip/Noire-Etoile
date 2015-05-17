@@ -10,10 +10,9 @@ public class Engine {
 	private Scanner in;
 	private boolean isWindows;
 	private static final int WINDOW_WIDTH = 80;
-	public static final int SYSTEM_MOVE = 0;
-	public static final int PLANET_MOVE = 1;
-	public static final int ON_SURFACE = 2;
-	public static final int SPACEDOCK = 3;
+	public static final int PLANET_MOVE = 0;
+	public static final int ON_SURFACE = 1;
+	public static final int SPACEDOCK = 2;
 	
 	public Engine() {
 		in = new Scanner(System.in);

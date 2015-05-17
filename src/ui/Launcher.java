@@ -115,7 +115,11 @@ public class Launcher {
 		ret = e.render(x);
 		switch (ret) {
 			case "1":
-				systemX(e, bd, false);
+				if (systemX(e, bd, false)) {
+					if (e.isEvent(bd, player_planet)) {
+						e.runEvent(bd, player_planet, player_name, Engine.PLANET_MOVE);
+					}
+				}
 				orbitX(e, bd);
 				return;
 			case "2":
@@ -399,7 +403,7 @@ public class Launcher {
 		
 	}
 
-	private static void systemX(Engine e, DBInterface bd, boolean must) {
+	private static boolean systemX(Engine e, DBInterface bd, boolean must) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String[] p = getArrayFilledWithBlanks(10);
 		String ret;
@@ -427,12 +431,11 @@ public class Launcher {
 		switch (ret) {
 			case "g":
 				boolean change = galaxyX(e, bd);
-				systemX(e, bd, change);
-				return;
+				return systemX(e, bd, change);
 			case "r":
 				if (must)
 					break;
-				return;
+				return false;
 			default:
 				int choice = Integer.parseInt(ret);
 				//System.out.println("player_planet = " + player_planet);
@@ -441,7 +444,7 @@ public class Launcher {
 					//System.out.println("In choice to set planet. player_planet = "+player_planet);
 					bd.setPlayerPlanet(player_planet, player_name);
 				}
-				return;
+				return true;
 		}
 		}
 	}
