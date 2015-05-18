@@ -246,7 +246,7 @@ public class Launcher {
 	private static void cargoX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
-		x[0] = "Inventory Screen";	
+		x[0] = "Inventory Screen";
 		try {
 			ResultSet rs = bd.getGoods(player_name);
 			if(rs!= null){
@@ -290,9 +290,20 @@ public class Launcher {
 				orbitX(e, bd);
 				return;
 			}
-			int choice = Integer.parseInt(ret);
-			if (choice>0 && choice<11) {
-				vendorX(e, bd, p[choice-1]);
+			else if(ret== ""){
+				continue;
+			}
+			else{
+				try {
+					int choice = Integer.parseInt(ret);
+					if (choice>0 && choice<11) {
+						vendorX(e, bd, p[choice-1]);
+					}
+				} catch (NumberFormatException exc) {
+				   x[18] = "   Please enter a valid entry";
+				   continue;
+				}
+			
 			}
 		}		
 	}
@@ -328,10 +339,15 @@ public class Launcher {
 				landingX(e, bd);
 				return;
 			}
-			int choice = Integer.parseInt(ret);
-			if (choice>0 && choice<11) {
+			try {
+				int choice = Integer.parseInt(ret);
+				if (choice>0 && choice<11) {
 				//bd.makeTrade(player_name, v, p[choice-1],1);
 				amountX(e, bd, v, p[choice-1]);
+				}}
+				catch(Exception exc){
+					x[18] = "   Please enter a valid entry";
+					   continue;
 			}
 		}		
 	}
