@@ -81,14 +81,14 @@ CREATE PROCEDURE create_new_player (IN PName varchar(255),In playerPlanet varcha
 			IN maxWeight int, in sName varchar(255))
 this:BEGIN
 	
-	DECLARE @alreadyPlayer varchar(255) DEFAULT NULL;
+	DECLARE alreadyPlayer varchar(255) DEFAULT NULL;
 	
-	SELECT personName INTO @alreadyPlayer
+	SELECT name INTO alreadyPlayer
 	FROM Person
-	Where PName = personName
+	Where PName = name;
 	
 	
-	if(@alreadyPlayer IS NULL) then
+	if(alreadyPlayer IS not NULL) then
 		leave this;
 	end if;
 	

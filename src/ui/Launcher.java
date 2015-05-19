@@ -78,6 +78,7 @@ public class Launcher {
 		x[2] = "software upgrade. It was what?";
 		x[22] = "(Enter your player's name and press enter)";
 		ret = e.render(x);
+		if(ret==""){ createCharater(e,bd); return;}
 		player_name = ret;
 		x[4] = "Ah yes, Captain " + player_name + "!";
 		x[6] = "Now that your new ship has been completed, what would you like to name her?";
@@ -143,6 +144,7 @@ public class Launcher {
 				orbitX(e, bd);
 				return;
 			case "7":
+				System.exit(0);
 				return;
 			default:
 				break;
@@ -343,6 +345,8 @@ public class Launcher {
 				int choice = Integer.parseInt(ret);
 				if (choice>0 && choice<11) {
 				//bd.makeTrade(player_name, v, p[choice-1],1);
+					System.out.println(p[choice-1]);
+					
 				amountX(e, bd, v, p[choice-1]);
 				}}
 				catch(Exception exc){
@@ -372,6 +376,11 @@ public class Launcher {
 				System.out.println("Ahhhhh things are breeeaking");
 				return;
 			}
+			while (!rs.getString("goodName").equals(good)){
+				if (rs.isLast()) {
+					break;
+				}
+				rs.next();}
 			gc = rs.getInt("good_value");
 			gw = rs.getInt("weight");
 			x[6] = "    " + good + " costs " + gc + " per unit from " + v;
@@ -388,7 +397,14 @@ public class Launcher {
 				vendorX(e, bd, v);
 				return;
 			}
-			int choice = Integer.parseInt(ret);
+			int choice;
+			try {
+			choice = Integer.parseInt(ret);
+			}
+			catch(Exception exc){
+				x[18] = "   Please enter a valid entry";
+				   continue;
+			}
 			System.out.println(pw + ","+gw*choice);
 			if (choice * gw > pw) {
 				x[9] = "    Not enough space";
@@ -407,7 +423,7 @@ public class Launcher {
 				bd.makeTrade(player_name, v, good, choice);
 				traderecieptX(e, bd, v, good, choice, gc);
 				return;
-			}
+			}	
 		}				
 	}
 
