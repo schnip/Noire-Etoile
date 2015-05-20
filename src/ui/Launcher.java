@@ -18,7 +18,6 @@ public class Launcher {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		String[] x = getArrayFilledWithBlanks(23);
 		Engine e = new Engine();
 		DBInterface bd = new BlackDatabase();
@@ -37,7 +36,6 @@ public class Launcher {
 				createCharater(e, bd);
 			}
 			if (ret.equals("3")) {
-				// TODO things
 				loadGame(e, bd);
 			}
 			ret = e.render(x);
@@ -242,8 +240,6 @@ public class Launcher {
 					break;
 				}
 				try{
-					if (rs == null)
-						break;
 					rs.first();
 					for (int i = 0; i < 10; i++) {
 						x[i+2] = "  " + rs.getInt("star_date") + " " + rs.getString("log_text");

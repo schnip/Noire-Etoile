@@ -67,7 +67,6 @@ public class BlackDatabase implements DBInterface{
 			getPoliceLvlStmt = conn.prepareCall("{call get_police_planet(?)}");
 			getPoliceLvlSSStmt = conn.prepareCall("{call get_police_star_system(?)}");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.out.println("breaking in Black Database init:");
 			e.printStackTrace();
 		}
@@ -428,7 +427,7 @@ public class BlackDatabase implements DBInterface{
 			giveGoodStmt.setString(1, player);
 			giveGoodStmt.setString(2, good);
 			giveGoodStmt.setInt(3, quantity);
-			boolean hadResults = giveGoodStmt.execute();
+			giveGoodStmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -443,7 +442,6 @@ public class BlackDatabase implements DBInterface{
 			playerExistsStmt.execute();
 			outputValue = playerExistsStmt.getBoolean(1);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return outputValue;
@@ -453,7 +451,7 @@ public class BlackDatabase implements DBInterface{
 	public void dropCharacter(String playerName) {
 		try {
 			dropPlayerStmt.setString(1, playerName);
-			boolean hadResults = dropPlayerStmt.execute();
+			dropPlayerStmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

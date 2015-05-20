@@ -273,69 +273,8 @@ DELIMITER //
 CREATE procedure drop_player (in PName varchar(255))
 begin
     delete from Person
-    where name = PName and employer = "User"
+    where name = PName
     limit 1;
     
-END//
-DELIMITER ;
-
-DELIMITER //
-CREATE procedure give_good_to_player (in PName varchar(255), good_name varchar(255), QTY int)
-this.begin
-    
-	DECLARE good varchar(255) DEFAULT NULL;
-	DECLARE wgt int DEFAULT NULL;
-	
-	
-	SELECT name INTO good
-	FROM Inventory_entry
-	Where PName = personName and goodName = good_name;
-	
-	
-	
-	IF (good IS NOT NULL)
-	THEN
-	
-	Update Inventory_entry
-	Set quantity = quantity + QTY
-	WHERE personName = PName AND good_name = goodName;
-	leave this;
-	END IF;
-	
-	SELECT weight INTO wgt
-	FROM Inventory_entry
-	Where PName = personName and goodName = good_name;
-	
-	
-	INSERT INTO Inventory_entry
-	VALUES (PName, good_name, QTY, wgt);
-		
-END//
-DELIMITER ;
-
-DELIMITER //
-CREATE procedure get_legality_good (in good_name varchar(255))
-begin
-    Select legality
-	FROM Goods
-	WHERE goodName = good_name;
-END//
-DELIMITER ;
-
-DELIMITER //
-CREATE procedure get_police_planet (in planet_name varchar(255))
-begin
-    SELECT police_level
-	FROM Planet
-	Where name = planet_name;
-END//
-DELIMITER ;
-
-DELIMITER //
-CREATE procedure get_police_star_system (in star_system_name varchar(255))
-begin
-    SELECT police_level
-	FROM Star_System
-	Where name = star_system_name;
 END//
 DELIMITER ;
