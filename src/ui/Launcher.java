@@ -240,7 +240,7 @@ public class Launcher {
 				x[22] = "(l for local news, s for system news, g for galactic news, b to go back)";
 				try{
 					rs.first();
-					if(!rs.next()){x[3]="There is no news for this system";break;}
+					if(!rs.next()){x[3]="There is no news for this planet";break;}
 					rs.previous();
 					for (int i = 0; i < 10; i++) {
 						x[i+2] = "  " + rs.getInt("star_date") + " " + rs.getString("log_text");
@@ -334,6 +334,8 @@ public class Launcher {
 			if(rs!= null){
 				rs.first();
 				for (int i = 1; i < 11; i++) {
+					if(!rs.next()){x[3]="There are no other people on this planet";break;}
+					rs.previous();
 					x[i+5] = "    " + i + ") " + rs.getString("name");
 					p[i-1] = rs.getString("name");
 					if (rs.isLast()) {
@@ -381,6 +383,8 @@ public class Launcher {
 			if(rs!= null){
 				rs.first();
 				for (int i = 1; i < 11; i++) {
+					if(!rs.next()){x[3]="There are no goods for this person";break;}
+					rs.previous();
 					gdArray.add(rs.getString("goodName"));
 					x[i+5] = "    " + i + ") " + rs.getString("goodName")+
 							"         " + rs.getString("quantity")+"        " + rs.getString("good_value");
@@ -434,6 +438,8 @@ public class Launcher {
 				return;
 			}
 			while (!rs.getString("goodName").equals(good)){
+				if(!rs.next()){x[3]="There are no goods";break;}
+				rs.previous();
 				if (rs.isLast()) {
 					break;
 				}
@@ -507,6 +513,8 @@ public class Launcher {
 			ResultSet rs = bd.getSystemPlanets(player_system);
 			rs.first();
 			for (int i = 1; i < 11; i++) {
+				if(!rs.next()){x[3]="There are no planets in this system";break;}
+				rs.previous();
 				x[i+5] = "    " + i + ") " + rs.getString("name");
 				p[i-1] = rs.getString("name");
 				if (rs.isLast()) {
@@ -555,6 +563,8 @@ public class Launcher {
 			if(rs!=null){
 				rs.first();
 				for (int i = 1; i < 11; i++) {
+					if(!rs.next()){x[3]="There are no systems in the galaxy";break;}
+					rs.previous();
 					x[i+5] = "    " + i + ") " + rs.getString("name");
 					p[i-1] = rs.getString("name");
 					if (rs.isLast()) {
