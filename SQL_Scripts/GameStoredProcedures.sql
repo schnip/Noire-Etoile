@@ -81,14 +81,18 @@ CREATE PROCEDURE create_new_player (IN PName varchar(255),In playerPlanet varcha
 			IN maxWeight int, in sName varchar(255))
 this:BEGIN
 	
-	DECLARE @alreadyPlayer varchar(255) DEFAULT NULL;
+	DECLARE alreadyPlayer varchar(255) DEFAULT NULL;
 	
-	SELECT personName INTO @alreadyPlayer
+	SELECT name INTO alreadyPlayer
 	FROM Person
+<<<<<<< HEAD
 	Where PName = personName;
+=======
+	Where PName = name;
+>>>>>>> bbdf8ad7eaea7c607b48311b192de9ee6e667f30
 	
 	
-	if(@alreadyPlayer IS NULL) then
+	if(alreadyPlayer IS not NULL) then
 		leave this;
 	end if;
 	
@@ -251,11 +255,30 @@ BEGIN
 END//
 DELIMITER ;
 
+DELIMITER //
+CREATE function player_exists (PName varchar(255)) returns boolean
+begin
+    DECLARE alreadyPlayer varchar(255) DEFAULT NULL;
+	
+	SELECT name INTO alreadyPlayer
+	FROM Person
+	Where PName = name and employer = "User";
+	
+	
+	if(alreadyPlayer IS not NULL) then
+		return true;
+	end if;
+    return false;
+    
+END//
+DELIMITER ;
 
-
-
-
-
-
-
-
+DELIMITER //
+CREATE procedure drop_player (in PName varchar(255))
+begin
+    delete from Person
+    where name = PName and employer = "User"
+    limit 1;
+    
+END//
+DELIMITER ;
