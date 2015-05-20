@@ -14,9 +14,6 @@ public class Launcher {
 	private static String player_planet;
 	private static String player_system;
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		String[] x = getArrayFilledWithBlanks(23);
 		Engine e = new Engine();
@@ -292,7 +289,6 @@ public class Launcher {
 
 	private static void cargoX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
-		String ret;
 		x[0] = "Inventory Screen";
 		try {
 			ResultSet rs = bd.getGoods(player_name);
@@ -307,7 +303,7 @@ public class Launcher {
 				}
 			}
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
-		ret = e.render(x);		
+		e.render(x);		
 	}
 
 	private static void landingX(Engine e, DBInterface bd) {
@@ -474,9 +470,10 @@ public class Launcher {
 
 	private static void spacedockX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
-		String ret;
-		x[0] = "Spacedock Screen";	
-		ret = e.render(x);
+		x[0] = "Spacedock Screen";
+		x[2] = "This area currently under construction.";	
+		x[18] = "(press enter to return to previous screen)";
+		e.render(x);
 
 	}
 
@@ -502,7 +499,7 @@ public class Launcher {
 				rs.next();
 			}
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
-		// TODO bring planets there to be selected between
+		
 		while(true) {
 			ret = e.render(x);
 			switch (ret) {
@@ -533,7 +530,6 @@ public class Launcher {
 		x[0] = "Galaxy Screen";
 		x[1] = "    You are currently in the " + player_system + " system";
 		x[3] = "    r) Return to system screen";
-		// TODO bring system there to be selected between
 		try {
 			ResultSet rs = bd.getSystems();
 			if(rs!=null){
@@ -585,12 +581,11 @@ public class Launcher {
 
 	private static void traderecieptX(Engine e, DBInterface bd, String vendor, String good, int quantity, int unitcost) {
 		String[] x = getArrayFilledWithBlanks(23);
-		String ret;
 		x[0] = "Reciept of the Trade of Goods";	
 		x[1] = "You are currently on " + player_planet + " in the " + player_system + " system";
 		x[3] = "You have successfully traded "  + quantity + " of " + good + " for " + unitcost + " credits";
 		x[5] = vendor + " thanks you for your buisness";
 		x[22] = "(Press enter)";
-		ret = e.render(x);
+		e.render(x);
 	}
 }
