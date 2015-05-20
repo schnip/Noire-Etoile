@@ -12,6 +12,7 @@ public class Event {
 	public static final int ON_SURFACE = 1;
 	public static final int SPACEDOCK = 2;
 	public static final int MAX_SCRAP_QUANTITY = 10;
+	public static final int POLICE_RATE = 5;
 	
 	private static DBInterface bd;
 	private static String planet;
@@ -27,6 +28,11 @@ public class Event {
 		Event.type = type;
 		Event.e = e;
 		Event.r = new Random();
+
+		if (r.nextInt(POLICE_RATE) == 0) {
+			police();
+			return;
+		}
 		
 		
 		// This is the default
@@ -46,6 +52,10 @@ public class Event {
 		x[22] = "(press enter to continue)";
 		bd.giveGood(player, good, qty);
 		ret = e.render(x);
+	}
+
+	private static void police() {
+
 	}
 
 	private static String getRandomGood() {
