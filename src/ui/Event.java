@@ -13,6 +13,8 @@ public class Event {
 	public static final int SPACEDOCK = 2;
 	public static final int MAX_SCRAP_QUANTITY = 10;
 	public static final int POLICE_RATE = 5;
+	public static final int POLICE_THRESHOLD = 50;
+	public static final int POLICE_LEANIENCY = 50;
 	
 	private static DBInterface bd;
 	private static String planet;
@@ -55,7 +57,24 @@ public class Event {
 	}
 
 	private static void police() {
-
+		String[] x = Launcher.getArrayFilledWithBlanks(23);
+		String ret;
+		x[4] = "    A police cruiser flies by on its runs to intercept illegal goods";
+		x[22] = "(press enter to continue)";
+		ret = e.render(x);
+		if (POLICE_THRESHOLD <= (r.nextInt(POLICE_LEANIENCY) + bd.getPoliceLevel(planet))) {
+			x[6] = "    The police stop and board your ship to look for illegal goods";
+			ret = e.render(x);
+			try {
+				ResultSet rs = bd.getGoods(player);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			x[6] = "    The cruiser passes uneventfully by without boarding your ship"
+			ret = e.render(x);
+			return;
+		}
 	}
 
 	private static String getRandomGood() {
