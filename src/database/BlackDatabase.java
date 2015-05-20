@@ -29,6 +29,11 @@ public class BlackDatabase implements DBInterface{
 	private CallableStatement getPlayerShipStmt;
 	private CallableStatement playerExistsStmt;
 	private CallableStatement dropPlayerStmt;
+	private CallableStatement getAllGoodsStmt;
+	private CallableStatement giveGoodStmt;
+	private CallableStatement getLegalityStmt;
+	private CallableStatement getPoliceLvlStmt;
+	private CallableStatement getPoliceLvlSSStmt;
 
 	public BlackDatabase() {
 		try {
@@ -56,6 +61,11 @@ public class BlackDatabase implements DBInterface{
 			getPlayerShipStmt = conn.prepareCall("{call get_player_ship(?)}");
 			playerExistsStmt = conn.prepareCall("{? = call player_exists(?)}");
 			dropPlayerStmt = conn.prepareCall("{call drop_player(?)}");
+			getAllGoodsStmt = conn.prepareCall("{call get_all_goods()}");
+			giveGoodStmt = conn.prepareCall("{call give_good_to_player()}");
+			getLegalityStmt = conn.prepareCall("{call get_legality_good(?)}");
+			getPoliceLvlStmt = conn.prepareCall("{call get_police_planet(?)}");
+			getPoliceLvlSSStmt = conn.prepareCall("{call get_police_star_system(?)}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("breaking in Black Database init:");
@@ -397,14 +407,31 @@ public class BlackDatabase implements DBInterface{
 
 	@Override
 	public ResultSet getAllGoods() {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSet r = null;
+		try {
+			boolean hadResults = getAllGoodsStmt.execute();
+			while (hadResults) {
+				r = getAllGoodsStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return r;
+		
 	}
 
 	@Override
 	public void giveGood(String player, String good, int quantity) {
-		// TODO Auto-generated method stub
-
+		try {
+			giveGoodStmt.setString(1, player);
+			giveGoodStmt.setString(2, good);
+			giveGoodStmt.setInt(3, quantity);
+			boolean hadResults = giveGoodStmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -421,6 +448,7 @@ public class BlackDatabase implements DBInterface{
 		}
 		return outputValue;
 	}
+	
 	@Override
 	public void dropCharacter(String playerName) {
 		try {
@@ -429,6 +457,81 @@ public class BlackDatabase implements DBInterface{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public int getLegality(String good) {
+		ResultSet r = null;
+		int bol=-1;
+		try {
+			getLegalityStmt.setString(1, good);
+			boolean hadResults = getLegalityStmt.execute();
+			while (hadResults) {
+				r = getLegalityStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (r == null) {
+			return -1;
+		}
+		try{
+			r.first();
+			if( r.getBoolean("legality"))bol=1;else bol=0;
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+		return bol;
+	}
+
+	@Override
+	public int getPoliceLevel(String planet) {
+		ResultSet r = null;
+		int bol=-1;
+		try {
+			getPoliceLvlStmt.setString(1, planet);
+			boolean hadResults = getPoliceLvlStmt.execute();
+			while (hadResults) {
+				r = getPoliceLvlStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (r == null) {
+			return -1;
+		}
+		try{
+			r.first();
+			bol= r.getInt("police_level");
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+		return bol;
+	}
+
+	@Override
+	public int getPoliceLevelStarSystem(String planet) {
+		ResultSet r = null;
+		int bol=-1;
+		try {
+			getPoliceLvlSSStmt.setString(1, planet);
+			boolean hadResults = getPoliceLvlSSStmt.execute();
+			while (hadResults) {
+				r = getPoliceLvlSSStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (r == null) {
+			return -1;
+		}
+		try{
+			r.first();
+			bol= r.getInt("police_level");
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+		return bol;
 	}
 
 }

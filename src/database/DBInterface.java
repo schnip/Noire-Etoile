@@ -24,4 +24,7 @@ public interface DBInterface {
 	public void giveGood(String player, String good, int quantity);
 	public boolean playerExists(String playerName);
 	public void dropCharacter(String playerName);
+	public int getLegality(String good);
+	public int getPoliceLevel(String planet);
+	public int getPoliceLevelStarSystem(String planet);
 }
