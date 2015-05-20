@@ -19,9 +19,7 @@ public class Launcher {
 		Engine e = new Engine();
 		DBInterface bd = new BlackDatabase();
 		String ret;
-		x[0] = "Hello World!";
-		x[1] = "This is the main window in which you will interact with Noire Etoile";
-		x[3] = "This is the main menu";
+		x[1] = "Main Menu";
 		x[5] = "    1) Connect to the local database";
 		x[6] = "    2) New game";
 		x[7] = "    3) Load game";
