@@ -62,7 +62,7 @@ public class BlackDatabase implements DBInterface{
 			playerExistsStmt = conn.prepareCall("{? = call player_exists(?)}");
 			dropPlayerStmt = conn.prepareCall("{call drop_player(?)}");
 			getAllGoodsStmt = conn.prepareCall("{call get_all_goods()}");
-			giveGoodStmt = conn.prepareCall("{call give_good_to_player()}");
+			giveGoodStmt = conn.prepareCall("{call give_good_to_player(?,?,?)}");
 			getLegalityStmt = conn.prepareCall("{call get_legality_good(?)}");
 			getPoliceLvlStmt = conn.prepareCall("{call get_police_planet(?)}");
 			getPoliceLvlSSStmt = conn.prepareCall("{call get_police_star_system(?)}");

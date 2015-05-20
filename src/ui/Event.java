@@ -72,7 +72,7 @@ public class Event {
 					if (rs.isLast()) {
 						break;
 					}
-					if (0 == bd.getLegality(rs.getString("name"))) {
+					if (0 == bd.getLegality(rs.getString("goodName"))) {
 						x[8] = "    The police officers come back to you carrying your " + rs.getString("name");
 						ret = e.render(x);
 						x[10] = "    They ask for an explanation.";
@@ -80,11 +80,11 @@ public class Event {
 						ret = e.render(x);
 						x[12] = "    They disregard your response and throw you out the airlock";
 						x[14] = "    GAME OVER";
-						x[22] = "(press enter to release your final breath");
+						x[22] = "(press enter to release your final breath)";
 						ret = e.render(x);
 						bd.dropCharacter(player);
 						e.close();
-						system.exit(0);
+						System.exit(0);
 					}
 					rs.next();
 				}
@@ -95,7 +95,7 @@ public class Event {
 				e.printStackTrace();
 			}
 		} else {
-			x[6] = "    The cruiser passes uneventfully by without boarding your ship"
+			x[6] = "    The cruiser passes uneventfully by without boarding your ship";
 			ret = e.render(x);
 			return;
 		}
@@ -111,6 +111,7 @@ public class Event {
 			rs.first();
 			while (!rs.isLast()) {
 				goods.add(rs.getString("goodName"));
+				rs.next();
 			}
 			
 			
