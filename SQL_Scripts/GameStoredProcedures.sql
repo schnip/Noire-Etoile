@@ -85,7 +85,7 @@ this:BEGIN
 	
 	SELECT personName INTO @alreadyPlayer
 	FROM Person
-	Where PName = personName
+	Where PName = personName;
 	
 	
 	if(@alreadyPlayer IS NULL) then
