@@ -85,11 +85,7 @@ this:BEGIN
 	
 	SELECT name INTO alreadyPlayer
 	FROM Person
-<<<<<<< HEAD
-	Where PName = personName;
-=======
 	Where PName = name;
->>>>>>> bbdf8ad7eaea7c607b48311b192de9ee6e667f30
 	
 	
 	if(alreadyPlayer IS not NULL) then
