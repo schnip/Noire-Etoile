@@ -12,7 +12,7 @@ public class Event {
 	public static final int ON_SURFACE = 1;
 	public static final int SPACEDOCK = 2;
 	public static final int MAX_SCRAP_QUANTITY = 10;
-	public static final int POLICE_RATE = 5;
+	public static final int POLICE_RATE = 2;
 	public static final int POLICE_THRESHOLD = 50;
 	public static final int POLICE_LEANIENCY = 50;
 	
@@ -73,7 +73,7 @@ public class Event {
 						break;
 					}
 					if (0 == bd.getLegality(rs.getString("goodName"))) {
-						x[8] = "    The police officers come back to you carrying your " + rs.getString("name");
+						x[8] = "    The police officers come back to you carrying your " + rs.getString("goodName");
 						ret = e.render(x);
 						x[10] = "    They ask for an explanation.";
 						x[22] = "(type your response and press enter)";

@@ -11,7 +11,7 @@ public class Engine {
 	private Scanner in;
 	private boolean isWindows;
 	private static final int WINDOW_WIDTH = 80;
-	private static final int EVENT_FREQUENCY = 5; // Lower is more frequent
+	private static final int EVENT_FREQUENCY = 2; // Lower is more frequent
 	
 	public Engine() {
 		in = new Scanner(System.in);

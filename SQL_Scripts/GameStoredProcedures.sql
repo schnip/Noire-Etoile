@@ -287,7 +287,7 @@ this:begin
 	DECLARE wgt int DEFAULT NULL;
 	
 	
-	SELECT name INTO good
+	SELECT goodName INTO good
 	FROM Inventory_entry
 	Where PName = personName and goodName = good_name;
 	
