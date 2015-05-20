@@ -232,12 +232,14 @@ public class Launcher {
 			ret = e.render(x);
 			switch (ret) {
 			case "l":
-				ResultSet rs = bd.getPlanetNews("player_planet");
+				ResultSet rs = bd.getPlanetNews(player_planet);
 				if (rs == null) {
 					break;
 				}
 				try{
 					rs.first();
+					if(!rs.next()){x[3]="There is no news for this system";break;}
+					rs.previous();
 					for (int i = 0; i < 10; i++) {
 						x[i+2] = "  " + rs.getInt("star_date") + " " + rs.getString("log_text");
 						if (rs.isLast()) {
@@ -254,6 +256,8 @@ public class Launcher {
 				}
 				try{
 					rs.first();
+					if(!rs.next()){x[3]="There is no news for this system";break;}
+					rs.previous();
 					for (int i = 0; i < 10; i++) {
 						x[i+2] = "  " + rs.getInt("star_date") + " " + rs.getString("log_text");
 						if (rs.isLast()) {
@@ -270,6 +274,8 @@ public class Launcher {
 				}
 				try{
 					rs.first();
+					if(!rs.next()){x[3]="There is no news for the Galaxy";break;}
+					rs.previous();
 					for (int i = 0; i < 10; i++) {
 						x[i+2] = "  " + rs.getInt("star_date") + " " + rs.getString("log_text");
 						if (rs.isLast()) {
