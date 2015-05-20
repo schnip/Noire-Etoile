@@ -517,7 +517,7 @@ public class Launcher {
 				rs.next();
 			}
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
-		
+
 		while(true) {
 			ret = e.render(x);
 			switch (ret) {
@@ -529,12 +529,16 @@ public class Launcher {
 					break;
 				return false;
 			default:
-				int choice = Integer.parseInt(ret);
-				//System.out.println("player_planet = " + player_planet);
-				if (choice>0 && choice<11) {
-					player_planet = p[choice-1];
-					//System.out.println("In choice to set planet. player_planet = "+player_planet);
-					bd.setPlayerPlanet(player_planet, player_name);
+				try {
+					int choice = Integer.parseInt(ret);
+					if (choice>0 && choice<11) {
+						player_planet = p[choice-1];
+						//System.out.println("In choice to set planet. player_planet = "+player_planet);
+						bd.setPlayerPlanet(player_planet, player_name);
+					}
+				} catch (NumberFormatException exc) {
+					x[18] = "   Please enter a valid entry";
+					continue;
 				}
 				return true;
 			}
@@ -568,14 +572,19 @@ public class Launcher {
 			case "r":
 				return false;
 			default:
-				int choice = Integer.parseInt(ret);
-				if (choice>0 && choice<11) {
-					if (player_system.equals(p[choice-1])) {
-						return false;
+				try {
+					int choice = Integer.parseInt(ret);
+					if (choice>0 && choice<11) {
+						if (player_system.equals(p[choice-1])) {
+							return false;
+						}
+						player_system = p[choice-1];
+						player_planet = "nothing";
+						return true;
 					}
-					player_system = p[choice-1];
-					player_planet = "nothing";
-					return true;
+				} catch (NumberFormatException exc) {
+					x[18] = "   Please enter a valid entry";
+					continue;
 				}
 				break;
 			}
