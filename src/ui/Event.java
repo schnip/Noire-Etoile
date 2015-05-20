@@ -67,6 +67,30 @@ public class Event {
 			ret = e.render(x);
 			try {
 				ResultSet rs = bd.getGoods(player);
+				rs.first();
+				while (true) {
+					if (rs.isLast()) {
+						break;
+					}
+					if (0 == bd.getLegality(rs.getString("name"))) {
+						x[8] = "    The police officers come back to you carrying your " + rs.getString("name");
+						ret = e.render(x);
+						x[10] = "    They ask for an explanation.";
+						x[22] = "(type your response and press enter)";
+						ret = e.render(x);
+						x[12] = "    They disregard your response and throw you out the airlock";
+						x[14] = "    GAME OVER";
+						x[22] = "(press enter to release your final breath");
+						ret = e.render(x);
+						bd.dropCharacter(player);
+						e.close();
+						system.exit(0);
+					}
+					rs.next();
+				}
+				x[8] = "    The search comes back clean and the police continue on their way";
+				ret = e.render(x);
+				return;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
