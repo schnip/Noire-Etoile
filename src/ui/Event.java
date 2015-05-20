@@ -11,6 +11,7 @@ public class Event {
 	public static final int PLANET_MOVE = 0;
 	public static final int ON_SURFACE = 1;
 	public static final int SPACEDOCK = 2;
+	public static final int MAX_SCRAP_QUANTITY = 10;
 	
 	private static DBInterface bd;
 	private static String planet;
@@ -34,19 +35,17 @@ public class Event {
 
 	private static void salvage() {
 		String good = getRandomGood();
+		int qty = r.nextInt(MAX_SCRAP_QUANTITY) + 1;
 		if (good == null) {
 			return;
 		}
 		String[] x = Launcher.getArrayFilledWithBlanks(23);
 		String ret;
-		x[0] = "System Screen";	
-		x[22] = "(Select option and press enter)";
-		while(true) {
-			ret = e.render(x);
-			if (ret.equals("r")) {
-				break;
-			}
-		}
+		x[4] = "    While on your journey, you encountered some scrap that you could salvage";
+		x[6] = "    You now have " + qty + " addtional " + good;
+		x[22] = "(press enter to continue)";
+		bd.giveGood(player, good, qty);
+		ret = e.render(x);
 	}
 
 	private static String getRandomGood() {
