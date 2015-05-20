@@ -17,3 +17,8 @@ insert into Person
 (name,max_weight,employer,planet)
 values
 ('Hook',2500,'Triad','Omicron Persei 8');
+
+/*insert into Person
+(name,max_weight,employer,planet)
+values
+('Hook',2500,'Triad','Omicron Persei 8');*/

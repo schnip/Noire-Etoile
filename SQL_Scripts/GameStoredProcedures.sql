@@ -339,3 +339,21 @@ begin
 	Where name = star_system_name;
 END//
 DELIMITER ;
+
+DELIMITER //
+CREATE procedure get_danger_planet (in planet_name varchar(255))
+begin
+    SELECT danger_level
+	FROM Planet
+	Where name = planet_name;
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE procedure get_danger_star_system (in star_system_name varchar(255))
+begin
+    SELECT danger_level
+	FROM Star_System
+	Where name = star_system_name;
+END//
+DELIMITER ;
