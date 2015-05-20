@@ -27,6 +27,8 @@ public class BlackDatabase implements DBInterface{
 	private CallableStatement getTotalWeightStmt;
 	private CallableStatement getPlanetSystemStmt;
 	private CallableStatement getPlayerShipStmt;
+	private CallableStatement playerExistsStmt;
+	private CallableStatement dropPlayerStmt;
 	
 	public BlackDatabase() {
 		try {
@@ -52,6 +54,8 @@ public class BlackDatabase implements DBInterface{
 			getTotalWeightStmt = conn.prepareCall("{call get_total_weight(?)}");
 			getPlanetSystemStmt = conn.prepareCall("{call system_given_planet(?)}");
 			getPlayerShipStmt = conn.prepareCall("{call get_player_ship(?)}");
+			playerExistsStmt = conn.prepareCall("{? = call player_exists(?)}");
+			dropPlayerStmt = conn.prepareCall("{call drop_player(?)}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("breaking in Black Database init:");
@@ -401,6 +405,30 @@ public class BlackDatabase implements DBInterface{
 	public void giveGood(String player, String good, int quantity) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean playerExists(String playerName) {
+		boolean outputValue = false;
+		try {
+			playerExistsStmt.registerOutParameter(1,java.sql.Types.BOOLEAN);
+			playerExistsStmt.setString(2,playerName);
+			playerExistsStmt.execute();
+			outputValue = playerExistsStmt.getBoolean(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return outputValue;
+	}
+	@Override
+	public void dropCharacter(String playerName) {
+		try {
+			dropPlayerStmt.setString(1, playerName);
+			boolean hadResults = dropPlayerStmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

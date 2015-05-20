@@ -251,11 +251,30 @@ BEGIN
 END//
 DELIMITER ;
 
+DELIMITER //
+CREATE function player_exists (PName varchar(255)) returns boolean
+begin
+    DECLARE alreadyPlayer varchar(255) DEFAULT NULL;
+	
+	SELECT name INTO alreadyPlayer
+	FROM Person
+	Where PName = name;
+	
+	
+	if(alreadyPlayer IS not NULL) then
+		return true;
+	end if;
+    return false;
+    
+END//
+DELIMITER ;
 
-
-
-
-
-
-
-
+DELIMITER //
+CREATE procedure drop_player (in PName varchar(255))
+begin
+    delete from Person
+    where name = PName
+    limit 1;
+    
+END//
+DELIMITER ;

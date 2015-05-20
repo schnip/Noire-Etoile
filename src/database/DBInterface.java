@@ -22,4 +22,6 @@ public interface DBInterface {
 	public int getPlayerRemainingWeight(String playerName);
 	public ResultSet getAllGoods();
 	public void giveGood(String player, String good, int quantity);
+	public boolean playerExists(String playerName);
+	public void dropCharacter(String playerName);
 }

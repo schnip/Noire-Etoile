@@ -43,6 +43,7 @@ public class Launcher {
 			ret = e.render(x);
 		}
 		e.close();
+		System.exit(0);
 	}
 	
 	private static void settingsX(Engine e, DBInterface bd) {
@@ -78,15 +79,53 @@ public class Launcher {
 		x[2] = "software upgrade. It was what?";
 		x[22] = "(Enter your player's name and press enter)";
 		ret = e.render(x);
+		int offset = 0;
 		if(ret==""){ createCharater(e,bd); return;}
+		if(bd.playerExists(ret)){
+			String pname = ret;
+			while(true){
+			offset=2;
+			x[2+offset] ="It seems I have been able to find your old data. Would you like to continue";
+			x[3+offset] = "where you left off or create a new charater?";
+			x[22] = "(Enter l to load previous game, n to create a new character, or o to overwrite)";
+			ret = e.render(x);
+			if (ret.toLowerCase().equals("n")){
+				x[20] ="";
+				createCharater(e,bd); return;
+			}
+			else if (ret.toLowerCase().equals( "l")){
+				x[20] ="";
+				String get;
+				get = bd.getPlayerPlanet(pname);
+				if (get == null) {
+					get = "Planet Eric";
+				}
+				player_name = pname;
+				player_planet = get;
+				player_system = bd.getPlanetSystem(get);
+				player_ship = bd.getPlayerShip(pname);
+				orbitX(e, bd);
+				return;
+			}
+			else if (ret.toLowerCase().equals( "o")){
+				x[20] ="";
+				bd.dropCharacter(ret);
+				break;
+			}
+			else{
+				x[20] = "Please enter (y/n) as a valid entry.";
+				continue;
+			}
+			}
+		}
 		player_name = ret;
-		x[4] = "Ah yes, Captain " + player_name + "!";
-		x[6] = "Now that your new ship has been completed, what would you like to name her?";
+		x[4+offset] = "Ah yes, Captain " + player_name + "!";
+		x[5+offset] = "Now that your new ship has been completed, what would you like to name her?";
 		x[22] = "(Enter your ship's name and press enter)";
 		ret = e.render(x);
 		player_ship = ret;
-		x[8] = "Very well, the " + player_ship + " it is!";
-		x[10] = "When you are ready, we'll go to orbit!";
+		x[7+offset] = "Very well, the " + player_ship + " it is!";
+		x[8+offset] = "When you are ready, we'll go to orbit!";
 		x[22] = "(Press enter when you are ready to go to orbit)";
 		ret = e.render(x);
 		player_planet = "Planet Eric";
@@ -144,7 +183,8 @@ public class Launcher {
 				orbitX(e, bd);
 				return;
 			case "7":
-				System.exit(0);
+				String[] main=null;
+				main(main);
 				return;
 			default:
 				break;
