@@ -258,7 +258,7 @@ begin
 	
 	SELECT name INTO alreadyPlayer
 	FROM Person
-	Where PName = name;
+	Where PName = name and employer = "User";
 	
 	
 	if(alreadyPlayer IS not NULL) then
@@ -273,7 +273,7 @@ DELIMITER //
 CREATE procedure drop_player (in PName varchar(255))
 begin
     delete from Person
-    where name = PName
+    where name = PName and employer = "User"
     limit 1;
     
 END//

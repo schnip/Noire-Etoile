@@ -45,7 +45,7 @@ public class Launcher {
 		e.close();
 		System.exit(0);
 	}
-	
+
 	private static void settingsX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
@@ -55,11 +55,11 @@ public class Launcher {
 		x[22] = "(Type a number and press enter)";
 		ret = e.render(x);
 		switch (ret) {
-			case "1":
-				break;
-			default:
-				orbitX(e, bd);
-				break;
+		case "1":
+			break;
+		default:
+			orbitX(e, bd);
+			break;
 		}
 	}
 
@@ -77,45 +77,47 @@ public class Launcher {
 		x[0] = "Welcome to Noire Etoile! I am your ship's onboard computer!";
 		x[1] = "Please forgive my dataloss, I seem to have forgotten your name in my most recent";
 		x[2] = "software upgrade. It was what?";
-		x[22] = "(Enter your player's name and press enter)";
+		x[22] = "(Enter your player's name (minimum length 2) and press enter)";
 		ret = e.render(x);
+		if(ret.length()<2) {createCharater(e,bd); return;}
 		int offset = 0;
 		if(ret==""){ createCharater(e,bd); return;}
 		if(bd.playerExists(ret)){
 			String pname = ret;
 			while(true){
-			offset=2;
-			x[2+offset] ="It seems I have been able to find your old data. Would you like to continue";
-			x[3+offset] = "where you left off or create a new charater?";
-			x[22] = "(Enter l to load previous game, n to create a new character, or o to overwrite)";
-			ret = e.render(x);
-			if (ret.toLowerCase().equals("n")){
-				x[20] ="";
-				createCharater(e,bd); return;
-			}
-			else if (ret.toLowerCase().equals( "l")){
-				x[20] ="";
-				String get;
-				get = bd.getPlayerPlanet(pname);
-				if (get == null) {
-					get = "Planet Eric";
+				offset=2;
+				x[2+offset] ="It seems I have been able to find your old data. Would you like to continue";
+				x[3+offset] = "where you left off or create a new charater?";
+				x[22] = "(Enter l to load previous game, n to create a new character, or o to overwrite)";
+				ret = e.render(x);
+				if (ret.toLowerCase().equals("n")){
+					x[20] ="";
+					createCharater(e,bd); return;
 				}
-				player_name = pname;
-				player_planet = get;
-				player_system = bd.getPlanetSystem(get);
-				player_ship = bd.getPlayerShip(pname);
-				orbitX(e, bd);
-				return;
-			}
-			else if (ret.toLowerCase().equals( "o")){
-				x[20] ="";
-				bd.dropCharacter(ret);
-				break;
-			}
-			else{
-				x[20] = "Please enter (y/n) as a valid entry.";
-				continue;
-			}
+				else if (ret.toLowerCase().equals( "l")){
+					x[20] ="";
+					String get;
+					get = bd.getPlayerPlanet(pname);
+					if (get == null) {
+						get = "Planet Eric";
+					}
+					player_name = pname;
+					player_planet = get;
+					player_system = bd.getPlanetSystem(get);
+					player_ship = bd.getPlayerShip(pname);
+					orbitX(e, bd);
+					return;
+				}
+				else if (ret.toLowerCase().equals( "o")){
+					x[20] ="";
+					ret = pname;
+					bd.dropCharacter(ret);
+					break;
+				}
+				else{
+					x[20] = "Please enter (y/n) as a valid entry.";
+					continue;
+				}
 			}
 		}
 		player_name = ret;
@@ -152,8 +154,8 @@ public class Launcher {
 		x[9] = "    7) Quit";
 		x[22] = "(Type a number and press enter)";
 		while(true) {
-		ret = e.render(x);
-		switch (ret) {
+			ret = e.render(x);
+			switch (ret) {
 			case "1":
 				if (systemX(e, bd, false)) {
 					if (e.isEvent(bd, player_planet)) {
@@ -188,7 +190,7 @@ public class Launcher {
 				return;
 			default:
 				break;
-		}
+			}
 		}
 	}
 
@@ -198,20 +200,27 @@ public class Launcher {
 		x[0] = "Load Game";	
 		x[3] = "    Enter the name of the character you want to load";
 		x[4] = "    ";
-		x[22] = "(Type a name and press enter)";
+		x[20] = "    r) Return to previous screen";
+		x[22] = "(Type a name (minimum length 2) and press enter)";
 		while(true) {
 			ret = e.render(x);
-			String get;
-			get = bd.getPlayerPlanet(ret);
-			if (get == null) {
-				continue;
-			} else {
-				player_name = ret;
-				player_planet = get;
-				player_system = bd.getPlanetSystem(get);
-				player_ship = bd.getPlayerShip(ret);
-				orbitX(e, bd);
-				return;
+			if(ret.equals("r")){return;}
+			if(bd.playerExists(ret)){
+				String get;
+				get = bd.getPlayerPlanet(ret);
+				if (get == null) {
+					continue;
+				} else {
+					player_name = ret;
+					player_planet = get;
+					player_system = bd.getPlanetSystem(get);
+					player_ship = bd.getPlayerShip(ret);
+					orbitX(e, bd);
+					return;
+				}
+			}
+			else{
+				x[18]= "Character "+ ret + " does not exist. ";
 			}
 		}
 	}
@@ -220,19 +229,19 @@ public class Launcher {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;
 		player_planet = bd.getPlayerPlanet(player_name);
-		
+
 		x[0] = "News Screen";
 		x[1] = "You are on " + player_planet + " in the " + player_system + " system";
 		x[22] = "(l for local news, s for system news, g for galactic news, b to go back)";
 		while(true) {
 			ret = e.render(x);
 			switch (ret) {
-				case "l":
-					ResultSet rs = bd.getPlanetNews("player_planet");
-					if (rs == null) {
-						break;
-					}
-					try{
+			case "l":
+				ResultSet rs = bd.getPlanetNews("player_planet");
+				if (rs == null) {
+					break;
+				}
+				try{
 					if (rs == null)
 						break;
 					rs.first();
@@ -243,14 +252,14 @@ public class Launcher {
 						}
 						rs.next();
 					}
-					} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+				} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+				break;
+			case "s":
+				rs = bd.getSystemNews("player_system");
+				if (rs == null) {
 					break;
-				case "s":
-					rs = bd.getSystemNews("player_system");
-					if (rs == null) {
-						break;
-					}
-					try{
+				}
+				try{
 					rs.first();
 					for (int i = 0; i < 10; i++) {
 						x[i+2] = "  " + rs.getInt("star_date") + " " + rs.getString("log_text");
@@ -259,14 +268,14 @@ public class Launcher {
 						}
 						rs.next();
 					}
-					} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+				} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+				break;
+			case "g":
+				rs = bd.getGalaxyNews();
+				if (rs == null) {
 					break;
-				case "g":
-					rs = bd.getGalaxyNews();
-					if (rs == null) {
-						break;
-					}
-					try{
+				}
+				try{
 					rs.first();
 					for (int i = 0; i < 10; i++) {
 						x[i+2] = "  " + rs.getInt("star_date") + " " + rs.getString("log_text");
@@ -275,12 +284,12 @@ public class Launcher {
 						}
 						rs.next();
 					}
-					} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
-					break;
-				case "b":
-					return;
-				default:
-					break;
+				} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+				break;
+			case "b":
+				return;
+			default:
+				break;
 			}
 		}
 	}
@@ -292,14 +301,14 @@ public class Launcher {
 		try {
 			ResultSet rs = bd.getGoods(player_name);
 			if(rs!= null){
-			rs.first();
-			for (int i = 1; i < 11; i++) {
-				x[i+5] = "  " + rs.getInt("quantity") + " " + rs.getString("goodName");
-				if (rs.isLast()) {
-					break;
+				rs.first();
+				for (int i = 1; i < 11; i++) {
+					x[i+5] = "  " + rs.getInt("quantity") + " " + rs.getString("goodName");
+					if (rs.isLast()) {
+						break;
+					}
+					rs.next();
 				}
-				rs.next();
-			}
 			}
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		ret = e.render(x);		
@@ -315,15 +324,15 @@ public class Launcher {
 		try {
 			ResultSet rs = bd.getVendors(player_planet, player_name);
 			if(rs!= null){
-			rs.first();
-			for (int i = 1; i < 11; i++) {
-				x[i+5] = "    " + i + ") " + rs.getString("name");
-				p[i-1] = rs.getString("name");
-				if (rs.isLast()) {
-					break;
+				rs.first();
+				for (int i = 1; i < 11; i++) {
+					x[i+5] = "    " + i + ") " + rs.getString("name");
+					p[i-1] = rs.getString("name");
+					if (rs.isLast()) {
+						break;
+					}
+					rs.next();
 				}
-				rs.next();
-			}
 			}
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		while (true) {
@@ -342,14 +351,14 @@ public class Launcher {
 						vendorX(e, bd, p[choice-1]);
 					}
 				} catch (NumberFormatException exc) {
-				   x[18] = "   Please enter a valid entry";
-				   continue;
+					x[18] = "   Please enter a valid entry";
+					continue;
 				}
-			
+
 			}
 		}		
 	}
-	
+
 	private static void vendorX(Engine e, DBInterface bd, String v) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String[] p = getArrayFilledWithBlanks(10);
@@ -362,17 +371,17 @@ public class Launcher {
 		try {
 			ResultSet rs = bd.getGoods(v);
 			if(rs!= null){
-			rs.first();
-			for (int i = 1; i < 11; i++) {
-				gdArray.add(rs.getString("goodName"));
-				x[i+5] = "    " + i + ") " + rs.getString("goodName")+
-						"         " + rs.getString("quantity")+"        " + rs.getString("good_value");
-				p[i-1] = rs.getString("goodName");
-				if (rs.isLast()) {
-					break;
+				rs.first();
+				for (int i = 1; i < 11; i++) {
+					gdArray.add(rs.getString("goodName"));
+					x[i+5] = "    " + i + ") " + rs.getString("goodName")+
+							"         " + rs.getString("quantity")+"        " + rs.getString("good_value");
+					p[i-1] = rs.getString("goodName");
+					if (rs.isLast()) {
+						break;
+					}
+					rs.next();
 				}
-				rs.next();
-			}
 			}
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		while (true) {
@@ -384,14 +393,14 @@ public class Launcher {
 			try {
 				int choice = Integer.parseInt(ret);
 				if (choice>0 && choice<11) {
-				//bd.makeTrade(player_name, v, p[choice-1],1);
+					//bd.makeTrade(player_name, v, p[choice-1],1);
 					System.out.println(p[choice-1]);
-					
-				amountX(e, bd, v, p[choice-1]);
+
+					amountX(e, bd, v, p[choice-1]);
 				}}
-				catch(Exception exc){
-					x[18] = "   Please enter a valid entry";
-					   continue;
+			catch(Exception exc){
+				x[18] = "   Please enter a valid entry";
+				continue;
 			}
 		}		
 	}
@@ -439,11 +448,11 @@ public class Launcher {
 			}
 			int choice;
 			try {
-			choice = Integer.parseInt(ret);
+				choice = Integer.parseInt(ret);
 			}
 			catch(Exception exc){
 				x[18] = "   Please enter a valid entry";
-				   continue;
+				continue;
 			}
 			System.out.println(pw + ","+gw*choice);
 			if (choice * gw > pw) {
@@ -472,7 +481,7 @@ public class Launcher {
 		String ret;
 		x[0] = "Spacedock Screen";	
 		ret = e.render(x);
-		
+
 	}
 
 	private static boolean systemX(Engine e, DBInterface bd, boolean must) {
@@ -499,8 +508,8 @@ public class Launcher {
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		// TODO bring planets there to be selected between
 		while(true) {
-		ret = e.render(x);
-		switch (ret) {
+			ret = e.render(x);
+			switch (ret) {
 			case "g":
 				boolean change = galaxyX(e, bd);
 				return systemX(e, bd, change);
@@ -517,7 +526,7 @@ public class Launcher {
 					bd.setPlayerPlanet(player_planet, player_name);
 				}
 				return true;
-		}
+			}
 		}
 	}
 
@@ -532,37 +541,37 @@ public class Launcher {
 		try {
 			ResultSet rs = bd.getSystems();
 			if(rs!=null){
-			rs.first();
-			for (int i = 1; i < 11; i++) {
-				x[i+5] = "    " + i + ") " + rs.getString("name");
-				p[i-1] = rs.getString("name");
-				if (rs.isLast()) {
-					break;
+				rs.first();
+				for (int i = 1; i < 11; i++) {
+					x[i+5] = "    " + i + ") " + rs.getString("name");
+					p[i-1] = rs.getString("name");
+					if (rs.isLast()) {
+						break;
+					}
+					rs.next();
 				}
-				rs.next();
-			}
 			}
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		while(true) {
 			ret = e.render(x);
 			switch (ret) {
-				case "r":
-					return false;
-				default:
-					int choice = Integer.parseInt(ret);
-					if (choice>0 && choice<11) {
-						if (player_system.equals(p[choice-1])) {
-							return false;
-						}
-						player_system = p[choice-1];
-						player_planet = "nothing";
-						return true;
+			case "r":
+				return false;
+			default:
+				int choice = Integer.parseInt(ret);
+				if (choice>0 && choice<11) {
+					if (player_system.equals(p[choice-1])) {
+						return false;
 					}
-					break;
+					player_system = p[choice-1];
+					player_planet = "nothing";
+					return true;
+				}
+				break;
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("unused")
 	private static void emptyX(Engine e, DBInterface bd) {
 		String[] x = getArrayFilledWithBlanks(23);
@@ -577,7 +586,7 @@ public class Launcher {
 			}
 		}
 	}
-	
+
 	private static void traderecieptX(Engine e, DBInterface bd, String vendor, String good, int quantity, int unitcost) {
 		String[] x = getArrayFilledWithBlanks(23);
 		String ret;

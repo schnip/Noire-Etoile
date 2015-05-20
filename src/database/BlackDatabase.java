@@ -29,7 +29,7 @@ public class BlackDatabase implements DBInterface{
 	private CallableStatement getPlayerShipStmt;
 	private CallableStatement playerExistsStmt;
 	private CallableStatement dropPlayerStmt;
-	
+
 	public BlackDatabase() {
 		try {
 			Class.forName(JDBC_DRIVER);
@@ -197,18 +197,18 @@ public class BlackDatabase implements DBInterface{
 	@Override
 	public Boolean makeTrade(String buyerName, String vendorName, String BgoodName,
 			int Bquantity) {
-			boolean r = false;
-			try {
-				makeTradeStmt.setString(1, buyerName);
-				makeTradeStmt.setString(2, vendorName);
-				makeTradeStmt.setString(3, BgoodName);
-				makeTradeStmt.setInt(4, Bquantity);
-				r = makeTradeStmt.execute();
-				r=true;
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return r;
+		boolean r = false;
+		try {
+			makeTradeStmt.setString(1, buyerName);
+			makeTradeStmt.setString(2, vendorName);
+			makeTradeStmt.setString(3, BgoodName);
+			makeTradeStmt.setInt(4, Bquantity);
+			r = makeTradeStmt.execute();
+			r=true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return r;
 	}
 
 	@Override
@@ -404,7 +404,7 @@ public class BlackDatabase implements DBInterface{
 	@Override
 	public void giveGood(String player, String good, int quantity) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
