@@ -33,6 +33,7 @@ public class BlackDatabase implements DBInterface{
 	private CallableStatement giveGoodStmt;
 	private CallableStatement getLegalityStmt;
 	private CallableStatement getPoliceLvlStmt;
+	private CallableStatement getPoliceLvlSSStmt;
 
 	public BlackDatabase() {
 		try {
@@ -61,9 +62,10 @@ public class BlackDatabase implements DBInterface{
 			playerExistsStmt = conn.prepareCall("{? = call player_exists(?)}");
 			dropPlayerStmt = conn.prepareCall("{call drop_player(?)}");
 			getAllGoodsStmt = conn.prepareCall("{call get_all_goods()}");
-			giveGoodStmt = conn.prepareCall("{call get_all_goods()}");
-			getLegalityStmt = conn.prepareCall("{call get_all_goods(?)}");
-			getPoliceLvlStmt = conn.prepareCall("{call get_all_goods(?)}");
+			giveGoodStmt = conn.prepareCall("{call give_good_to_player()}");
+			getLegalityStmt = conn.prepareCall("{call get_legality_good(?)}");
+			getPoliceLvlStmt = conn.prepareCall("{call get_police_planet(?)}");
+			getPoliceLvlSSStmt = conn.prepareCall("{call get_police_star_system(?)}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("breaking in Black Database init:");
@@ -491,6 +493,31 @@ public class BlackDatabase implements DBInterface{
 			boolean hadResults = getPoliceLvlStmt.execute();
 			while (hadResults) {
 				r = getPoliceLvlStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (r == null) {
+			return -1;
+		}
+		try{
+			r.first();
+			bol= r.getInt("police_level");
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+		return bol;
+	}
+
+	@Override
+	public int getPoliceLevelStarSystem(String planet) {
+		ResultSet r = null;
+		int bol=-1;
+		try {
+			getPoliceLvlSSStmt.setString(1, planet);
+			boolean hadResults = getPoliceLvlSSStmt.execute();
+			while (hadResults) {
+				r = getPoliceLvlSSStmt.getResultSet();
 				//hadResults = getPlanetStmt.getMoreResults();
 				break;
 			}
