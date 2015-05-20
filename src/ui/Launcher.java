@@ -236,6 +236,10 @@ public class Launcher {
 				if (rs == null) {
 					break;
 				}
+				x = getArrayFilledWithBlanks(23);
+				x[0] = "News Screen";
+				x[1] = "You are on " + player_planet + " in the " + player_system + " system";
+				x[22] = "(l for local news, s for system news, g for galactic news, b to go back)";
 				try{
 					rs.first();
 					if(!rs.next()){x[3]="There is no news for this system";break;}
@@ -254,6 +258,10 @@ public class Launcher {
 				if (rs == null) {
 					break;
 				}
+				x = getArrayFilledWithBlanks(23);
+				x[0] = "News Screen";
+				x[1] = "You are on " + player_planet + " in the " + player_system + " system";
+				x[22] = "(l for local news, s for system news, g for galactic news, b to go back)";
 				try{
 					rs.first();
 					if(!rs.next()){x[3]="There is no news for this system";break;}
@@ -272,6 +280,10 @@ public class Launcher {
 				if (rs == null) {
 					break;
 				}
+				x = getArrayFilledWithBlanks(23);
+				x[0] = "News Screen";
+				x[1] = "You are on " + player_planet + " in the " + player_system + " system";
+				x[22] = "(l for local news, s for system news, g for galactic news, b to go back)";
 				try{
 					rs.first();
 					if(!rs.next()){x[3]="There is no news for the Galaxy";break;}
