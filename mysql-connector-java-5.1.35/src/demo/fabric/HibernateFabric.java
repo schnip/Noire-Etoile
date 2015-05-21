@@ -21,16 +21,16 @@
 
  */
 
-package demo.fabric;
+package src.demo.fabric;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistryBuilder;
+import src.org.hibernate.Session;
+import src.org.hibernate.SessionFactory;
+import src.org.hibernate.cfg.Configuration;
+import src.org.hibernate.service.ServiceRegistryBuilder;
 
 import com.mysql.fabric.hibernate.FabricMultiTenantConnectionProvider;
 

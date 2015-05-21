@@ -21,7 +21,7 @@
 
  */
 
-package testsuite.regression;
+package src.testsuite.regression;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -86,8 +86,8 @@ import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 import javax.transaction.xa.Xid;
 
-import testsuite.BaseTestCase;
-import testsuite.UnreliableSocketFactory;
+import src.testsuite.BaseTestCase;
+import src.testsuite.UnreliableSocketFactory;
 
 import com.mysql.jdbc.AuthenticationPlugin;
 import com.mysql.jdbc.Buffer;
