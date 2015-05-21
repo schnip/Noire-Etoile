@@ -361,14 +361,14 @@ DELIMITER ;
 DELIMITER //
 CREATE function all_goods_illegal (PName varchar(255)) returns boolean
 begin
-    DECLARE Illegal varchar(255) DEFAULT NULL;
+    DECLARE Illegal int DEFAULT 0;
 	
-	SELECT name INTO Illegal
+	SELECT count(personName) INTO Illegal
 	FROM Inventory_entry as i JOIN Goods as g ON i.goodName = g.goodName
-	Where PName != name AND legality = 1;
+	Where PName != personName AND legality = 0;
 	
 	
-	if(Illegal IS NULL) then
+	if(Illegal=0) then
 		return true;
 	end if;
     return false;

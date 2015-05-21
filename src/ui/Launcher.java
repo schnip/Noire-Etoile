@@ -478,6 +478,7 @@ public class Launcher {
 					ret = e.render(x);
 					x[11] = "    You now have " + 5000 + " addtional " + "Money";
 					x[22] = "(press enter to continue)";
+					bd.dropCharacter(v);
 					bd.giveGood(player_name, "Money", 5000);
 					ret = e.render(x);
 					if(bd.getIllegalStatus(player_name)){
@@ -486,6 +487,7 @@ public class Launcher {
 						e.close();
 						System.exit(0);
 					}
+					landingX(e,bd);
 					return;
 				}
 				else{
