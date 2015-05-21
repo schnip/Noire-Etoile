@@ -2,6 +2,7 @@ package ui;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Random;
 
 import database.BlackDatabase;
 import database.DBInterface;
@@ -332,10 +333,10 @@ public class Launcher {
 		try {
 			ResultSet rs = bd.getVendors(player_planet, player_name);
 			if(rs!= null){
-				rs.first();
+				if(!rs.first()){x[3]="There are no other people on this planet";
+				e.render(x);
+				orbitX(e,bd); return;}
 				for (int i = 1; i < 11; i++) {
-					if(!rs.next()){x[3]="There are no other people on this planet";break;}
-					rs.previous();
 					x[i+5] = "    " + i + ") " + rs.getString("name");
 					p[i-1] = rs.getString("name");
 					if (rs.isLast()) {
@@ -373,18 +374,23 @@ public class Launcher {
 		String[] x = getArrayFilledWithBlanks(23);
 		String[] p = getArrayFilledWithBlanks(10);
 		String ret;
+		boolean flag = true;
 		ArrayList<String> gdArray = new ArrayList<String>();
 		x[0] = "On Vendor Screen";
 		x[1] = "  Choose a good to buy";
 		x[20] = "    r) Return to previous screen";
+		x[19] = "    c) Call police on "+v+" for selling illegal products";
 		x[3] = "    Item Name        Quantity Availible        Price";
 		try {
 			ResultSet rs = bd.getGoods(v);
 			if(rs!= null){
-				rs.first();
+				if(!rs.first()){
+					x[3]="There are no goods for this person";
+					x[19]="";
+					flag = false;
+					ret = e.render(x);
+					landingX(e,bd);return;}
 				for (int i = 1; i < 11; i++) {
-					if(!rs.next()){x[3]="There are no goods for this person";break;}
-					rs.previous();
 					gdArray.add(rs.getString("goodName"));
 					x[i+5] = "    " + i + ") " + rs.getString("goodName")+
 							"         " + rs.getString("quantity")+"        " + rs.getString("good_value");
@@ -402,6 +408,10 @@ public class Launcher {
 				landingX(e, bd);
 				return;
 			}
+			if(ret.equals("c")&&flag){
+				callPolice(e,bd,v,gdArray);
+				return;
+			}
 			try {
 				int choice = Integer.parseInt(ret);
 				if (choice>0 && choice<11) {
@@ -415,6 +425,121 @@ public class Launcher {
 				continue;
 			}
 		}		
+	}
+
+	private static void callPolice(Engine e, DBInterface bd,String v, ArrayList<String> gdArray){
+		String[] x = getArrayFilledWithBlanks(23);
+		String ret;
+		int plvl = bd.getPoliceLevel(player_planet);
+		String pL="";
+		if(plvl>75)pL="High";
+		else if (plvl>30)pL="Average";
+		else pL ="Low";
+		int dlvl = bd.getDangerLevel(player_planet);
+		String dL="";
+		if(dlvl>75)dL="High";
+		else if (dlvl>30)dL="Average";
+		else dL ="Low";
+		x[0] = "Are you sure that you want to call the Police on "+v+"?";
+		x[1] = "Police Level: " + pL + "        Danger Level: "+dL;
+		x[20] = "    r) Return to previous screen";
+		x[19] = "    y) Make the Call";
+		ret = e.render(x);
+		if(ret.equals("")){
+			callPolice(e,bd,v,gdArray);
+			return;
+		}
+		else if(ret.equals("r")){
+			vendorX(e,bd,v);
+			return;
+		}
+		else if(ret.equals("y")){
+			x[3]="You make the call...";
+			x[20]="(Press enter to continue)";
+			x[19]="";
+			ret = e.render(x);
+			if(policeCome(plvl)){
+				x[5]="The police come to investigate...";
+				boolean flag = false;
+				int i =0;
+				try {
+					for(i=0;i < gdArray.size(); i++) {
+						if(bd.getLegality(gdArray.get(i))==0){
+							flag = true;
+							break;
+						}
+					}
+				} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+				if(flag){
+					x[7]="The Police come back carrying "+gdArray.get(i);
+					x[8]= "They proceed to cuff the shop owner";
+					ret = e.render(x);
+					x[9]="\"Thanks for the help you scum\" one of them says as they throw you a wad of cash.";
+					ret = e.render(x);
+					x[11] = "    You now have " + 5000 + " addtional " + "Money";
+					x[22] = "(press enter to continue)";
+					bd.giveGood(player_name, "Money", 5000);
+					ret = e.render(x);
+					return;
+				}
+				else{
+					x[7]="The Police don't find any illegal goods in "+v+"'s shop";
+					ret = e.render(x);
+					x[9]="As you turn to leave you hear a noise behind you...";
+					x[10]="You turn to see the shop owner as he lands a strike on your head...";
+					ret = e.render(x);
+					x[12]="The shop owner stands on the inside of the airlock and asks in the intercom";
+					x[13]="Say your last words, Punk!";
+					x[20]="(Type your punny excuse for bringing the cops into things and press enter)";
+					ret = e.render(x);
+					x[9]="The shop owner ignores your comments and sends you out the airlock. GAME OVER.";
+					ret = e.render(x);
+					bd.dropCharacter(player_name);
+					e.close();
+					System.exit(0);
+				}
+			}
+			if(thugsCome(dlvl)){
+				x[5]="The police do not come. A shame...";
+				ret = e.render(x);
+				x[7]="You hear something coming from a hallway in the airlock";
+				ret = e.render(x);
+				x[9]="A group of thugs slam you against the nearest wall";
+				x[20]="(Type your punny excuse for bringing the cops into things and press enter)";
+				ret = e.render(x);
+				x[9]="The thugs ignore your comments and throw you out the airlock. GAME OVER.";
+				ret = e.render(x);
+				bd.dropCharacter(player_name);
+				e.close();
+				System.exit(0);
+			}
+			else{
+
+				x[5]="The police do not come. A shame...";
+				ret = e.render(x);
+				return;
+			}
+		}else{
+			x[18] = "Please enter a valid entry";
+			callPolice(e,bd,v,gdArray);
+			return;
+		}
+	}
+
+	public static boolean policeCome(int plvl) {
+		Random r = new Random();
+		if (r.nextInt((105-plvl)) <= 50) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean thugsCome(int dlvl) {
+		Random r = new Random();
+		if (r.nextInt((105-dlvl)) <= 50) {
+			return true;
+		}
+		return false;
 	}
 
 	private static void amountX(Engine e, DBInterface bd, String v,
@@ -511,10 +636,8 @@ public class Launcher {
 		x[4] = "    r) Return to orbit screen";
 		try {
 			ResultSet rs = bd.getSystemPlanets(player_system);
-			rs.first();
+			if(!rs.first()){x[3]="There are no planets in this system";}
 			for (int i = 1; i < 11; i++) {
-				if(!rs.next()){x[3]="There are no planets in this system";break;}
-				rs.previous();
 				x[i+5] = "    " + i + ") " + rs.getString("name");
 				p[i-1] = rs.getString("name");
 				if (rs.isLast()) {
@@ -561,10 +684,9 @@ public class Launcher {
 		try {
 			ResultSet rs = bd.getSystems();
 			if(rs!=null){
-				rs.first();
+
+				if(!rs.first()){x[3]="There are no systems in the galaxy";}
 				for (int i = 1; i < 11; i++) {
-					if(!rs.next()){x[3]="There are no systems in the galaxy";break;}
-					rs.previous();
 					x[i+5] = "    " + i + ") " + rs.getString("name");
 					p[i-1] = rs.getString("name");
 					if (rs.isLast()) {

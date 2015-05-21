@@ -258,7 +258,7 @@ begin
 	
 	SELECT name INTO alreadyPlayer
 	FROM Person
-	Where PName = name and employer = "User";
+	Where PName = name;
 	
 	
 	if(alreadyPlayer IS not NULL) then
