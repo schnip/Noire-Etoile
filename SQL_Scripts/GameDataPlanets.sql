@@ -21,7 +21,7 @@ VALUES
 INSERT INTO Planet
 (name, loc_x, loc_y, info, danger_level, police_level,star_system)
 VALUES
-('Veldin', 30, 30, "Home of the galactic duo", 100, 1, 'Easter Egg Nebula');
+('Veldin', 30, 30, "Home of the galactic duo", 1, 100, 'Easter Egg Nebula');
 
 INSERT INTO Planet
 (name, loc_x, loc_y, info, danger_level, police_level,star_system)
