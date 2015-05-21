@@ -33,6 +33,7 @@ public class BlackDatabase implements DBInterface{
 	private CallableStatement giveGoodStmt;
 	private CallableStatement getLegalityStmt;
 	private CallableStatement getPoliceLvlStmt;
+	private CallableStatement getDangerLvlStmt;
 	private CallableStatement getPoliceLvlSSStmt;
 
 	public BlackDatabase() {
@@ -65,6 +66,7 @@ public class BlackDatabase implements DBInterface{
 			giveGoodStmt = conn.prepareCall("{call give_good_to_player(?,?,?)}");
 			getLegalityStmt = conn.prepareCall("{call get_legality_good(?)}");
 			getPoliceLvlStmt = conn.prepareCall("{call get_police_planet(?)}");
+			getDangerLvlStmt = conn.prepareCall("{call get_danger_planet(?)}");
 			getPoliceLvlSSStmt = conn.prepareCall("{call get_police_star_system(?)}");
 		} catch (Exception e) {
 			System.out.println("breaking in Black Database init:");
@@ -528,6 +530,31 @@ public class BlackDatabase implements DBInterface{
 		try{
 			r.first();
 			bol= r.getInt("police_level");
+		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
+		return bol;
+	}
+
+	@Override
+	public int getDangerLevel(String player_planet) {
+		ResultSet r = null;
+		int bol=-1;
+		try {
+			getDangerLvlStmt.setString(1, player_planet);
+			boolean hadResults = getDangerLvlStmt.execute();
+			while (hadResults) {
+				r = getDangerLvlStmt.getResultSet();
+				//hadResults = getPlanetStmt.getMoreResults();
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (r == null) {
+			return -1;
+		}
+		try{
+			r.first();
+			bol= r.getInt("danger_level");
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		return bol;
 	}
