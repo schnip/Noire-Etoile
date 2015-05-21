@@ -357,3 +357,24 @@ begin
 	Where name = star_system_name;
 END//
 DELIMITER ;
+
+DELIMITER //
+CREATE function all_goods_illegal (PName varchar(255)) returns boolean
+begin
+    DECLARE Illegal varchar(255) DEFAULT NULL;
+	
+	SELECT name INTO Illegal
+	FROM Inventory_entry as i JOIN Goods as g ON i.goodName = g.goodName
+	Where PName != name AND legality = 1;
+	
+	
+	if(Illegal IS NULL) then
+		return true;
+	end if;
+    return false;
+    
+END//
+DELIMITER ;
+
+
+
