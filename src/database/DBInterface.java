@@ -28,4 +28,5 @@ public interface DBInterface {
 	public int getPoliceLevel(String planet);
 	public int getPoliceLevelStarSystem(String planet);
 	public int getDangerLevel(String player_planet);
+	public boolean getIllegalStatus(String player_name);
 }
