@@ -22,3 +22,14 @@ insert into Employer
 (name,status)
 values
 ('User','Impartial');
+
+insert into Employer
+(name,status)
+values
+('Megacorp Company','Good');
+
+insert into Employer
+(name,status)
+values
+('Olympians','Impartial');
+

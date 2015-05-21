@@ -51,7 +51,7 @@ values
 insert into Goods
 (goodName,good_value,weight,legality,description)
 values
-('Scheme Interpreter', 0, 1, true, 'No body needs this in their life...');
+('Scheme Interpreter', 0, 1, false, 'No body needs this in their life...');
 
 insert into Goods
 (goodName,good_value,weight,legality,description)
@@ -132,6 +132,12 @@ insert into Goods
 (goodName,good_value,weight,legality,description)
 values
 ('Alcoholic Beverage', 20, 3, false, 'ARE YOU OF AGE? Our scanners say no');
+
+insert into Goods
+(goodName,good_value,weight,legality,description)
+values
+('RYNO XX', 100000, 50, true, 'RYNO: Rip Ya a New One');
+
 
 
 
