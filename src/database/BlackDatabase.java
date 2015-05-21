@@ -35,6 +35,7 @@ public class BlackDatabase implements DBInterface{
 	private CallableStatement getPoliceLvlStmt;
 	private CallableStatement getDangerLvlStmt;
 	private CallableStatement getPoliceLvlSSStmt;
+	private CallableStatement illegalsStmt;
 
 	public BlackDatabase() {
 		try {
@@ -68,6 +69,7 @@ public class BlackDatabase implements DBInterface{
 			getPoliceLvlStmt = conn.prepareCall("{call get_police_planet(?)}");
 			getDangerLvlStmt = conn.prepareCall("{call get_danger_planet(?)}");
 			getPoliceLvlSSStmt = conn.prepareCall("{call get_police_star_system(?)}");
+			illegalsStmt = conn.prepareCall("{? = call all_goods_illegal(?)}");
 		} catch (Exception e) {
 			System.out.println("breaking in Black Database init:");
 			e.printStackTrace();
@@ -557,6 +559,20 @@ public class BlackDatabase implements DBInterface{
 			bol= r.getInt("danger_level");
 		} catch(Exception exp){System.out.println("this is bad... :");exp.printStackTrace();}
 		return bol;
+	}
+
+	@Override
+	public boolean getIllegalStatus(String player_name) {
+		boolean outputValue = false;
+		try {
+			illegalsStmt.registerOutParameter(1,java.sql.Types.BOOLEAN);
+			illegalsStmt.setString(2,player_name);
+			illegalsStmt.execute();
+			outputValue = illegalsStmt.getBoolean(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return outputValue;
 	}
 
 }
