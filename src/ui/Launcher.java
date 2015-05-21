@@ -480,12 +480,6 @@ public class Launcher {
 					x[22] = "(press enter to continue)";
 					bd.giveGood(player_name, "Money", 5000);
 					ret = e.render(x);
-					if(bd.getIllegalStatus(player_name)){
-						x[13]="Congratulations you have eradicated illegal goods from the Galaxy. YOU WIN!!";
-						ret= e.render(x);
-						e.close();
-						System.exit(0);
-					}
 					return;
 				}
 				else{
