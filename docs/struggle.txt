@@ -8,3 +8,4 @@ Things that did not go well
 -Although we had a streamlined system for rendering each window, we did not have have a streamlined system for menus, which quickly became messy and unweildy, slowing down development speed and leading to many errors and problems
 
 Description of the front end
+For the user interface of our game, we chose to use Java outputting to a terminal. We created an engine class that we could use to print to the screen the same way every single time, and an event class to keep consistnacy between events as well. This made use of an interface that was fufilled by a backend Java class that made all the JDBC calls for the project, providing the program will all its interaction to the MySQL database. The user was presented with the same input entry type every single time, which was a line at the bottom of the screen to type into, with the line being entered and the next screen being rendered upon the pressing of the enter key.
