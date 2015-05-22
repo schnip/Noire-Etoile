@@ -1,0 +1,10 @@
+Things that went well in our project
+-Drawing things to the terminal went well, we managed to create a system to always get the terminal filled properly
+-Making use of an interface allowed us to improve our workflow as a team
+-Using stored procedures allowed us to check our data as we were putting it into the database to prevent duplicates
+
+Things that did not go well
+-Rolling an external jar into a project so that it can be run outside of eclipse proved extremely difficult, as such, we were never able to get the final version of our project to run in a normal terminal, as was the original plan
+-Although we had a streamlined system for rendering each window, we did not have have a streamlined system for menus, which quickly became messy and unweildy, slowing down development speed and leading to many errors and problems
+
+Description of the front end
