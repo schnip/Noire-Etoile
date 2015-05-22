@@ -439,7 +439,7 @@ public class BlackDatabase implements DBInterface{
 
 	@Override
 	public boolean playerExists(String playerName) {
-		boolean outputValue = false;
+		boolean outputValue = false; 
 		try {
 			playerExistsStmt.registerOutParameter(1,java.sql.Types.BOOLEAN);
 			playerExistsStmt.setString(2,playerName);
